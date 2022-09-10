@@ -28,4 +28,11 @@ class HomeOverviewCubit extends Cubit<HomeOverviewState> {
       emit(HomeOverviewState(job: job));
     }
   }
+
+  //get logs
+
+  //Add log
+  void addLog() async {
+    _logsRepository.saveLog(log);
+  }
 }

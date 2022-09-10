@@ -3,6 +3,7 @@ import 'package:continual_care_alpha/home_overview/home_overview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jobs_repository/jobs_repository.dart';
+import 'package:logs_repository/logs_repository.dart';
 
 import '../../schedule/widgets/job_list_tile.dart';
 
@@ -17,9 +18,10 @@ class HomeOverviewPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) =>
-            HomeOverviewCubit(repository: context.read<JobsRepository>())
-              ..getUpcoming(),
+        create: (context) => HomeOverviewCubit(
+              jobsRepository: context.read<JobsRepository>(),
+              logsRepository: context.read<LogsRepository>(),
+            )..getUpcoming(),
         child: HomeOverviewView());
   }
 }
