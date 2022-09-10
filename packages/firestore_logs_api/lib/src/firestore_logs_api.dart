@@ -13,11 +13,10 @@ class FirestoreLogsApi implements LogsApi {
   final FirebaseFirestore _firestore;
 
   /// a converter method for maintaining type-safety
-  late final logsCollection =
-      _firestore.collection('logs').withConverter<Log>(
-            fromFirestore: (snapshot, _) => Log.fromJson(snapshot.data()!),
-            toFirestore: (log, _) => log.toJson(),
-          );
+  late final logsCollection = _firestore.collection('logs').withConverter<Log>(
+        fromFirestore: (snapshot, _) => Log.fromJson(snapshot.data()!),
+        toFirestore: (log, _) => log.toJson(),
+      );
 
   /// This stream orders the [Log]'s by the
   /// time they were created, and then converts
@@ -62,43 +61,5 @@ class FirestoreLogsApi implements LogsApi {
       final currentLogId = check.docs[0].reference.id;
       await logsCollection.doc(currentLogId).delete();
     }
-  }
-
-  /// This method uses the Batch write api for
-  /// executing multiple operations in a single call,
-  /// which in this case is to delete all the logs that
-  /// are marked completed
-  @override
-  Future<int> clearCompleted() {
-    final batch = _firestore.batch();
-    return logsCollection
-        .where('isCompleted', isEqualTo: true)
-        .get()
-        .then((querySnapshot) {
-      final completedLogsAmount = querySnapshot.docs.length;
-      for (final document in querySnapshot.docs) {
-        batch.delete(document.reference);
-      }
-      batch.commit();
-      return completedLogsAmount;
-    });
-  }
-
-  /// This method uses the Batch write api for
-  /// executing multiple operations in a single call,
-  /// which in this case is to mark all the logs as
-  /// completed
-  @override
-  Future<int> completeAll({required bool isCompleted}) {
-    final batch = _firestore.batch();
-    return logsCollection.get().then((querySnapshot) {
-      final completedLogsAmount = querySnapshot.docs.length;
-      for (final document in querySnapshot.docs) {
-        final completedLog = document.data().copyWith(isCompleted: true);
-        batch.update(document.reference, completedLog.toJson());
-      }
-      batch.commit();
-      return completedLogsAmount;
-    });
   }
 }

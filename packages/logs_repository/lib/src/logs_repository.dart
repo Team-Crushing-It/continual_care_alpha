@@ -24,15 +24,4 @@ class LogsRepository {
   /// If no log with the given id exists, a [LogNotFoundException] error is
   /// thrown.
   Future<void> deleteLog(String id) => _logsApi.deleteLog(id);
-
-  /// Deletes all completed logs.
-  ///
-  /// Returns the number of deleted logs.
-  Future<int> clearCompleted() => _logsApi.clearCompleted();
-
-  /// Sets the `isCompleted` state of all logs to the given value.
-  ///
-  /// Returns the number of updated logs.
-  Future<int> completeAll({required bool isCompleted}) =>
-      _logsApi.completeAll(isCompleted: isCompleted);
 }

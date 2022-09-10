@@ -73,27 +73,4 @@ class LocalStorageLogsApi extends LogsApi {
       return _setValue(kLogsCollectionKey, json.encode(logs));
     }
   }
-
-  @override
-  Future<int> clearCompleted() async {
-    final logs = [..._LogstreamController.value];
-    final completedLogsAmount = logs.where((t) => t.isCompleted).length;
-    logs.removeWhere((t) => t.isCompleted);
-    _LogstreamController.add(logs);
-    await _setValue(kLogsCollectionKey, json.encode(logs));
-    return completedLogsAmount;
-  }
-
-  @override
-  Future<int> completeAll({required bool isCompleted}) async {
-    final logs = [..._LogstreamController.value];
-    final changedLogsAmount =
-        logs.where((t) => t.isCompleted != isCompleted).length;
-    final newLogs = [
-      for (final log in logs) log.copyWith(isCompleted: isCompleted)
-    ];
-    _LogstreamController.add(newLogs);
-    await _setValue(kLogsCollectionKey, json.encode(newLogs));
-    return changedLogsAmount;
-  }
 }

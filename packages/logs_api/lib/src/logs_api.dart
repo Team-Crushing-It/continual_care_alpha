@@ -20,16 +20,6 @@ abstract class LogsApi {
   /// If no log with the given id exists, a [LogNotFoundException] error is
   /// thrown.
   Future<void> deleteLog(String id);
-
-  /// Deletes all completed logs.
-  ///
-  /// Returns the number of deleted logs.
-  Future<int> clearCompleted();
-
-  /// Sets the `isCompleted` state of all logs to the given value.
-  ///
-  /// Returns the number of updated logs.
-  Future<int> completeAll({required bool isCompleted});
 }
 
 /// Error thrown when a [Log] with a given id is not found.
