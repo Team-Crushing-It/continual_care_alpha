@@ -5,18 +5,22 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:continual_care_alpha/app/app.dart';
 import 'package:continual_care_alpha/theme/theme.dart';
 import 'package:jobs_repository/jobs_repository.dart';
+import 'package:logs_repository/logs_repository.dart';
 
 class App extends StatelessWidget {
   const App({
     Key? key,
     required AuthenticationRepository authenticationRepository,
     required JobsRepository jobsRepository,
+    required LogsRepository logsRepository,
   })  : _authenticationRepository = authenticationRepository,
         _jobsRepository = jobsRepository,
+        _logsRepository = logsRepository,
         super(key: key);
 
   final AuthenticationRepository _authenticationRepository;
   final JobsRepository _jobsRepository;
+  final LogsRepository _logsRepository;
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +28,7 @@ class App extends StatelessWidget {
       providers: [
         RepositoryProvider.value(value: _authenticationRepository),
         RepositoryProvider.value(value: _jobsRepository),
+        RepositoryProvider.value(value: _logsRepository),
       ],
       child: BlocProvider(
         create: (_) => AppBloc(
