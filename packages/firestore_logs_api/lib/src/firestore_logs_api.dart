@@ -24,7 +24,7 @@ class FirestoreLogsApi implements LogsApi {
   /// a [Log]
   @override
   Stream<List<Log>> getLogs() {
-    return logsCollection.orderBy('startTime').snapshots().map(
+    return logsCollection.orderBy('completed').snapshots().map(
           (snapshot) => snapshot.docs.map((e) => e.data()).toList(),
         );
   }

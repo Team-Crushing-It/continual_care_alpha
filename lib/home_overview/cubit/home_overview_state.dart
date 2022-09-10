@@ -11,4 +11,14 @@ class HomeOverviewState extends Equatable {
 
   @override
   List<Object?> get props => [job, logs];
+
+  HomeOverviewState copyWith({
+    Job? job,
+    List<Log>? logs,
+  }) {
+    return HomeOverviewState(
+      job: job ?? this.job,
+      logs: logs ?? this.logs,
+    );
+  }
 }

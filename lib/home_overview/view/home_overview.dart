@@ -21,7 +21,7 @@ class HomeOverviewPage extends StatelessWidget {
         create: (context) => HomeOverviewCubit(
               jobsRepository: context.read<JobsRepository>(),
               logsRepository: context.read<LogsRepository>(),
-            )..getUpcoming(),
+            )..getUpcoming()..getLogs(),
         child: HomeOverviewView());
   }
 }
@@ -36,64 +36,129 @@ class HomeOverviewView extends StatelessWidget {
         appBar: AppBar(
           title: Text('Home Overview'),
         ),
-        body: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        body: Column(
           children: [
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(bottom: 16),
-                      padding: EdgeInsets.only(bottom: 4),
-                      width: double.maxFinite,
-                      child: Text(
-                        "Upcoming Job",
-                        style: TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.bold),
-                      ),
-                      decoration: BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(
-                            width: 1,
-                            color: Color(0xff626262),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(bottom: 16),
+                          padding: EdgeInsets.only(bottom: 4),
+                          width: double.maxFinite,
+                          child: Text(
+                            "Upcoming Job",
+                            style: TextStyle(
+                                fontSize: 24, fontWeight: FontWeight.bold),
+                          ),
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                width: 1,
+                                color: Color(0xff626262),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                        BlocBuilder<HomeOverviewCubit, HomeOverviewState>(
+                          builder: (context, state) {
+                            print('inBlocBuilder');
+                            if (state.job != null) {
+                              return JobListTile(
+                                job: state.job!,
+                                onTap: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (_) {
+                                      return BlocProvider.value(
+                                        value:
+                                            context.read<HomeOverviewCubit>(),
+                                        child: AlertDialog(
+                                          title: Text(
+                                              "Tue Aug 2 Maureen & Day Derosa"),
+                                          content: Text(
+                                              'Would you like to start the job?',
+                                              style: TextStyle(
+                                                  color: Color(0xff989898))),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () {
+                                                context
+                                                    .read<HomeOverviewCubit>()
+                                                    .addLog();
+                                              },
+                                              child: Text(
+                                                'Yes',
+                                                style: TextStyle(
+                                                    color: Colors.red),
+                                              ),
+                                            ),
+                                            TextButton(
+                                              onPressed: () {},
+                                              child: Text(
+                                                'No',
+                                                style: TextStyle(
+                                                    color: Colors.red),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                              );
+                            }
+                            return Center(child: Text("No upcomming jobs"));
+                          },
+                        ),
+                      ],
                     ),
-                    BlocBuilder<HomeOverviewCubit, HomeOverviewState>(
-                      builder: (context, state) {
-                        print('inBlocBuilder');
-                        if (state.job != null) {
-                          return JobListTile(job: state.job!);
-                        }
-                        return Center(child: Text("No upcomming jobs"));
-                      },
-                    ),
-                  ],
+                  ),
                 ),
-              ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 16, bottom: 16, right: 2),
+                  child: Column(
+                    children: [
+                      IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.notifications,
+                            size: 32,
+                          )),
+                      IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.account_circle,
+                            size: 32,
+                          ))
+                    ],
+                  ),
+                )
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 16, bottom: 16, right: 2),
-              child: Column(
-                children: [
-                  IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.notifications,
-                        size: 32,
-                      )),
-                  IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.account_circle,
-                        size: 32,
-                      ))
-                ],
-              ),
+            BlocBuilder<HomeOverviewCubit, HomeOverviewState>(
+              builder: (context, state) {
+                print(state.logs);
+                print("hello");
+                if (state.logs != null) {
+                  if (state.logs!.isNotEmpty) {
+                    return Expanded(
+                      child: ListView.builder(
+                          itemCount: state.logs!.length,
+                          itemBuilder: ((context, index) {
+                            return Text(state.logs![index].sentiment);
+                          })),
+                    );
+                  }
+                }
+                return Text("Nothing here");
+              },
             )
           ],
         ));

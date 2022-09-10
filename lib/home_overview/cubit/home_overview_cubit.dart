@@ -29,10 +29,16 @@ class HomeOverviewCubit extends Cubit<HomeOverviewState> {
     }
   }
 
-  //get logs
-
   //Add log
   void addLog() async {
+    final log = Log(sentiment: "hello friend");
     _logsRepository.saveLog(log);
+    final logs = await _logsRepository.getLogs().first;
+    emit(state.copyWith(logs: logs));
+  }
+    // Get logs
+    void getLogs() async {
+    final logs = await _logsRepository.getLogs().first;
+    emit(state.copyWith(logs: logs));
   }
 }
