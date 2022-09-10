@@ -1,4 +1,4 @@
-name: continual_care
+name: continual_care_alpha
 description: Giving back through caregiving
 version: 1.0.0+1
 publish_to: none
@@ -31,7 +31,6 @@ dependencies:
   jobs_repository:
     path: packages/jobs_repository
   transparent_image: ^2.0.0
-  jiffy: ^5.0.0
   firebase_core: ^1.21.1
 
 dev_dependencies:

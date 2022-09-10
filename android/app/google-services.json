@@ -1,0 +1,118 @@
+{
+  "project_info": {
+    "project_number": "243155743060",
+    "project_id": "continual-care",
+    "storage_bucket": "continual-care.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:243155743060:android:7b5061167b545760b858c1",
+        "android_client_info": {
+          "package_name": "com.example.test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "243155743060-tv6v599v0ktrc36tvnvprv26dkr0dkl5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrErPoDlvUlNDLGdroxZQbWXufeC5eAbw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "243155743060-tv6v599v0ktrc36tvnvprv26dkr0dkl5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "243155743060-6ioc97pb8n8sjptqvn109vnd2jhptj3f.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.verygoodcore.derosa-payment"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:243155743060:android:d5893a7a1f5d5a3bb858c1",
+        "android_client_info": {
+          "package_name": "com.example.verygoodcore.continual_care_alpha"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "243155743060-tv6v599v0ktrc36tvnvprv26dkr0dkl5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrErPoDlvUlNDLGdroxZQbWXufeC5eAbw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "243155743060-tv6v599v0ktrc36tvnvprv26dkr0dkl5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "243155743060-6ioc97pb8n8sjptqvn109vnd2jhptj3f.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.verygoodcore.derosa-payment"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:243155743060:android:c96c8d6f2690e648b858c1",
+        "android_client_info": {
+          "package_name": "com.example.verygoodcore.derosa_payment"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "243155743060-tv6v599v0ktrc36tvnvprv26dkr0dkl5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrErPoDlvUlNDLGdroxZQbWXufeC5eAbw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "243155743060-tv6v599v0ktrc36tvnvprv26dkr0dkl5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "243155743060-6ioc97pb8n8sjptqvn109vnd2jhptj3f.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.verygoodcore.derosa-payment"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
