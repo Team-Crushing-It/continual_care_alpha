@@ -13,10 +13,13 @@ class HomeOverviewCubit extends Cubit<HomeOverviewState> {
 
   void getUpcoming() async {
     List<Job> jobs = await _repository.getJobs().first;
-    jobs = jobs.where((element) => element.startTime.isAfter(DateTime.now())).toList();
+    jobs = jobs
+        .where((element) => element.startTime.isAfter(DateTime.now()))
+        .toList();
     jobs.sort(((a, b) => a.startTime.compareTo(b.startTime)));
-  
-    final job = jobs.first;
-    emit(HomeOverviewState(job: job));
+    if (jobs.isNotEmpty) {
+      final job = jobs.first;
+      emit(HomeOverviewState(job: job));
+    }
   }
 }
