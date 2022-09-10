@@ -5,7 +5,7 @@ enum CurrentHomePage { overview, schedule, alert }
 
 class HomeState extends Equatable {
   const HomeState({
-    this.page = CurrentHomePage.schedule,
+    this.page = CurrentHomePage.overview,
   });
 
   final CurrentHomePage page;

@@ -3,14 +3,14 @@ import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:continual_care_alpha/home/home.dart';
-// import 'package:continual_care_alpha/schedule/schedule.dart';
+import 'package:continual_care_alpha/schedule/schedule.dart';
 
 List<Page> onGenerateHomePages(
   HomeState state,
   List<Page<dynamic>> pages,
 ) {
   if (state.page == CurrentHomePage.schedule) {
-    // return [SchedulePage.page()];
+    return [SchedulePage.page()];
   }
   if (state.page == CurrentHomePage.overview) {
     return [HomeOverviewPage.page()];
