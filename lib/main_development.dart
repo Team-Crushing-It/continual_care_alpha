@@ -23,6 +23,7 @@ void main() async {
     App(
       authenticationRepository: authenticationRepository,
       jobsRepository: jobsRepository,
+      logsRepository: logsRepository,
     ),
   );
 }
