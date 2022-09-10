@@ -1,0 +1,21 @@
+name: firestore_jobs_api
+description: My new Firestore package
+version: 1.0.0+1
+publish_to: none
+
+environment:
+  sdk: ">=2.16.0 <3.0.0"
+
+dependencies:
+  cloud_firestore: ^3.4.3
+  fake_cloud_firestore: ^1.2.1
+  flutter:
+    sdk: flutter
+  jobs_api:
+    path: ../jobs_api
+ 
+dev_dependencies:
+  coverage: ^1.1.0
+  mocktail: ^0.2.0
+  test: ^1.19.2
+  very_good_analysis: ^2.4.0
