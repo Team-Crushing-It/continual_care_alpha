@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:jobs_api/jobs_api.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:logs_api/logs_api.dart';
 
 part 'user.g.dart';
 

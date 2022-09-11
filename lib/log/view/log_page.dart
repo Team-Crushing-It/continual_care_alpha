@@ -1,4 +1,5 @@
 import 'package:continual_care_alpha/app/bloc/app_bloc.dart';
+import 'package:continual_care_alpha/schedule/widgets/date_ios_format.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -47,42 +48,32 @@ class LogView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final status = context.select((LogBloc bloc) => bloc.state.status);
+    final state = context.watch<LogBloc>().state;
     final isNewLog = context.select(
       (LogBloc bloc) => bloc.state.isNewLog,
     );
-    final theme = Theme.of(context);
-    final floatingActionButtonTheme = theme.floatingActionButtonTheme;
-    final fabBackgroundColor = floatingActionButtonTheme.backgroundColor ??
-        theme.colorScheme.secondary;
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          isNewLog ? 'Create New Log' : ' Log',
+          isNewLog
+              ? 'Create New Log'
+              : '${state.initialLog!.completed.dateIosFormat()}',
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        tooltip: 'l10n.editLogSaveButtonTooltip',
-        shape: const ContinuousRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(32)),
-        ),
-        backgroundColor: status.isLoadingOrSuccess
-            ? fabBackgroundColor.withOpacity(0.5)
-            : fabBackgroundColor,
-        onPressed: status.isLoadingOrSuccess
-            ? null
-            : () => context.read<LogBloc>().add(const LogSubmitted()),
-        child: status.isLoadingOrSuccess
-            ? const CupertinoActivityIndicator()
-            : const Icon(Icons.check_rounded),
       ),
       body: CupertinoScrollbar(
         child: SingleChildScrollView(
-          child: Column(
-            children: const [
-              _ClientField(),
-            ],
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Column(
+              children: [
+                Text(state.initialLog!.id),
+                _Comments(),
+                _Todos(),
+                _IADLS(),
+                _BADLS(),
+              ],
+            ),
           ),
         ),
       ),
@@ -90,14 +81,186 @@ class LogView extends StatelessWidget {
   }
 }
 
-class _ClientField extends StatelessWidget {
-  const _ClientField();
+class _Comments extends StatelessWidget {
+  const _Comments();
 
   @override
   Widget build(BuildContext context) {
-    final state = context.watch<LogBloc>().state;
-    final hintText = state.initialLog?.id ?? '';
+    return Column(
+      children: [
+        Container(
+          width: double.maxFinite,
+          child: Text(
+            "Comments",
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          ),
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                width: 1,
+                color: Color(0xff626262),
+              ),
+            ),
+          ),
+        ),
+        BlocBuilder<LogBloc, LogState>(
+          builder: (context, state) {
+            if (state.comments != null) {
+              if (state.comments!.isNotEmpty) {
+                return Expanded(
+                  child: ListView.builder(
+                    itemCount: state.comments!.length,
+                    itemBuilder: ((context, index) {
+                      return Container(
+                        child: Text('Comment 1'),
+                      );
+                    }),
+                  ),
+                );
+              }
+            }
+            return Text("No comments yet");
+          },
+        ),
+      ],
+    );
+  }
+}
 
-    return Container();
+class _Todos extends StatelessWidget {
+  const _Todos();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          width: double.maxFinite,
+          child: Text(
+            "Todos",
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          ),
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                width: 1,
+                color: Color(0xff626262),
+              ),
+            ),
+          ),
+        ),
+        BlocBuilder<LogBloc, LogState>(
+          builder: (context, state) {
+            if (state.todos != null) {
+              if (state.todos!.isNotEmpty) {
+                return Expanded(
+                  child: ListView.builder(
+                    itemCount: state.todos!.length,
+                    itemBuilder: ((context, index) {
+                      return Container(
+                        child: Text('Todo 1'),
+                      );
+                    }),
+                  ),
+                );
+              }
+            }
+            return Text("No Todos yet");
+          },
+        ),
+      ],
+    );
+  }
+}
+
+class _IADLS extends StatelessWidget {
+  const _IADLS();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          width: double.maxFinite,
+          child: Text(
+            "IADLS",
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          ),
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                width: 1,
+                color: Color(0xff626262),
+              ),
+            ),
+          ),
+        ),
+        BlocBuilder<LogBloc, LogState>(
+          builder: (context, state) {
+            if (state.iadls != null) {
+              if (state.iadls!.isNotEmpty) {
+                return Expanded(
+                  child: ListView.builder(
+                    itemCount: state.iadls!.length,
+                    itemBuilder: ((context, index) {
+                      return Container(
+                        child: Text('iadl 1'),
+                      );
+                    }),
+                  ),
+                );
+              }
+            }
+            return Text("No IADLS yet");
+          },
+        ),
+      ],
+    );
+  }
+}
+
+class _BADLS extends StatelessWidget {
+  const _BADLS();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          width: double.maxFinite,
+          child: Text(
+            "BADLS",
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          ),
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                width: 1,
+                color: Color(0xff626262),
+              ),
+            ),
+          ),
+        ),
+        BlocBuilder<LogBloc, LogState>(
+          builder: (context, state) {
+            if (state.badls != null) {
+              if (state.badls!.isNotEmpty) {
+                return Expanded(
+                  child: ListView.builder(
+                    itemCount: state.badls!.length,
+                    itemBuilder: ((context, index) {
+                      return Container(
+                        child: Text('badl 1'),
+                      );
+                    }),
+                  ),
+                );
+              }
+            }
+            return Text("No BADLS yet");
+          },
+        ),
+      ],
+    );
   }
 }
