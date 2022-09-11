@@ -1,5 +1,6 @@
 import 'package:continual_care_alpha/home_overview/bloc/home_overview_bloc.dart';
 import 'package:continual_care_alpha/home_overview/home_overview.dart';
+import 'package:continual_care_alpha/log/log.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jobs_repository/jobs_repository.dart';
@@ -34,123 +35,122 @@ class HomeOverviewView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Home Overview'),
-        ),
-        body: Column(
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(bottom: 16),
-                          padding: EdgeInsets.only(bottom: 4),
-                          width: double.maxFinite,
-                          child: Text(
-                            "Upcoming Job",
-                            style: TextStyle(
-                                fontSize: 24, fontWeight: FontWeight.bold),
-                          ),
-                          decoration: BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(
-                                width: 1,
-                                color: Color(0xff626262),
-                              ),
+      appBar: AppBar(
+        title: Text('Home Overview'),
+      ),
+      body: Column(
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(bottom: 16),
+                        padding: EdgeInsets.only(bottom: 4),
+                        width: double.maxFinite,
+                        child: Text(
+                          "Upcoming Job",
+                          style: TextStyle(
+                              fontSize: 24, fontWeight: FontWeight.bold),
+                        ),
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                              width: 1,
+                              color: Color(0xff626262),
                             ),
                           ),
                         ),
-                        BlocBuilder<HomeOverviewBloc, HomeOverviewState>(
-                          builder: (context, state) {
-                            if (state.job != null) {
-                              return JobListTile(
-                                job: state.job!,
-                                onTap: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (newContext) {
-                                      return BlocProvider.value(
-                                        value: context.read<HomeOverviewBloc>(),
-                                        child: AlertDialog(
-                                          title: Text(
-                                              "Tue Aug 2 Maureen & Day Derosa"),
-                                          content: Text(
-                                              'Would you like to start the job?',
-                                              style: TextStyle(
-                                                  color: Color(0xff989898))),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () {
-                                                context
-                                                    .read<HomeOverviewBloc>()
-                                                    .add(
-                                                        HomeOverviewLogAdded());
-                                                Navigator.pop(newContext);
-                                              },
-                                              child: Text(
-                                                'Yes',
-                                                style: TextStyle(
-                                                    color: Colors.red),
-                                              ),
+                      ),
+                      BlocBuilder<HomeOverviewBloc, HomeOverviewState>(
+                        builder: (context, state) {
+                          if (state.job != null) {
+                            return JobListTile(
+                              job: state.job!,
+                              onTap: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (newContext) {
+                                    return BlocProvider.value(
+                                      value: context.read<HomeOverviewBloc>(),
+                                      child: AlertDialog(
+                                        title: Text(
+                                            "Tue Aug 2 Maureen & Day Derosa"),
+                                        content: Text(
+                                            'Would you like to start the job?',
+                                            style: TextStyle(
+                                                color: Color(0xff989898))),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
+                                              context
+                                                  .read<HomeOverviewBloc>()
+                                                  .add(HomeOverviewLogAdded());
+                                              Navigator.pop(newContext);
+                                            },
+                                            child: Text(
+                                              'Yes',
+                                              style:
+                                                  TextStyle(color: Colors.red),
                                             ),
-                                            TextButton(
-                                              onPressed: () {
-                                                Navigator.pop(newContext);
-                                              },
-                                              child: Text(
-                                                'No',
-                                                style: TextStyle(
-                                                    color: Colors.red),
-                                              ),
+                                          ),
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.pop(newContext);
+                                            },
+                                            child: Text(
+                                              'No',
+                                              style:
+                                                  TextStyle(color: Colors.red),
                                             ),
-                                          ],
-                                        ),
-                                      );
-                                    },
-                                  );
-                                },
-                              );
-                            }
-                            return Center(child: Text("No upcomming jobs"));
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 16, bottom: 16, right: 2),
-                  child: Column(
-                    children: [
-                      IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.notifications,
-                            size: 32,
-                          )),
-                      IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.account_circle,
-                            size: 32,
-                          ))
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                            );
+                          }
+                          return Center(child: Text("No upcomming jobs"));
+                        },
+                      ),
                     ],
                   ),
-                )
-              ],
-            ),
-            Container(
-              margin: EdgeInsets.only(bottom: 16),
-              padding: EdgeInsets.only(bottom: 4),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 16, bottom: 16, right: 2),
+                child: Column(
+                  children: [
+                    IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.notifications,
+                          size: 32,
+                        )),
+                    IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.account_circle,
+                          size: 32,
+                        ))
+                  ],
+                ),
+              )
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Container(
               width: double.maxFinite,
               child: Text(
-                "Upcoming Job",
+                "Activity Log",
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               decoration: BoxDecoration(
@@ -162,85 +162,35 @@ class HomeOverviewView extends StatelessWidget {
                 ),
               ),
             ),
-            BlocBuilder<HomeOverviewBloc, HomeOverviewState>(
-              builder: (context, state) {
-                if (state.logs != null) {
-                  if (state.logs!.isNotEmpty) {
-                    return Expanded(
-                      child: ListView.builder(
-                          itemCount: state.logs!.length,
-                          itemBuilder: ((context, index) {
-                            // return Text(state.logs![index].sentiment);
-                            return ListTile(
-                              onTap: () {},
-                              title: Column(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom: 4.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          "Wed Sep 7",
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 8.0),
-                                          child: Text.rich(
-                                              overflow: TextOverflow.ellipsis,
-                                              TextSpan(children: [
-                                                TextSpan(
-                                                    text: "Mood: ",
-                                                    style: TextStyle(
-                                                        color:
-                                                            Color(0xff989898))),
-                                                TextSpan(text: "🤩"),
-                                              ])),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              subtitle: Container(
-                                decoration: ShapeDecoration(
-                                  shape: Border(
-                                    bottom: BorderSide(
-                                      color: Colors.black,
-                                      width: 0.5,
-                                    ),
-                                  ),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(4),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      InfoItem(title: "Comments", count: 4),
-                                      InfoItem(title: "Tasks", count: 12),
-                                      InfoItem(title: "IADL", count: 2),
-                                      InfoItem(title: "BADL", count: 5)
-                                    ],
-                                  ),
-                                ),
+          ),
+          BlocBuilder<HomeOverviewBloc, HomeOverviewState>(
+            builder: (context, state) {
+              if (state.logs != null) {
+                if (state.logs!.isNotEmpty) {
+                  return Expanded(
+                    child: ListView.builder(
+                      itemCount: state.logs!.length,
+                      itemBuilder: ((context, index) {
+                        return LogTile(
+                          initialLog: state.logs![index],
+                          onTap: () {
+                            Navigator.of(context).push(
+                              LogPage.route(
+                                initialLog: state.logs![index],
                               ),
                             );
-                          })),
-                    );
-                  }
+                          },
+                        );
+                      }),
+                    ),
+                  );
                 }
-                return Text("Nothing here");
-              },
-            )
-          ],
-        ));
+              }
+              return Text("No logs yet");
+            },
+          )
+        ],
+      ),
+    );
   }
 }

@@ -1,17 +1,17 @@
-part of 'edit_log_bloc.dart';
+part of 'log_bloc.dart';
 
-enum EditLogStatus { initial, updated, loading, success, failure }
+enum LogStatus { initial, updated, loading, success, failure }
 
-extension EditLogStatusX on EditLogStatus {
+extension LogStatusX on LogStatus {
   bool get isLoadingOrSuccess => [
-        EditLogStatus.loading,
-        EditLogStatus.success,
+        LogStatus.loading,
+        LogStatus.success,
       ].contains(this);
 }
 
-class EditLogState extends Equatable {
-  EditLogState({
-    this.status = EditLogStatus.initial,
+class LogState extends Equatable {
+  LogState({
+    this.status = LogStatus.initial,
     this.initialLog,
     this.user = User.empty,
     this.comments = const [],
@@ -23,7 +23,7 @@ class EditLogState extends Equatable {
     this.isCompleted = false,
   }) : this.completed = completed ?? DateTime.now();
 
-  final EditLogStatus status;
+  final LogStatus status;
   final Log? initialLog;
   final User user;
   final List<Comment>? comments;
@@ -50,8 +50,8 @@ class EditLogState extends Equatable {
         isCompleted
       ];
 
-  EditLogState copyWith(
-      {EditLogStatus? status,
+  LogState copyWith(
+      {LogStatus? status,
       Log? initialLog,
       User? user,
       List<Comment>? comments,
@@ -61,7 +61,7 @@ class EditLogState extends Equatable {
       String? sentiment,
       DateTime? completed,
       bool? isCompleted,}) {
-    return EditLogState(
+    return LogState(
       status: status ?? this.status,
       initialLog: initialLog ?? this.initialLog,
       user: user ?? this.user,
