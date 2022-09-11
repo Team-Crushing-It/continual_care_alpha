@@ -1,4 +1,4 @@
-import 'package:continual_care_alpha/home_overview/cubit/home_overview_cubit.dart';
+import 'package:continual_care_alpha/home_overview/bloc/home_overview_bloc.dart';
 import 'package:continual_care_alpha/home_overview/home_overview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,10 +18,12 @@ class HomeOverviewPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => HomeOverviewCubit(
+        create: (context) => HomeOverviewBloc(
               jobsRepository: context.read<JobsRepository>(),
               logsRepository: context.read<LogsRepository>(),
-            )..getUpcoming()..getLogs(),
+            )
+              ..add(HomeOverviewSubscriptionRequested())
+              ..add(HomeOverviewUpcomingJobRequested()),
         child: HomeOverviewView());
   }
 }
@@ -31,7 +33,6 @@ class HomeOverviewView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('whole thing');
     return Scaffold(
         appBar: AppBar(
           title: Text('Home Overview'),
@@ -65,19 +66,17 @@ class HomeOverviewView extends StatelessWidget {
                             ),
                           ),
                         ),
-                        BlocBuilder<HomeOverviewCubit, HomeOverviewState>(
+                        BlocBuilder<HomeOverviewBloc, HomeOverviewState>(
                           builder: (context, state) {
-                            print('inBlocBuilder');
                             if (state.job != null) {
                               return JobListTile(
                                 job: state.job!,
                                 onTap: () {
                                   showDialog(
                                     context: context,
-                                    builder: (_) {
+                                    builder: (newContext) {
                                       return BlocProvider.value(
-                                        value:
-                                            context.read<HomeOverviewCubit>(),
+                                        value: context.read<HomeOverviewBloc>(),
                                         child: AlertDialog(
                                           title: Text(
                                               "Tue Aug 2 Maureen & Day Derosa"),
@@ -89,8 +88,10 @@ class HomeOverviewView extends StatelessWidget {
                                             TextButton(
                                               onPressed: () {
                                                 context
-                                                    .read<HomeOverviewCubit>()
-                                                    .addLog();
+                                                    .read<HomeOverviewBloc>()
+                                                    .add(
+                                                        HomeOverviewLogAdded());
+                                                Navigator.pop(newContext);
                                               },
                                               child: Text(
                                                 'Yes',
@@ -99,7 +100,9 @@ class HomeOverviewView extends StatelessWidget {
                                               ),
                                             ),
                                             TextButton(
-                                              onPressed: () {},
+                                              onPressed: () {
+                                                Navigator.pop(newContext);
+                                              },
                                               child: Text(
                                                 'No',
                                                 style: TextStyle(
@@ -142,17 +145,94 @@ class HomeOverviewView extends StatelessWidget {
                 )
               ],
             ),
-            BlocBuilder<HomeOverviewCubit, HomeOverviewState>(
+            Container(
+              margin: EdgeInsets.only(bottom: 16),
+              padding: EdgeInsets.only(bottom: 4),
+              width: double.maxFinite,
+              child: Text(
+                "Upcoming Job",
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    width: 1,
+                    color: Color(0xff626262),
+                  ),
+                ),
+              ),
+            ),
+            BlocBuilder<HomeOverviewBloc, HomeOverviewState>(
               builder: (context, state) {
-                print(state.logs);
-                print("hello");
                 if (state.logs != null) {
                   if (state.logs!.isNotEmpty) {
                     return Expanded(
                       child: ListView.builder(
                           itemCount: state.logs!.length,
                           itemBuilder: ((context, index) {
-                            return Text(state.logs![index].sentiment);
+                            // return Text(state.logs![index].sentiment);
+                            return ListTile(
+                              onTap: () {},
+                              title: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 4.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "Wed Sep 7",
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 8.0),
+                                          child: Text.rich(
+                                              overflow: TextOverflow.ellipsis,
+                                              TextSpan(children: [
+                                                TextSpan(
+                                                    text: "Mood: ",
+                                                    style: TextStyle(
+                                                        color:
+                                                            Color(0xff989898))),
+                                                TextSpan(text: "🤩"),
+                                              ])),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              subtitle: Container(
+                                decoration: ShapeDecoration(
+                                  shape: Border(
+                                    bottom: BorderSide(
+                                      color: Colors.black,
+                                      width: 0.5,
+                                    ),
+                                  ),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(4),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      InfoItem(title: "Comments", count: 4),
+                                      InfoItem(title: "Tasks", count: 12),
+                                      InfoItem(title: "IADL", count: 2),
+                                      InfoItem(title: "BADL", count: 5)
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
                           })),
                     );
                   }

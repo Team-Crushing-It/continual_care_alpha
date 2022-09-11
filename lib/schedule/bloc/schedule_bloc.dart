@@ -29,7 +29,7 @@ class ScheduleBloc extends Bloc<ScheduleEvent, ScheduleState> {
     Emitter<ScheduleState> emit,
   ) async {
     emit(state.copyWith(status: () => ScheduleStatus.loading));
-
+    
     await emit.forEach<List<Job>>(
       _jobsRepository.getJobs(),
       onData: (jobs) => state.copyWith(
