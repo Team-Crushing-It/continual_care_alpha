@@ -1,6 +1,6 @@
 part of 'home_cubit.dart';
 
-enum CurrentHomePage { overview, schedule, alert }
+enum CurrentHomePage { overview, schedule, alert, chat }
 
 
 class HomeState extends Equatable {

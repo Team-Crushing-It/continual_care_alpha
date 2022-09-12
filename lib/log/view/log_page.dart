@@ -67,10 +67,12 @@ class LogView extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Column(
               children: [
-                _Comments(),
+                if (!isNewLog) _Comments(),
                 _Todos(),
                 _IADLS(),
                 _BADLS(),
+                if (isNewLog) _Comments(),
+                if (isNewLog) TextButton(onPressed: () {}, child: Text('test'))
               ],
             ),
           ),
@@ -85,43 +87,76 @@ class _Comments extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          width: double.maxFinite,
-          child: Text(
-            "Comments",
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-          ),
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(
-                width: 1,
-                color: Color(0xff626262),
+    final state = context.watch<LogBloc>().state;
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16.0),
+      child: Column(
+        children: [
+          Container(
+            width: double.maxFinite,
+            child: Text(
+              "Comments",
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  width: 1,
+                  color: Color(0xff626262),
+                ),
               ),
             ),
           ),
-        ),
-        BlocBuilder<LogBloc, LogState>(
-          builder: (context, state) {
-            if (state.comments != null) {
-              if (state.comments!.isNotEmpty) {
-                return Expanded(
-                  child: ListView.builder(
-                    itemCount: state.comments!.length,
-                    itemBuilder: ((context, index) {
-                      return Container(
-                        child: Text('Comment 1'),
-                      );
-                    }),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: BlocBuilder<LogBloc, LogState>(
+              builder: (context, state) {
+                if (state.comments != null) {
+                  if (state.comments!.isNotEmpty) {
+                    return Expanded(
+                      child: ListView.builder(
+                        itemCount: state.comments!.length,
+                        itemBuilder: ((context, index) {
+                          return Container(
+                            child: Text('Comment 1'),
+                          );
+                        }),
+                      ),
+                    );
+                  }
+                }
+                return Container();
+              },
+            ),
+          ),
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: Container(
+                  width: 30.0,
+                  height: 30.0,
+                  decoration: BoxDecoration(
+                    color: Colors.orange,
+                    shape: BoxShape.circle,
                   ),
-                );
-              }
-            }
-            return Text("No comments yet");
-          },
-        ),
-      ],
+                  child: Center(
+                      child: Text('Y',
+                          style: TextStyle(color: Colors.white, fontSize: 12))),
+                ),
+              ),
+              Expanded(
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    enabled: !state.status.isLoadingOrSuccess,
+                    hintText: 'Add a comment',
+                  ),
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
     );
   }
 }
@@ -131,43 +166,57 @@ class _Todos extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          width: double.maxFinite,
-          child: Text(
-            "Todos",
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-          ),
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(
-                width: 1,
-                color: Color(0xff626262),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16.0),
+      child: Column(
+        children: [
+          Container(
+            width: double.maxFinite,
+            child: Text(
+              "Tasks",
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  width: 1,
+                  color: Color(0xff626262),
+                ),
               ),
             ),
           ),
-        ),
-        BlocBuilder<LogBloc, LogState>(
-          builder: (context, state) {
-            if (state.todos != null) {
-              if (state.todos!.isNotEmpty) {
-                return Expanded(
-                  child: ListView.builder(
-                    itemCount: state.todos!.length,
-                    itemBuilder: ((context, index) {
-                      return Container(
-                        child: Text('Todo 1'),
-                      );
-                    }),
-                  ),
-                );
+          BlocBuilder<LogBloc, LogState>(
+            builder: (context, state) {
+              if (state.todos != null) {
+                if (state.todos!.isNotEmpty) {
+                  return Expanded(
+                    child: ListView.builder(
+                      itemCount: state.todos!.length,
+                      itemBuilder: ((context, index) {
+                        return CheckTile(
+                          text: state.todos![index].action,
+                        );
+                      }),
+                    ),
+                  );
+                }
               }
-            }
-            return Text("No Todos yet");
-          },
-        ),
-      ],
+              return Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Column(
+                  children: [
+                    CheckTile(text: 'Assist individual to bathroom'),
+                    CheckTile(text: 'Assist individual with getting dressed'),
+                    CheckTile(text: 'Prepare breakfast'),
+                    CheckTile(text: 'Clean kitchen'),
+                    CheckTile(text: 'Make bed'),
+                  ],
+                ),
+              );
+            },
+          ),
+        ],
+      ),
     );
   }
 }
@@ -177,43 +226,57 @@ class _IADLS extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          width: double.maxFinite,
-          child: Text(
-            "IADLS",
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-          ),
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(
-                width: 1,
-                color: Color(0xff626262),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16.0),
+      child: Column(
+        children: [
+          Container(
+            width: double.maxFinite,
+            child: Text(
+              "Instrumental ADLS",
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  width: 1,
+                  color: Color(0xff626262),
+                ),
               ),
             ),
           ),
-        ),
-        BlocBuilder<LogBloc, LogState>(
-          builder: (context, state) {
-            if (state.iadls != null) {
-              if (state.iadls!.isNotEmpty) {
-                return Expanded(
-                  child: ListView.builder(
-                    itemCount: state.iadls!.length,
-                    itemBuilder: ((context, index) {
-                      return Container(
-                        child: Text('iadl 1'),
-                      );
-                    }),
-                  ),
-                );
+          BlocBuilder<LogBloc, LogState>(
+            builder: (context, state) {
+              if (state.iadls != null) {
+                if (state.iadls!.isNotEmpty) {
+                  return Expanded(
+                    child: ListView.builder(
+                      itemCount: state.iadls!.length,
+                      itemBuilder: ((context, index) {
+                        return Container(
+                          child: Text('iadl 1'),
+                        );
+                      }),
+                    ),
+                  );
+                }
               }
-            }
-            return Text("No IADLS yet");
-          },
-        ),
-      ],
+              return Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Column(
+                  children: [
+                    CheckTile(text: 'Transportation'),
+                    CheckTile(text: 'Finances'),
+                    CheckTile(text: 'Meal'),
+                    CheckTile(text: 'Housecleaning'),
+                    CheckTile(text: 'Communication'),
+                  ],
+                ),
+              );
+            },
+          ),
+        ],
+      ),
     );
   }
 }
@@ -223,43 +286,58 @@ class _BADLS extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          width: double.maxFinite,
-          child: Text(
-            "BADLS",
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-          ),
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(
-                width: 1,
-                color: Color(0xff626262),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16.0),
+      child: Column(
+        children: [
+          Container(
+            width: double.maxFinite,
+            child: Text(
+              "Basic ADLS",
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  width: 1,
+                  color: Color(0xff626262),
+                ),
               ),
             ),
           ),
-        ),
-        BlocBuilder<LogBloc, LogState>(
-          builder: (context, state) {
-            if (state.badls != null) {
-              if (state.badls!.isNotEmpty) {
-                return Expanded(
-                  child: ListView.builder(
-                    itemCount: state.badls!.length,
-                    itemBuilder: ((context, index) {
-                      return Container(
-                        child: Text('badl 1'),
-                      );
-                    }),
-                  ),
-                );
+          BlocBuilder<LogBloc, LogState>(
+            builder: (context, state) {
+              if (state.badls != null) {
+                if (state.badls!.isNotEmpty) {
+                  return Expanded(
+                    child: ListView.builder(
+                      itemCount: state.badls!.length,
+                      itemBuilder: ((context, index) {
+                        return Container(
+                          child: Text('badl 1'),
+                        );
+                      }),
+                    ),
+                  );
+                }
               }
-            }
-            return Text("No BADLS yet");
-          },
-        ),
-      ],
+              return Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Column(
+                  children: [
+                    CheckTile(text: 'Bathing'),
+                    CheckTile(text: 'Dressing'),
+                    CheckTile(text: 'Toileting'),
+                    CheckTile(text: 'Transferring'),
+                    CheckTile(text: 'Continence'),
+                    CheckTile(text: 'Feeding'),
+                  ],
+                ),
+              );
+            },
+          ),
+        ],
+      ),
     );
   }
 }

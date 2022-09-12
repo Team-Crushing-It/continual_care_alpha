@@ -50,31 +50,48 @@ class HomeView extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            _HomeTabButton(
-              groupValue: selectedTab,
-              value: CurrentHomePage.overview,
-              icon: Icons.home_outlined,
-              label: 'Home',
-              color: Colors.grey,
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border(
+              top: BorderSide(
+                width: 1,
+                color: Color(0xff626262),
+              ),
             ),
-            _HomeTabButton(
-              groupValue: selectedTab,
-              value: CurrentHomePage.schedule,
-              icon: Icons.calendar_month_outlined,
-              label: 'Schedule',
-              color: Colors.grey,
-            ),
-            _HomeTabButton(
-              groupValue: selectedTab,
-              value: CurrentHomePage.alert,
-              icon: Icons.warning_amber_outlined,
-              label: 'Alert',
-              color: Colors.red,
-            ),
-          ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              _HomeTabButton(
+                groupValue: selectedTab,
+                value: CurrentHomePage.overview,
+                icon: Icons.home_outlined,
+                label: 'Home',
+                color: Colors.grey,
+              ),
+              _HomeTabButton(
+                groupValue: selectedTab,
+                value: CurrentHomePage.schedule,
+                icon: Icons.calendar_month_outlined,
+                label: 'Schedule',
+                color: Colors.grey,
+              ),
+              _HomeTabButton(
+                groupValue: selectedTab,
+                value: CurrentHomePage.chat,
+                icon: Icons.chat,
+                label: 'Chat',
+                color: Colors.grey,
+              ),
+              _HomeTabButton(
+                groupValue: selectedTab,
+                value: CurrentHomePage.alert,
+                icon: Icons.warning_amber_outlined,
+                label: 'Alert',
+                color: Colors.red,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -99,7 +116,7 @@ class _HomeTabButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 8),
+      padding: const EdgeInsets.symmetric(vertical: 8),
       child: SizedBox(
         width: 90,
         child: InkWell(
@@ -117,12 +134,13 @@ class _HomeTabButton extends StatelessWidget {
               Text(
                 label,
                 style: TextStyle(
-                    color: groupValue != value
-                        ? color
-                        : Theme.of(context).colorScheme.secondary,
-                    fontWeight: groupValue != value
-                        ? FontWeight.normal
-                        : FontWeight.bold),
+                  color: groupValue != value
+                      ? color
+                      : Theme.of(context).colorScheme.secondary,
+                  fontWeight:
+                      groupValue != value ? FontWeight.normal : FontWeight.bold,
+                  fontSize: 16,
+                ),
               )
             ],
           ),
