@@ -22,12 +22,12 @@ class FlutterJobsTheme {
               primary: const Color(0xFF2A3066),
               fixedSize: Size(280, 50))),
       textButtonTheme: TextButtonThemeData(
-          style: TextButton.styleFrom(primary: const Color(0xFF989898))
-      ),
+          style: TextButton.styleFrom(primary: const Color(0xFF989898))),
       scaffoldBackgroundColor: Colors.white,
       textTheme: const TextTheme(
-        bodyText2: TextStyle(color: Color(0xFF353743), fontSize: 16)
-      ),
+          bodyText1: TextStyle(color: Color(0xFF353743), fontSize: 16),
+          bodyText2: TextStyle(
+              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold)),
     );
   }
 

@@ -40,31 +40,33 @@ class _JobListTileState extends State<JobListTile> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final captionColor = theme.textTheme.caption?.color;
     hourly = widget.job.duration > 0 ? true : false;
     if (hourly) {
       endTime = widget.job.startTime
           .add(Duration(hours: widget.job.duration.toInt()));
     }
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0),
-      child: Dismissible(
-        key: UniqueKey(),
-        onDismissed: widget.onDismissed,
-        direction: DismissDirection.endToStart,
+    return Dismissible(
+      key: UniqueKey(),
+      onDismissed: widget.onDismissed,
+      direction: DismissDirection.endToStart,
+      child: Container(
         child: ListTile(
+          contentPadding: const EdgeInsets.all(0),
+          minVerticalPadding: 0,
           onTap: widget.onTap,
           title: Column(
             children: [
               Padding(
                 padding: const EdgeInsets.only(bottom: 4.0),
                 child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
                       widget.job.startTime.dateIosFormat()!,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
+                      style: theme.textTheme.bodyText2,
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -74,9 +76,7 @@ class _JobListTileState extends State<JobListTile> {
                             : widget.job.startTime.timeFormat()!,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          color: captionColor,
-                        ),
+                        // style: Theme.of(context).textTheme.bodyText2,
                       ),
                     ),
                   ],
@@ -85,12 +85,6 @@ class _JobListTileState extends State<JobListTile> {
             ],
           ),
           subtitle: Container(
-            decoration: ShapeDecoration(
-              shape: Border.all(
-                color: Colors.black,
-                width: 1.0,
-              ),
-            ),
             child: Padding(
               padding: const EdgeInsets.all(4),
               child: Row(
@@ -99,10 +93,6 @@ class _JobListTileState extends State<JobListTile> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      IconText(
-                        icon: Icons.person,
-                        text: widget.job.client,
-                      ),
                       IconText(
                         icon: Icons.location_on,
                         text: widget.job.location,
@@ -113,19 +103,6 @@ class _JobListTileState extends State<JobListTile> {
                       )
                     ],
                   ),
-                  SizedBox(
-                    width: 70,
-                    child: Text(
-                      '\$${oCcy.format(widget.job.pay)}',
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      overflow: TextOverflow.clip,
-                      maxLines: 1,
-                    ),
-                  )
                 ],
               ),
             ),

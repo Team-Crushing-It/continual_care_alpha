@@ -14,13 +14,15 @@ class LogTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      onTap: onTap,
-      title: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 4.0),
-            child: Row(
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8.0),
+      child: ListTile(
+        contentPadding: const EdgeInsets.all(0),
+        minVerticalPadding: 0,
+        onTap: onTap,
+        title: Column(
+          children: [
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
@@ -42,29 +44,29 @@ class LogTile extends StatelessWidget {
                 ),
               ],
             ),
-          ),
-        ],
-      ),
-      subtitle: Container(
-        decoration: ShapeDecoration(
-          shape: Border(
-            bottom: BorderSide(
-              color: Colors.black,
-              width: 0.5,
+          ],
+        ),
+        subtitle: Container(
+          decoration: ShapeDecoration(
+            shape: Border(
+              bottom: BorderSide(
+                color: Colors.black,
+                width: 0.5,
+              ),
             ),
           ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(4),
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              InfoItem(title: "Comments", count: 4),
-              InfoItem(title: "Tasks", count: 12),
-              InfoItem(title: "IADL", count: 2),
-              InfoItem(title: "BADL", count: 5)
-            ],
+          child: Padding(
+            padding: const EdgeInsets.all(8),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                InfoItem(title: "Comments", count: 4),
+                InfoItem(title: "Tasks", count: 12),
+                InfoItem(title: "IADL", count: 2),
+                InfoItem(title: "BADL", count: 5)
+              ],
+            ),
           ),
         ),
       ),

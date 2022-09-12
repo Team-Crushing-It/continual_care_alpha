@@ -38,31 +38,32 @@ class HomeOverviewView extends StatelessWidget {
       appBar: AppBar(
         title: Text('Home Overview'),
       ),
-      body: Column(
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+        child: Column(
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        margin: EdgeInsets.only(bottom: 16),
-                        padding: EdgeInsets.only(bottom: 4),
-                        width: double.maxFinite,
-                        child: Text(
-                          "Upcoming Job",
-                          style: TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.bold),
-                        ),
-                        decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                              width: 1,
-                              color: Color(0xff626262),
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 8),
+                        child: Container(
+                          width: double.maxFinite,
+                          child: Text(
+                            "Upcoming",
+                            style: TextStyle(
+                                fontSize: 24, fontWeight: FontWeight.bold),
+                          ),
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                width: 1,
+                                color: Color(0xff626262),
+                              ),
                             ),
                           ),
                         ),
@@ -88,10 +89,10 @@ class HomeOverviewView extends StatelessWidget {
                                         actions: [
                                           TextButton(
                                             onPressed: () {
-                                              context
-                                                  .read<HomeOverviewBloc>()
-                                                  .add(HomeOverviewLogAdded());
                                               Navigator.pop(newContext);
+                                              Navigator.of(context).push(
+                                                LogPage.route(),
+                                              );
                                             },
                                             child: Text(
                                               'Yes',
@@ -123,73 +124,73 @@ class HomeOverviewView extends StatelessWidget {
                     ],
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 16, bottom: 16, right: 2),
-                child: Column(
-                  children: [
-                    IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.notifications,
-                          size: 32,
-                        )),
-                    IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.account_circle,
-                          size: 32,
-                        ))
-                  ],
+                Padding(
+                  padding: const EdgeInsets.only(top: 16, bottom: 16, right: 2),
+                  child: Column(
+                    children: [
+                      IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.notifications,
+                            size: 32,
+                          )),
+                      IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.account_circle,
+                            size: 32,
+                          ))
+                    ],
+                  ),
+                )
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Container(
+                width: double.maxFinite,
+                child: Text(
+                  "Activity Log",
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
-              )
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Container(
-              width: double.maxFinite,
-              child: Text(
-                "Activity Log",
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-              decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(
-                    width: 1,
-                    color: Color(0xff626262),
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                      width: 1,
+                      color: Color(0xff626262),
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          BlocBuilder<HomeOverviewBloc, HomeOverviewState>(
-            builder: (context, state) {
-              if (state.logs != null) {
-                if (state.logs!.isNotEmpty) {
-                  return Expanded(
-                    child: ListView.builder(
-                      itemCount: state.logs!.length,
-                      itemBuilder: ((context, index) {
-                        return LogTile(
-                          initialLog: state.logs![index],
-                          onTap: () {
-                            Navigator.of(context).push(
-                              LogPage.route(
-                                initialLog: state.logs![index],
-                              ),
-                            );
-                          },
-                        );
-                      }),
-                    ),
-                  );
+            BlocBuilder<HomeOverviewBloc, HomeOverviewState>(
+              builder: (context, state) {
+                if (state.logs != null) {
+                  if (state.logs!.isNotEmpty) {
+                    return Expanded(
+                      child: ListView.builder(
+                        itemCount: state.logs!.length,
+                        itemBuilder: ((context, index) {
+                          return LogTile(
+                            initialLog: state.logs![index],
+                            onTap: () {
+                              Navigator.of(context).push(
+                                LogPage.route(
+                                  initialLog: state.logs![index],
+                                ),
+                              );
+                            },
+                          );
+                        }),
+                      ),
+                    );
+                  }
                 }
-              }
-              return Text("No logs yet");
-            },
-          )
-        ],
+                return Text("No logs yet");
+              },
+            )
+          ],
+        ),
       ),
     );
   }

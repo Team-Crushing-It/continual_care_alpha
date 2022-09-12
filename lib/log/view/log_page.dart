@@ -67,7 +67,6 @@ class LogView extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Column(
               children: [
-                Text(state.initialLog!.id),
                 _Comments(),
                 _Todos(),
                 _IADLS(),
