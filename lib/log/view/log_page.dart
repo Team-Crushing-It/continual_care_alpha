@@ -2,12 +2,10 @@ import 'package:continual_care_alpha/app/bloc/app_bloc.dart';
 import 'package:continual_care_alpha/schedule/widgets/date_ios_format.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:continual_care_alpha/log/log.dart';
 import 'package:logs_api/logs_api.dart';
 import 'package:logs_repository/logs_repository.dart';
-import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 
 class LogPage extends StatelessWidget {
   const LogPage({super.key});
@@ -72,7 +70,20 @@ class LogView extends StatelessWidget {
                 _IADLS(),
                 _BADLS(),
                 if (isNewLog) _Comments(),
-                if (isNewLog) TextButton(onPressed: () {}, child: Text('test'))
+                if (isNewLog)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 32),
+                    child: OutlinedButton(
+                      onPressed: () {},
+                      child: Container(
+                        width: double.infinity,
+                        child: Center(
+                          child: Text('Save Log',
+                              style: Theme.of(context).textTheme.bodyText1),
+                        ),
+                      ),
+                    ),
+                  ),
               ],
             ),
           ),
@@ -94,6 +105,7 @@ class _Comments extends StatelessWidget {
         children: [
           Container(
             width: double.maxFinite,
+            height: 32,
             child: Text(
               "Comments",
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
@@ -111,7 +123,7 @@ class _Comments extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: BlocBuilder<LogBloc, LogState>(
               builder: (context, state) {
-                if (state.comments != null) {
+                if (state.comments == null) {
                   if (state.comments!.isNotEmpty) {
                     return Expanded(
                       child: ListView.builder(
@@ -125,7 +137,94 @@ class _Comments extends StatelessWidget {
                     );
                   }
                 }
-                return Container();
+                return Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(right: 8),
+                            child: Container(
+                              width: 30.0,
+                              height: 30.0,
+                              decoration: BoxDecoration(
+                                color: Colors.blue,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Center(
+                                  child: Text('N',
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 12))),
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              'Vitals are up',
+                              style: Theme.of(context).textTheme.bodyText1,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(right: 8),
+                            child: Container(
+                              width: 30.0,
+                              height: 30.0,
+                              decoration: BoxDecoration(
+                                color: Colors.blue,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Center(
+                                  child: Text('N',
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 12))),
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              'She actually walked down the stairs herself today to get to the Drs',
+                              style: Theme.of(context).textTheme.bodyText1,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(right: 8),
+                            child: Container(
+                              width: 30.0,
+                              height: 30.0,
+                              decoration: BoxDecoration(
+                                color: Colors.blue,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Center(
+                                  child: Text('N',
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 12))),
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              'She actually walked down the stairs herself today to get to the Drs',
+                              style: Theme.of(context).textTheme.bodyText1,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                );
               },
             ),
           ),
@@ -172,6 +271,7 @@ class _Todos extends StatelessWidget {
         children: [
           Container(
             width: double.maxFinite,
+            height: 32,
             child: Text(
               "Tasks",
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
@@ -187,7 +287,7 @@ class _Todos extends StatelessWidget {
           ),
           BlocBuilder<LogBloc, LogState>(
             builder: (context, state) {
-              if (state.todos != null) {
+              if (state.todos == null) {
                 if (state.todos!.isNotEmpty) {
                   return Expanded(
                     child: ListView.builder(
@@ -232,6 +332,7 @@ class _IADLS extends StatelessWidget {
         children: [
           Container(
             width: double.maxFinite,
+            height: 32,
             child: Text(
               "Instrumental ADLS",
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
@@ -247,7 +348,7 @@ class _IADLS extends StatelessWidget {
           ),
           BlocBuilder<LogBloc, LogState>(
             builder: (context, state) {
-              if (state.iadls != null) {
+              if (state.iadls == null) {
                 if (state.iadls!.isNotEmpty) {
                   return Expanded(
                     child: ListView.builder(
@@ -292,6 +393,7 @@ class _BADLS extends StatelessWidget {
         children: [
           Container(
             width: double.maxFinite,
+            height: 32,
             child: Text(
               "Basic ADLS",
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
@@ -307,7 +409,7 @@ class _BADLS extends StatelessWidget {
           ),
           BlocBuilder<LogBloc, LogState>(
             builder: (context, state) {
-              if (state.badls != null) {
+              if (state.badls == null) {
                 if (state.badls!.isNotEmpty) {
                   return Expanded(
                     child: ListView.builder(

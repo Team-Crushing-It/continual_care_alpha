@@ -77,8 +77,7 @@ class LogBloc extends Bloc<LogEvent, LogState> {
     LogCompletedChanged event,
     Emitter<LogState> emit,
   ) {
-    emit(state.copyWith(
-        status: LogStatus.updated, completed: event.completed));
+    emit(state.copyWith(status: LogStatus.updated, completed: event.completed));
   }
 
   void _onisCompletedChanged(

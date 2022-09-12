@@ -1,4 +1,5 @@
 import 'package:continual_care_alpha/home_overview/home_overview.dart';
+import 'package:continual_care_alpha/log/log.dart';
 import 'package:flutter/material.dart';
 import 'package:logs_api/logs_api.dart';
 
@@ -26,7 +27,7 @@ class LogTile extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Wed Sep 7",
+                  initialLog.completed.toDateIosFormat()!,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -61,10 +62,10 @@ class LogTile extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                InfoItem(title: "Comments", count: 4),
-                InfoItem(title: "Tasks", count: 12),
-                InfoItem(title: "IADL", count: 2),
-                InfoItem(title: "BADL", count: 5)
+                InfoItem(title: "Comments", count: initialLog.comments.length),
+                InfoItem(title: "Tasks", count: initialLog.todos.length),
+                InfoItem(title: "IADL", count: initialLog.iadls.length),
+                InfoItem(title: "BADL", count: initialLog.badls.length)
               ],
             ),
           ),
