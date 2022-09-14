@@ -45,6 +45,7 @@ class HomeOverviewView extends StatelessWidget {
           children: [
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
               children: [
                 Expanded(
                   child: Column(
@@ -83,7 +84,7 @@ class HomeOverviewView extends StatelessWidget {
                                       value: context.read<HomeOverviewBloc>(),
                                       child: AlertDialog(
                                         title: Text(
-                                            "Tue Aug 2 Maureen & Day Derosa"),
+                                            "Mon Sep 12 Maureen & Day Derosa"),
                                         content: Text(
                                             'Would you like to start the job?',
                                             style: TextStyle(
@@ -189,235 +190,233 @@ class HomeOverviewView extends StatelessWidget {
                     // );
 
                     return SingleChildScrollView(
-                      child: Expanded(
-                        child: Column(
-                          children: [
+                      child: Column(
+                        children: [
                       
-                            LogTile(
-                              initialLog: Log(
-                                completed:
-                                    DateTime.now().subtract(Duration(days: 1)),
-                                comments: [
-                                  Comment(),
-                                  Comment(),
-                                ],
-                                todos: [
-                                  Todo(),
-                                  Todo(),
-                                ],
-                                iadls: [
-                                  ADL(),
-                                ],
-                                badls: [
-                                  ADL(),
-                                  ADL(),
-                                  ADL(),
-                                  ADL(),
-                                ],
-                              ),
-                              onTap: () {
-                                Navigator.of(context).push(
-                                  LogPage.route(
-                                    initialLog: Log(
-                                      completed: DateTime.now()
-                                          .subtract(Duration(days: 2)),
-                                      comments: [
-                                        Comment(),
-                                        Comment(),
-                                        Comment(),
-                                      ],
-                                      todos: [
-                                        Todo(),
-                                        Todo(),
-                                        Todo(),
-                                        Todo(),
-                                        Todo(),
-                                      ],
-                                      iadls: [
-                                        ADL(),
-                                      ],
-                                      badls: [
-                                        ADL(),
-                                        ADL(),
-                                        ADL(),
-                                        ADL(),
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              },
+                          LogTile(
+                            initialLog: Log(
+                              completed:
+                                  DateTime.now().subtract(Duration(days: 1)),
+                              comments: [
+                                Comment(),
+                                Comment(),
+                              ],
+                              todos: [
+                                Todo(),
+                                Todo(),
+                              ],
+                              iadls: [
+                                ADL(),
+                              ],
+                              badls: [
+                                ADL(),
+                                ADL(),
+                                ADL(),
+                                ADL(),
+                              ],
                             ),
-                            LogTile(
-                              initialLog: Log(
-                                completed:
-                                    DateTime.now().subtract(Duration(days: 3)),
-                                comments: [
-                                  Comment(),
-                                  Comment(),
-                                ],
-                                todos: [
-                                  Todo(),
-                                  Todo(),
-                                  Todo(),
-                                  Todo(),
-                                  Todo(),
-                                ],
-                                iadls: [
-                                  ADL(),
-                                  ADL(),
-                                ],
-                                badls: [
-                                  ADL(),
-                                  ADL(),
-                                  ADL(),
-                                  ADL(),
-                                ],
-                              ),
-                              onTap: () {
-                                Navigator.of(context).push(
-                                  LogPage.route(
-                                    initialLog: Log(
-                                      completed: DateTime.now()
-                                          .subtract(Duration(days: 4)),
-                                      comments: [
-                                        Comment(),
-                                        Comment(),
-                                        Comment(),
-                                        Comment(),
-                                      ],
-                                      todos: [
-                                        Todo(),
-                                        Todo(),
-                                        Todo(),
-                                        Todo(),
-                                      ],
-                                      iadls: [
-                                        ADL(),
-                                        ADL(),
-                                      ],
-                                      badls: [
-                                        ADL(),
-                                        ADL(),
-                                        ADL(),
-                                        ADL(),
-                                      ],
-                                    ),
+                            onTap: () {
+                              Navigator.of(context).push(
+                                LogPage.route(
+                                  initialLog: Log(
+                                    completed: DateTime.now()
+                                        .subtract(Duration(days: 1)),
+                                    comments: [
+                                      Comment(),
+                                      Comment(),
+                                      Comment(),
+                                    ],
+                                    todos: [
+                                      Todo(),
+                                      Todo(),
+                                      Todo(),
+                                      Todo(),
+                                      Todo(),
+                                    ],
+                                    iadls: [
+                                      ADL(),
+                                    ],
+                                    badls: [
+                                      ADL(),
+                                      ADL(),
+                                      ADL(),
+                                      ADL(),
+                                    ],
                                   ),
-                                );
-                              },
+                                ),
+                              );
+                            },
+                          ),
+                          LogTile(
+                            initialLog: Log(
+                              completed:
+                                  DateTime.now().subtract(Duration(days: 3)),
+                              comments: [
+                                Comment(),
+                                Comment(),
+                              ],
+                              todos: [
+                                Todo(),
+                                Todo(),
+                                Todo(),
+                                Todo(),
+                                Todo(),
+                              ],
+                              iadls: [
+                                ADL(),
+                                ADL(),
+                              ],
+                              badls: [
+                                ADL(),
+                                ADL(),
+                                ADL(),
+                                ADL(),
+                              ],
                             ),
-                            LogTile(
-                              initialLog: Log(
-                                completed:
-                                    DateTime.now().subtract(Duration(days: 5)),
-                                comments: [
-                                  Comment(),
-                                  Comment(),
-                                ],
-                                todos: [
-                                  Todo(),
-                                  Todo(),
-                                  Todo(),
-                                  Todo(),
-                                  Todo(),
-                                ],
-                                iadls: [
-                                  ADL(),
-                                  ADL(),
-                                ],
-                                badls: [
-                                  ADL(),
-                                  ADL(),
-                                  ADL(),
-                                ],
-                              ),
-                              onTap: () {
-                                Navigator.of(context).push(
-                                  LogPage.route(
-                                    initialLog: Log(
-                                      completed: DateTime.now()
-                                          .subtract(Duration(days: 1)),
-                                      comments: [
-                                        Comment(),
-                                        Comment(),
-                                        Comment(),
-                                      ],
-                                      todos: [
-                                        Todo(),
-                                        Todo(),
-                                        Todo(),
-                                        Todo(),
-                                      ],
-                                      iadls: [
-                                        ADL(),
-                                      ],
-                                      badls: [
-                                        ADL(),
-                                        ADL(),
-                                      ],
-                                    ),
+                            onTap: () {
+                              Navigator.of(context).push(
+                                LogPage.route(
+                                  initialLog: Log(
+                                    completed: DateTime.now()
+                                        .subtract(Duration(days: 3)),
+                                    comments: [
+                                      Comment(),
+                                      Comment(),
+                                      Comment(),
+                                      Comment(),
+                                    ],
+                                    todos: [
+                                      Todo(),
+                                      Todo(),
+                                      Todo(),
+                                      Todo(),
+                                    ],
+                                    iadls: [
+                                      ADL(),
+                                      ADL(),
+                                    ],
+                                    badls: [
+                                      ADL(),
+                                      ADL(),
+                                      ADL(),
+                                      ADL(),
+                                    ],
                                   ),
-                                );
-                              },
+                                ),
+                              );
+                            },
+                          ),
+                          LogTile(
+                            initialLog: Log(
+                              completed:
+                                  DateTime.now().subtract(Duration(days: 5)),
+                              comments: [
+                                Comment(),
+                                Comment(),
+                              ],
+                              todos: [
+                                Todo(),
+                                Todo(),
+                                Todo(),
+                                Todo(),
+                                Todo(),
+                              ],
+                              iadls: [
+                                ADL(),
+                                ADL(),
+                              ],
+                              badls: [
+                                ADL(),
+                                ADL(),
+                                ADL(),
+                              ],
                             ),
-                            LogTile(
-                              initialLog: Log(
-                                completed:
-                                    DateTime.now().subtract(Duration(days: 6)),
-                                comments: [
-                                  Comment(),
-                                  Comment(),
-                                  Comment(),
-                                ],
-                                todos: [
-                                  Todo(),
-                                  Todo(),
-                                  Todo(),
-                                  Todo(),
-                                  Todo(),
-                                ],
-                                iadls: [
-                                  ADL(),
-                                  ADL(),
-                                ],
-                                badls: [
-                                  ADL(),
-                                  ADL(),
-                                ],
-                              ),
-                              onTap: () {
-                                Navigator.of(context).push(
-                                  LogPage.route(
-                                    initialLog: Log(
-                                      completed: DateTime.now()
-                                          .subtract(Duration(days: 1)),
-                                      comments: [
-                                        Comment(),
-                                        Comment(),
-                                        Comment(),
-                                      ],
-                                      todos: [
-                                        Todo(),
-                                        Todo(),
-                                        Todo(),
-                                        Todo(),
-                                        Todo(),
-                                      ],
-                                      iadls: [
-                                        ADL(),
-                                      ],
-                                      badls: [
-                                        ADL(),
-                                        ADL(),
-                                        ADL(),
-                                      ],
-                                    ),
+                            onTap: () {
+                              Navigator.of(context).push(
+                                LogPage.route(
+                                  initialLog: Log(
+                                    completed: DateTime.now()
+                                        .subtract(Duration(days: 5)),
+                                    comments: [
+                                      Comment(),
+                                      Comment(),
+                                      Comment(),
+                                    ],
+                                    todos: [
+                                      Todo(),
+                                      Todo(),
+                                      Todo(),
+                                      Todo(),
+                                    ],
+                                    iadls: [
+                                      ADL(),
+                                    ],
+                                    badls: [
+                                      ADL(),
+                                      ADL(),
+                                    ],
                                   ),
-                                );
-                              },
+                                ),
+                              );
+                            },
+                          ),
+                          LogTile(
+                            initialLog: Log(
+                              completed:
+                                  DateTime.now().subtract(Duration(days: 6)),
+                              comments: [
+                                Comment(),
+                                Comment(),
+                                Comment(),
+                              ],
+                              todos: [
+                                Todo(),
+                                Todo(),
+                                Todo(),
+                                Todo(),
+                                Todo(),
+                              ],
+                              iadls: [
+                                ADL(),
+                                ADL(),
+                              ],
+                              badls: [
+                                ADL(),
+                                ADL(),
+                              ],
                             ),
-                          ],
-                        ),
+                            onTap: () {
+                              Navigator.of(context).push(
+                                LogPage.route(
+                                  initialLog: Log(
+                                    completed: DateTime.now()
+                                        .subtract(Duration(days: 6)),
+                                    comments: [
+                                      Comment(),
+                                      Comment(),
+                                      Comment(),
+                                    ],
+                                    todos: [
+                                      Todo(),
+                                      Todo(),
+                                      Todo(),
+                                      Todo(),
+                                      Todo(),
+                                    ],
+                                    iadls: [
+                                      ADL(),
+                                    ],
+                                    badls: [
+                                      ADL(),
+                                      ADL(),
+                                      ADL(),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ],
                       ),
                     );
                   }

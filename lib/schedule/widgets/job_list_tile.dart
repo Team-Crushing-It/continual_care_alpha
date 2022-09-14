@@ -99,7 +99,7 @@ class _JobListTileState extends State<JobListTile> {
                       ),
                       IconText(
                         icon: Icons.medical_information,
-                        text: widget.job.client ?? '',
+                        text: widget.job.client,
                       )
                     ],
                   ),
