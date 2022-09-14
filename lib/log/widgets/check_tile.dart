@@ -6,9 +6,11 @@ class CheckTile extends StatefulWidget {
   const CheckTile({
     Key? key,
     required this.text,
+    required this.onTap,
   }) : super(key: key);
 
   final String text;
+  final Function onTap;
 
   @override
   State<CheckTile> createState() => _CheckTileState();
@@ -37,7 +39,7 @@ class _CheckTileState extends State<CheckTile> {
                 }),
           ),
           Padding(
-            padding: const EdgeInsets.only(left:8.0),
+            padding: const EdgeInsets.only(left: 8.0),
             child: Text(widget.text,
                 overflow: TextOverflow.clip,
                 style: Theme.of(context).textTheme.bodyText1),

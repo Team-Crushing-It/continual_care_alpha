@@ -19,7 +19,7 @@ dependencies:
   flow_builder: ^0.0.9
   flutter:
     sdk: flutter
-  flutter_bloc: ^8.0.1
+  flutter_bloc: ^8.1.0
   flutter_localizations:
     sdk: flutter
   font_awesome_flutter: ^9.1.0
