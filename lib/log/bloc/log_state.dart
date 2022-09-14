@@ -11,6 +11,7 @@ extension LogStatusX on LogStatus {
 
 class LogState extends Equatable {
   LogState({
+    this.lastItemOperation,
     this.status = LogStatus.initial,
     this.initialLog,
     this.user = User.empty,
@@ -25,6 +26,7 @@ class LogState extends Equatable {
 
   final LogStatus status;
   final Log? initialLog;
+  final dynamic lastItemOperation;
   final User user;
   final List<Comment>? comments;
   final List<Todo>? todos;
@@ -39,6 +41,7 @@ class LogState extends Equatable {
   @override
   List<Object?> get props => [
         status,
+        lastItemOperation,
         initialLog,
         comments,
         todos,
@@ -52,7 +55,9 @@ class LogState extends Equatable {
 
   LogState copyWith(
       {LogStatus? status,
+      dynamic lastItemOperation,
       Log? initialLog,
+      dynamic las,
       User? user,
       List<Comment>? comments,
       List<Todo>? todos,
@@ -63,6 +68,7 @@ class LogState extends Equatable {
       bool? isCompleted,}) {
     return LogState(
       status: status ?? this.status,
+      lastItemOperation:lastItemOperation ?? this.lastItemOperation,
       initialLog: initialLog ?? this.initialLog,
       user: user ?? this.user,
       comments: comments ?? this.comments,

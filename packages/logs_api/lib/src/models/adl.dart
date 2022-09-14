@@ -46,7 +46,9 @@ class ADL extends Equatable {
   /// Whether or not the adl is completed
   ///
   /// Note that the date may be empty.
-  final bool isIndependent;
+  bool isIndependent;
+
+
 
   /// Returns a copy of this adl with the given values updated.
   ///

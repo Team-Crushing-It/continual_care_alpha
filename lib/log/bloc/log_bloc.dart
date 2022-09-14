@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:logs_api/logs_api.dart';
 import 'package:logs_repository/logs_repository.dart';
 
@@ -25,6 +26,7 @@ class LogBloc extends Bloc<LogEvent, LogState> {
             completed: initialLog?.completed ?? DateTime.now(),
           ),
         ) {
+    print(initialLog!.badls.length);
     on<LogCommentsChanged>(_onCommentsChanged);
     on<LogIADLSChanged>(_onIADLSChanged);
     on<LogBADLSChanged>(_onBADLSChanged);
@@ -42,21 +44,41 @@ class LogBloc extends Bloc<LogEvent, LogState> {
     LogCommentsChanged event,
     Emitter<LogState> emit,
   ) {
-    emit(state.copyWith(comments: event.comments));
+    state.comments!.add(event.comment);
+    emit(state.copyWith(
+        comments: state.comments,
+        lastItemOperation: event.comment,
+        initialLog: state.initialLog!.copyWith(comments: state.comments)));
   }
 
   void _onIADLSChanged(
     LogIADLSChanged event,
     Emitter<LogState> emit,
   ) {
-    emit(state.copyWith(iadls: event.iadls));
+    List<ADL>? iadls = state.iadls;
+    final previousADL = iadls![event.index];
+    iadls[event.index] =
+        previousADL.copyWith(isIndependent: !(previousADL.isIndependent));
+    emit(state.copyWith(
+        badls: iadls,
+        lastItemOperation: iadls[event.index],
+        initialLog: state.initialLog!.copyWith(iadls: iadls)));
+    // _logsRepository.saveLog(state.initialLog!);
   }
 
   void _onBADLSChanged(
     LogBADLSChanged event,
     Emitter<LogState> emit,
   ) {
-    emit(state.copyWith(badls: event.badls));
+    List<ADL>? badls = state.badls;
+    final previousADL = badls![event.index];
+    badls[event.index] =
+        previousADL.copyWith(isIndependent: !(previousADL.isIndependent));
+    emit(state.copyWith(
+        badls: badls,
+        lastItemOperation: badls[event.index],
+        initialLog: state.initialLog!.copyWith(badls: badls)));
+    // _logsRepository.saveLog(state.initialLog!);
   }
 
   void _onTodosChanged(

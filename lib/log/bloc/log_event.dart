@@ -8,30 +8,30 @@ abstract class LogEvent extends Equatable {
 }
 
 class LogCommentsChanged extends LogEvent {
-  const LogCommentsChanged(this.comments);
+  const LogCommentsChanged(this.comment);
 
-  final List<Comment> comments;
+  final Comment comment;
 
   @override
-  List<Object> get props => [comments];
+  List<Object> get props => [comment];
 }
 
 class LogIADLSChanged extends LogEvent {
-  const LogIADLSChanged(this.iadls);
+  const LogIADLSChanged(this.index);
 
-  final List<ADL> iadls;
+  final int index;
 
   @override
-  List<Object> get props => [iadls];
+  List<Object> get props => [index];
 }
 
 class LogBADLSChanged extends LogEvent {
-  const LogBADLSChanged(this.badls);
+  const LogBADLSChanged(this.index);
 
-  final List<ADL> badls;
+  final int index;
 
   @override
-  List<Object> get props => [badls];
+  List<Object> get props => [index];
 }
 
 class LogTodosChanged extends LogEvent {

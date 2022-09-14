@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:jobs_repository/jobs_repository.dart';
+import 'package:logs_api/logs_api.dart';
 import 'package:logs_repository/logs_repository.dart';
 
 part 'home_overview_event.dart';
@@ -44,7 +45,17 @@ class HomeOverviewBloc extends Bloc<HomeOverviewEvent, HomeOverviewState> {
 
   Future<void> _onLogAdded(
       HomeOverviewEvent event, Emitter<HomeOverviewState> emit) async {
-    final log = Log(sentiment: "hello friend");
+    final log = Log(sentiment: "hello friend",badls: [
+      ADL(name: "badl 1",isIndependent: false),
+      ADL(name: "badl 2",isIndependent: true),
+      ADL(name: "badl 3",isIndependent: false),
+      ADL(name: "badl 4",isIndependent: true),
+    ],iadls: [
+      ADL(name: "iadl 1",isIndependent: false),
+      ADL(name: "iadl 2",isIndependent: true),
+      ADL(name: "iadl 3",isIndependent: false),
+      ADL(name: "iadl 4",isIndependent: true),
+    ]);
     _logsRepository.saveLog(log);
     final logs = await _logsRepository.getLogs().first;
     emit(state.copyWith(logs: logs));
