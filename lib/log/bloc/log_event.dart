@@ -43,6 +43,24 @@ class LogTasksChanged extends LogEvent {
   List<Object> get props => [tasks];
 }
 
+class LogCMoodChanged extends LogEvent {
+  const LogCMoodChanged(this.cMood);
+
+  final Mood cMood;
+
+  @override
+  List<Object> get props => [cMood];
+}
+
+class LogIMoodChanged extends LogEvent {
+  const LogIMoodChanged(this.iMood);
+
+  final Mood iMood;
+
+  @override
+  List<Object> get props => [iMood];
+}
+
 class LogLocationChanged extends LogEvent {
   const LogLocationChanged(this.location);
 

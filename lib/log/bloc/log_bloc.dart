@@ -22,6 +22,8 @@ class LogBloc extends Bloc<LogEvent, LogState> {
             iadls: initialLog?.iadls ?? [],
             badls: initialLog?.badls ?? [],
             tasks: initialLog?.tasks ?? [],
+            cMood: initialLog?.cMood ?? Mood.neutral,
+            iMood: initialLog?.iMood ?? Mood.neutral,
             location: initialLog?.location ?? '',
             completed: initialLog?.completed ?? DateTime.now(),
           ),
@@ -31,6 +33,9 @@ class LogBloc extends Bloc<LogEvent, LogState> {
     on<LogIADLSChanged>(_onIADLSChanged);
     on<LogBADLSChanged>(_onBADLSChanged);
     on<LogTasksChanged>(_onTasksChanged);
+    on<LogCMoodChanged>(_onCMoodChanged);
+    on<LogIMoodChanged>(_onIMoodChanged);
+
     on<LogLocationChanged>(_onLocationChanged);
     on<LogCompletedChanged>(_onCompletedChanged);
     on<LogisCompletedChanged>(_onisCompletedChanged);
@@ -86,6 +91,20 @@ class LogBloc extends Bloc<LogEvent, LogState> {
     Emitter<LogState> emit,
   ) {
     emit(state.copyWith(tasks: event.tasks));
+  }
+
+  void _onCMoodChanged(
+    LogCMoodChanged event,
+    Emitter<LogState> emit,
+  ) {
+    emit(state.copyWith(cMood: event.cMood));
+  }
+
+  void _onIMoodChanged(
+    LogIMoodChanged event,
+    Emitter<LogState> emit,
+  ) {
+    emit(state.copyWith(iMood: event.iMood));
   }
 
   void _onLocationChanged(

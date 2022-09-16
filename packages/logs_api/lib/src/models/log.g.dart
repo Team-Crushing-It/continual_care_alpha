@@ -24,6 +24,8 @@ Log _$LogFromJson(Map<String, dynamic> json) => Log(
               ?.map((dynamic e) => ADL.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
+      cMood: $enumDecodeNullable(_$MoodEnumMap, json['cMood']) ?? Mood.neutral,
+      iMood: $enumDecodeNullable(_$MoodEnumMap, json['iMood']) ?? Mood.neutral,
       location: json['location'] as String? ?? '',
       completed: json['completed'] == null
           ? null
@@ -36,6 +38,14 @@ Map<String, dynamic> _$LogToJson(Log instance) => <String, dynamic>{
       'tasks': instance.tasks.map((e) => e.toJson()).toList(),
       'iadls': instance.iadls.map((e) => e.toJson()).toList(),
       'badls': instance.badls.map((e) => e.toJson()).toList(),
+      'cMood': _$MoodEnumMap[instance.cMood],
+      'iMood': _$MoodEnumMap[instance.iMood],
       'location': instance.location,
       'completed': instance.completed.toIso8601String(),
     };
+
+const _$MoodEnumMap = {
+  Mood.sad: 'sad',
+  Mood.neutral: 'neutral',
+  Mood.happy: 'happy',
+};
