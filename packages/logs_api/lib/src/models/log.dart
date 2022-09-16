@@ -35,12 +35,14 @@ class Log extends Equatable {
     this.iMood = Mood.neutral,
     this.location = '',
     DateTime? completed,
+    DateTime? started,
   })  : assert(
           id == null || id.isNotEmpty, // id: ''
           'id can not be null and should be empty',
         ),
         id = id ?? const Uuid().v4(),
-        completed = completed ?? DateTime.now();
+        completed = completed ?? DateTime.now(),
+        started = started ?? DateTime.now();
 
   /// The unique identifier of the log.
   ///
@@ -82,10 +84,15 @@ class Log extends Equatable {
   /// Note that the location may be empty.
   final String location;
 
-  /// The start time of the log.
+  /// The completed time of the log.
   ///
   /// Note that the date may be empty.
   final DateTime completed;
+
+  /// The start time of the log.
+  ///
+  /// Note that the date may be empty.
+  final DateTime started;
 
   /// Returns a copy of this log with the given values updated.
   ///
@@ -100,6 +107,7 @@ class Log extends Equatable {
     Mood? iMood,
     String? location,
     DateTime? completed,
+    DateTime? started,
   }) {
     return Log(
       id: id ?? this.id,
@@ -111,6 +119,7 @@ class Log extends Equatable {
       iMood: iMood ?? this.iMood,
       location: location ?? this.location,
       completed: completed ?? this.completed,
+      started: started ?? this.started,
     );
   }
 

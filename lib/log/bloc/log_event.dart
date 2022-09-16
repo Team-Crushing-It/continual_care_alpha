@@ -79,6 +79,14 @@ class LogCompletedChanged extends LogEvent {
   List<Object> get props => [completed];
 }
 
+class LogStartedChanged extends LogEvent {
+  const LogStartedChanged(this.started);
+
+  final DateTime started;
+
+  @override
+  List<Object> get props => [started];
+}
 class LogisCompletedChanged extends LogEvent {
   const LogisCompletedChanged(this.isCompleted);
 

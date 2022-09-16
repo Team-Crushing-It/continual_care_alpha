@@ -23,8 +23,10 @@ class LogState extends Equatable {
     this.iMood = Mood.neutral,
     this.location = "",
     DateTime? completed,
+    DateTime? started,
     this.isCompleted = false,
-  }) : this.completed = completed ?? DateTime.now();
+  })  : this.completed = completed ?? DateTime.now(),
+        this.started = started ?? DateTime.now();
 
   final LogStatus status;
   final Log? initialLog;
@@ -38,6 +40,7 @@ class LogState extends Equatable {
   final Mood? iMood;
   final String? location;
   final DateTime? completed;
+  final DateTime? started;
   final bool? isCompleted;
 
   bool get isNewLog => initialLog == null;
@@ -54,6 +57,7 @@ class LogState extends Equatable {
         badls,
         location,
         completed,
+        started,
         isCompleted
       ];
 
@@ -71,6 +75,7 @@ class LogState extends Equatable {
     Mood? iMood,
     String? location,
     DateTime? completed,
+    DateTime? started,
     bool? isCompleted,
   }) {
     return LogState(
@@ -86,6 +91,7 @@ class LogState extends Equatable {
       iMood: iMood ?? this.iMood,
       location: location ?? this.location,
       completed: completed ?? this.completed,
+      started: started ?? this.started,
       isCompleted: isCompleted ?? this.isCompleted,
     );
   }

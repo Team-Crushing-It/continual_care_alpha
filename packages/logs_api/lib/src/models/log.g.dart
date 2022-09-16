@@ -30,6 +30,9 @@ Log _$LogFromJson(Map<String, dynamic> json) => Log(
       completed: json['completed'] == null
           ? null
           : DateTime.parse(json['completed'] as String),
+      started: json['started'] == null
+          ? null
+          : DateTime.parse(json['started'] as String),
     );
 
 Map<String, dynamic> _$LogToJson(Log instance) => <String, dynamic>{
@@ -42,6 +45,7 @@ Map<String, dynamic> _$LogToJson(Log instance) => <String, dynamic>{
       'iMood': _$MoodEnumMap[instance.iMood],
       'location': instance.location,
       'completed': instance.completed.toIso8601String(),
+      'started': instance.started.toIso8601String(),
     };
 
 const _$MoodEnumMap = {
