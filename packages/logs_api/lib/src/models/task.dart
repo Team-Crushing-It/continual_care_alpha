@@ -10,7 +10,7 @@ part 'task.g.dart';
 /// {@template task}
 /// A single task item.
 /// TODO update
-/// Contains a list of [task]s, [task]s, adl's [id], in addition to the [sentiment]
+/// Contains a list of [task]s, [task]s, adl's [id], in addition to the [mood]
 ///
 /// If an [id] is provided, it cannot be empty. If no [id] is provided, one
 /// will be generated.

@@ -45,7 +45,7 @@ class HomeOverviewBloc extends Bloc<HomeOverviewEvent, HomeOverviewState> {
 
   Future<void> _onLogAdded(
       HomeOverviewEvent event, Emitter<HomeOverviewState> emit) async {
-    final log = Log(sentiment: "hello friend",badls: [
+    final log = Log(mood: "hello friend",badls: [
       ADL(name: "badl 1",isIndependent: false),
       ADL(name: "badl 2",isIndependent: true),
       ADL(name: "badl 3",isIndependent: false),

@@ -10,7 +10,7 @@ part 'log.g.dart';
 /// {@template log}
 /// A single log item.
 /// TODO update
-/// Contains a list of [comment]s, [task]s, adl's [id], in addition to the [sentiment]
+/// Contains a list of [comment]s, [task]s, adl's [id], in addition to the [mood]
 ///
 /// If an [id] is provided, it cannot be empty. If no [id] is provided, one
 /// will be generated.
@@ -29,7 +29,7 @@ class Log extends Equatable {
     this.tasks = const [],
     this.iadls = const [],
     this.badls = const [],
-    this.sentiment = '',
+    this.mood = '',
     DateTime? completed,
   })  : assert(
           id == null || id.isNotEmpty, // id: ''
@@ -63,10 +63,10 @@ class Log extends Equatable {
   /// Note that the adls may be empty.
   final List<ADL> badls;
 
-  /// The sentiment of the log.
+  /// The mood of the log.
   ///
-  /// Note that the sentiment may be empty.
-  final String sentiment;
+  /// Note that the mood may be empty.
+  final String mood;
 
   /// The start time of the log.
   ///
@@ -82,7 +82,7 @@ class Log extends Equatable {
     List<Task>? tasks,
     List<ADL>? badls,
     List<ADL>? iadls,
-    String? sentiment,
+    String? mood,
     DateTime? completed,
   }) {
     return Log(
@@ -91,7 +91,7 @@ class Log extends Equatable {
       tasks: tasks ?? this.tasks,
       iadls: iadls ?? this.iadls,
       badls: badls ?? this.badls,
-      sentiment: sentiment ?? this.sentiment,
+      mood: mood ?? this.mood,
       completed: completed ?? this.completed,
     );
   }
@@ -109,7 +109,7 @@ class Log extends Equatable {
         tasks,
         iadls,
         badls,
-        sentiment,
+        mood,
         completed,
       ];
 }

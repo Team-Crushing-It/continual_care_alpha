@@ -22,7 +22,7 @@ class LogBloc extends Bloc<LogEvent, LogState> {
             iadls: initialLog?.iadls ?? [],
             badls: initialLog?.badls ?? [],
             tasks: initialLog?.tasks ?? [],
-            sentiment: initialLog?.sentiment ?? '',
+            mood: initialLog?.mood ?? '',
             completed: initialLog?.completed ?? DateTime.now(),
           ),
         ) {
@@ -31,7 +31,7 @@ class LogBloc extends Bloc<LogEvent, LogState> {
     on<LogIADLSChanged>(_onIADLSChanged);
     on<LogBADLSChanged>(_onBADLSChanged);
     on<LogTasksChanged>(_onTasksChanged);
-    on<LogSentimentChanged>(_onSentimentChanged);
+    on<LogMoodChanged>(_onMoodChanged);
     on<LogCompletedChanged>(_onCompletedChanged);
     on<LogisCompletedChanged>(_onisCompletedChanged);
     on<LogSubmitted>(_onSubmitted);
@@ -88,11 +88,11 @@ class LogBloc extends Bloc<LogEvent, LogState> {
     emit(state.copyWith(tasks: event.tasks));
   }
 
-  void _onSentimentChanged(
-    LogSentimentChanged event,
+  void _onMoodChanged(
+    LogMoodChanged event,
     Emitter<LogState> emit,
   ) {
-    emit(state.copyWith(sentiment: event.sentiment));
+    emit(state.copyWith(mood: event.mood));
   }
 
   void _onCompletedChanged(
@@ -120,7 +120,7 @@ class LogBloc extends Bloc<LogEvent, LogState> {
       iadls: state.iadls,
       badls: state.badls,
       tasks: state.tasks,
-      sentiment: state.sentiment,
+      mood: state.mood,
       completed: state.completed,
     );
     print('log: $log');

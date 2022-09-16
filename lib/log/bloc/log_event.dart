@@ -43,13 +43,13 @@ class LogTasksChanged extends LogEvent {
   List<Object> get props => [tasks];
 }
 
-class LogSentimentChanged extends LogEvent {
-  const LogSentimentChanged(this.sentiment);
+class LogMoodChanged extends LogEvent {
+  const LogMoodChanged(this.mood);
 
-  final String sentiment;
+  final String mood;
 
   @override
-  List<Object> get props => [sentiment];
+  List<Object> get props => [mood];
 }
 
 class LogCompletedChanged extends LogEvent {
