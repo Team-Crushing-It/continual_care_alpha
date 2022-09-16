@@ -19,6 +19,8 @@ class LogState extends Equatable {
     this.tasks = const [],
     this.iadls = const [],
     this.badls = const [],
+    this.cMood = Mood.neutral,
+    this.iMood = Mood.neutral,
     this.location = "",
     DateTime? completed,
     this.isCompleted = false,
@@ -32,6 +34,8 @@ class LogState extends Equatable {
   final List<Task>? tasks;
   final List<ADL>? iadls;
   final List<ADL>? badls;
+  final Mood? cMood;
+  final Mood? iMood;
   final String? location;
   final DateTime? completed;
   final bool? isCompleted;
@@ -53,32 +57,36 @@ class LogState extends Equatable {
         isCompleted
       ];
 
-  LogState copyWith(
-      {LogStatus? status,
-      dynamic lastItemOperation,
-      Log? initialLog,
-      dynamic las,
-      User? user,
-      List<Comment>? comments,
-      List<Task>? tasks,
-      List<ADL>? iadls,
-      List<ADL>? badls,
-      String? location,
-      DateTime? completed,
-      bool? isCompleted,}) {
+  LogState copyWith({
+    LogStatus? status,
+    dynamic lastItemOperation,
+    Log? initialLog,
+    dynamic las,
+    User? user,
+    List<Comment>? comments,
+    List<Task>? tasks,
+    List<ADL>? iadls,
+    List<ADL>? badls,
+    Mood? cMood,
+    Mood? iMood,
+    String? location,
+    DateTime? completed,
+    bool? isCompleted,
+  }) {
     return LogState(
       status: status ?? this.status,
-      lastItemOperation:lastItemOperation ?? this.lastItemOperation,
+      lastItemOperation: lastItemOperation ?? this.lastItemOperation,
       initialLog: initialLog ?? this.initialLog,
       user: user ?? this.user,
       comments: comments ?? this.comments,
       tasks: tasks ?? this.tasks,
       iadls: iadls ?? this.iadls,
       badls: badls ?? this.badls,
+      cMood: cMood ?? this.cMood,
+      iMood: iMood ?? this.iMood,
       location: location ?? this.location,
       completed: completed ?? this.completed,
       isCompleted: isCompleted ?? this.isCompleted,
-      
     );
   }
 }

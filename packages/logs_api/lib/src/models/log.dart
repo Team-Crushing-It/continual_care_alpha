@@ -7,6 +7,8 @@ import 'package:logs_api/logs_api.dart';
 
 part 'log.g.dart';
 
+enum Mood { sad, neutral, happy }
+
 /// {@template log}
 /// A single log item.
 /// TODO update
@@ -29,6 +31,8 @@ class Log extends Equatable {
     this.tasks = const [],
     this.iadls = const [],
     this.badls = const [],
+    this.cMood = Mood.neutral,
+    this.iMood = Mood.neutral,
     this.location = '',
     DateTime? completed,
   })  : assert(
@@ -63,6 +67,16 @@ class Log extends Equatable {
   /// Note that the adls may be empty.
   final List<ADL> badls;
 
+  /// The mood of the caregiver.
+  ///
+  /// Note that the cMood may be empty.
+  final Mood cMood;
+
+  /// The mood of the individual we are serving
+  ///
+  /// Note that the cMood may be empty.
+  final Mood iMood;
+
   /// The location of the log.
   ///
   /// Note that the location may be empty.
@@ -82,6 +96,8 @@ class Log extends Equatable {
     List<Task>? tasks,
     List<ADL>? badls,
     List<ADL>? iadls,
+    Mood? cMood,
+    Mood? iMood,
     String? location,
     DateTime? completed,
   }) {
@@ -91,6 +107,8 @@ class Log extends Equatable {
       tasks: tasks ?? this.tasks,
       iadls: iadls ?? this.iadls,
       badls: badls ?? this.badls,
+      cMood: cMood ?? this.cMood,
+      iMood: iMood ?? this.iMood,
       location: location ?? this.location,
       completed: completed ?? this.completed,
     );
@@ -109,6 +127,8 @@ class Log extends Equatable {
         tasks,
         iadls,
         badls,
+        cMood,
+        iMood,
         location,
         completed,
       ];
