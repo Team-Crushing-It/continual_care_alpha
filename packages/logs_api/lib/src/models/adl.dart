@@ -10,7 +10,7 @@ part 'adl.g.dart';
 /// {@template adl}
 /// A single adl item.
 /// TODO update
-/// Contains a list of [adl]s, [adl]s, adl's [id], in addition to the [mood]
+/// Contains a list of [adl]s, [adl]s, adl's [id], in addition to the [location]
 ///
 /// If an [id] is provided, it cannot be empty. If no [id] is provided, one
 /// will be generated.

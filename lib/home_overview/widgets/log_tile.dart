@@ -38,7 +38,7 @@ class LogTile extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       TextSpan(children: [
                         TextSpan(
-                            text: "Mood: ",
+                            text: "Location: ",
                             style: TextStyle(color: Color(0xff989898))),
                         TextSpan(text: "🤩"),
                       ])),

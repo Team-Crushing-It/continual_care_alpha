@@ -19,7 +19,7 @@ class LogState extends Equatable {
     this.tasks = const [],
     this.iadls = const [],
     this.badls = const [],
-    this.mood = "",
+    this.location = "",
     DateTime? completed,
     this.isCompleted = false,
   }) : this.completed = completed ?? DateTime.now();
@@ -32,7 +32,7 @@ class LogState extends Equatable {
   final List<Task>? tasks;
   final List<ADL>? iadls;
   final List<ADL>? badls;
-  final String? mood;
+  final String? location;
   final DateTime? completed;
   final bool? isCompleted;
 
@@ -48,7 +48,7 @@ class LogState extends Equatable {
         user,
         iadls,
         badls,
-        mood,
+        location,
         completed,
         isCompleted
       ];
@@ -63,7 +63,7 @@ class LogState extends Equatable {
       List<Task>? tasks,
       List<ADL>? iadls,
       List<ADL>? badls,
-      String? mood,
+      String? location,
       DateTime? completed,
       bool? isCompleted,}) {
     return LogState(
@@ -75,7 +75,7 @@ class LogState extends Equatable {
       tasks: tasks ?? this.tasks,
       iadls: iadls ?? this.iadls,
       badls: badls ?? this.badls,
-      mood: mood ?? this.mood,
+      location: location ?? this.location,
       completed: completed ?? this.completed,
       isCompleted: isCompleted ?? this.isCompleted,
       

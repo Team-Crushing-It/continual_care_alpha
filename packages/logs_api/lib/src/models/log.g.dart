@@ -24,7 +24,7 @@ Log _$LogFromJson(Map<String, dynamic> json) => Log(
               ?.map((dynamic e) => ADL.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
-      mood: json['mood'] as String? ?? '',
+      location: json['location'] as String? ?? '',
       completed: json['completed'] == null
           ? null
           : DateTime.parse(json['completed'] as String),
@@ -36,6 +36,6 @@ Map<String, dynamic> _$LogToJson(Log instance) => <String, dynamic>{
       'tasks': instance.tasks.map((e) => e.toJson()).toList(),
       'iadls': instance.iadls.map((e) => e.toJson()).toList(),
       'badls': instance.badls.map((e) => e.toJson()).toList(),
-      'mood': instance.mood,
+      'location': instance.location,
       'completed': instance.completed.toIso8601String(),
     };

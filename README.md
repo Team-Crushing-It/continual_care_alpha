@@ -29,7 +29,7 @@ Lavona ⭐️⭐️⭐️⭐️⭐️ 5/5
 As a registered nurse, I fully endorse Continual Care. Continual care has provided a great aide for my mom. Our Aide is kind caring, and a responsive caregiver who is ... **Continual Care provided daily write ups so I can go on my mom’s page and see how her day went.** If there are any concerns or issues with mom they contact us immediately ...
 
 Aaron ⭐️⭐️⭐️⭐️⭐️ 5/5 
-The culture at Continual Care is one that loves the soul of the person while nurturing for the body. They look beyond the faults and moods and somehow see the good no matter what the current condition. This is a quality that cannot be taught but only recognized and encouraged.
+The culture at Continual Care is one that loves the soul of the person while nurturing for the body. They look beyond the faults and locations and somehow see the good no matter what the current condition. This is a quality that cannot be taught but only recognized and encouraged.
 
 Full reviews on [Caring.com](https://www.caring.com/senior-care/connecticut/bridgeport/continual-care#)
 

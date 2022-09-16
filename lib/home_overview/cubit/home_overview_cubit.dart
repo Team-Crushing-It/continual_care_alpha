@@ -30,7 +30,7 @@ class HomeOverviewCubit extends Cubit<HomeOverviewState> {
 
   //Add log
   void addLog() async {
-    final log = Log(mood: "hello friend");
+    final log = Log(location: "hello friend");
     _logsRepository.saveLog(log);
     final logs = await _logsRepository.getLogs().first;
     emit(state.copyWith(logs: logs));
