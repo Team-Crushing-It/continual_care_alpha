@@ -82,7 +82,7 @@ class LogView extends StatelessWidget {
                   ),
                 ),
               ),
-              _Todos(),
+              _Tasks(),
               Container(
                 width: double.maxFinite,
                 height: 32,
@@ -243,8 +243,8 @@ class _Comments extends StatelessWidget {
   }
 }
 
-class _Todos extends StatelessWidget {
-  const _Todos();
+class _Tasks extends StatelessWidget {
+  const _Tasks();
 
   @override
   Widget build(BuildContext context) {
@@ -252,14 +252,14 @@ class _Todos extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 16.0),
       child: BlocBuilder<LogBloc, LogState>(
         builder: (context, state) {
-          if (state.todos == null) {
-            if (state.todos!.isNotEmpty) {
+          if (state.tasks == null) {
+            if (state.tasks!.isNotEmpty) {
               return Expanded(
                 child: ListView.builder(
-                  itemCount: state.todos!.length,
+                  itemCount: state.tasks!.length,
                   itemBuilder: ((context, index) {
                     return CheckTile(
-                      text: state.todos![index].action,
+                      text: state.tasks![index].action,
                       onTap: (value) {},
                     );
                   }),

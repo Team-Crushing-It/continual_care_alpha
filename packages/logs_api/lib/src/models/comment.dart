@@ -10,7 +10,7 @@ part 'comment.g.dart';
 /// {@template comment}
 /// A single comment item.
 /// TODO update
-/// Contains a list of [comment]s, [todo]s, adl's [id], in addition to the [sentiment]
+/// Contains a list of [comment]s, [task]s, adl's [id], in addition to the [sentiment]
 ///
 /// If an [id] is provided, it cannot be empty. If no [id] is provided, one
 /// will be generated.

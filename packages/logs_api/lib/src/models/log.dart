@@ -10,7 +10,7 @@ part 'log.g.dart';
 /// {@template log}
 /// A single log item.
 /// TODO update
-/// Contains a list of [comment]s, [todo]s, adl's [id], in addition to the [sentiment]
+/// Contains a list of [comment]s, [task]s, adl's [id], in addition to the [sentiment]
 ///
 /// If an [id] is provided, it cannot be empty. If no [id] is provided, one
 /// will be generated.
@@ -26,7 +26,7 @@ class Log extends Equatable {
   Log({
     String? id,
     this.comments = const [],
-    this.todos = const [],
+    this.tasks = const [],
     this.iadls = const [],
     this.badls = const [],
     this.sentiment = '',
@@ -48,10 +48,10 @@ class Log extends Equatable {
   /// Note that the comments may be empty.
   final List<Comment> comments;
 
-  /// The todos on the log
+  /// The tasks on the log
   ///
-  /// Note that the todos may be empty.
-  final List<Todo> todos;
+  /// Note that the tasks may be empty.
+  final List<Task> tasks;
 
   /// The iadls on the log
   ///
@@ -79,7 +79,7 @@ class Log extends Equatable {
   Log copyWith({
     String? id,
     List<Comment>? comments,
-    List<Todo>? todos,
+    List<Task>? tasks,
     List<ADL>? badls,
     List<ADL>? iadls,
     String? sentiment,
@@ -88,7 +88,7 @@ class Log extends Equatable {
     return Log(
       id: id ?? this.id,
       comments: comments ?? this.comments,
-      todos: todos ?? this.todos,
+      tasks: tasks ?? this.tasks,
       iadls: iadls ?? this.iadls,
       badls: badls ?? this.badls,
       sentiment: sentiment ?? this.sentiment,
@@ -106,7 +106,7 @@ class Log extends Equatable {
   List<Object> get props => [
         id,
         comments,
-        todos,
+        tasks,
         iadls,
         badls,
         sentiment,

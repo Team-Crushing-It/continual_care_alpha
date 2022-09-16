@@ -16,7 +16,7 @@ class LogState extends Equatable {
     this.initialLog,
     this.user = User.empty,
     this.comments = const [],
-    this.todos = const [],
+    this.tasks = const [],
     this.iadls = const [],
     this.badls = const [],
     this.sentiment = "",
@@ -29,7 +29,7 @@ class LogState extends Equatable {
   final dynamic lastItemOperation;
   final User user;
   final List<Comment>? comments;
-  final List<Todo>? todos;
+  final List<Task>? tasks;
   final List<ADL>? iadls;
   final List<ADL>? badls;
   final String? sentiment;
@@ -44,7 +44,7 @@ class LogState extends Equatable {
         lastItemOperation,
         initialLog,
         comments,
-        todos,
+        tasks,
         user,
         iadls,
         badls,
@@ -60,7 +60,7 @@ class LogState extends Equatable {
       dynamic las,
       User? user,
       List<Comment>? comments,
-      List<Todo>? todos,
+      List<Task>? tasks,
       List<ADL>? iadls,
       List<ADL>? badls,
       String? sentiment,
@@ -72,7 +72,7 @@ class LogState extends Equatable {
       initialLog: initialLog ?? this.initialLog,
       user: user ?? this.user,
       comments: comments ?? this.comments,
-      todos: todos ?? this.todos,
+      tasks: tasks ?? this.tasks,
       iadls: iadls ?? this.iadls,
       badls: badls ?? this.badls,
       sentiment: sentiment ?? this.sentiment,

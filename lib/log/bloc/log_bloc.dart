@@ -21,7 +21,7 @@ class LogBloc extends Bloc<LogEvent, LogState> {
             comments: initialLog?.comments ?? [],
             iadls: initialLog?.iadls ?? [],
             badls: initialLog?.badls ?? [],
-            todos: initialLog?.todos ?? [],
+            tasks: initialLog?.tasks ?? [],
             sentiment: initialLog?.sentiment ?? '',
             completed: initialLog?.completed ?? DateTime.now(),
           ),
@@ -30,7 +30,7 @@ class LogBloc extends Bloc<LogEvent, LogState> {
     on<LogCommentsChanged>(_onCommentsChanged);
     on<LogIADLSChanged>(_onIADLSChanged);
     on<LogBADLSChanged>(_onBADLSChanged);
-    on<LogTodosChanged>(_onTodosChanged);
+    on<LogTasksChanged>(_onTasksChanged);
     on<LogSentimentChanged>(_onSentimentChanged);
     on<LogCompletedChanged>(_onCompletedChanged);
     on<LogisCompletedChanged>(_onisCompletedChanged);
@@ -81,11 +81,11 @@ class LogBloc extends Bloc<LogEvent, LogState> {
     // _logsRepository.saveLog(state.initialLog!);
   }
 
-  void _onTodosChanged(
-    LogTodosChanged event,
+  void _onTasksChanged(
+    LogTasksChanged event,
     Emitter<LogState> emit,
   ) {
-    emit(state.copyWith(todos: event.todos));
+    emit(state.copyWith(tasks: event.tasks));
   }
 
   void _onSentimentChanged(
@@ -119,7 +119,7 @@ class LogBloc extends Bloc<LogEvent, LogState> {
       comments: state.comments,
       iadls: state.iadls,
       badls: state.badls,
-      todos: state.todos,
+      tasks: state.tasks,
       sentiment: state.sentiment,
       completed: state.completed,
     );
