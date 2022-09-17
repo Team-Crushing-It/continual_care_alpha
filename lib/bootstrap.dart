@@ -8,32 +8,64 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:authentication_repository/authentication_repository.dart';
 import 'package:bloc/bloc.dart';
+import 'package:continual_care_alpha/app/app.dart';
 import 'package:flutter/widgets.dart';
+import 'package:jobs_api/jobs_api.dart';
+import 'package:jobs_repository/jobs_repository.dart';
+import 'package:logs_api/logs_api.dart';
+import 'package:logs_repository/logs_repository.dart';
 
 class AppBlocObserver extends BlocObserver {
   @override
-  void onChange(BlocBase<dynamic> bloc, Change<dynamic> change) {
+  void onChange(BlocBase bloc, Change change) {
     super.onChange(bloc, change);
-    log('onChange(${bloc.runtimeType}, $change)');
+    // ignore: lines_longer_than_80_chars
+    log('onChange: ${bloc.runtimeType},\nCurrent state: ${change.currentState}\nNext state: ${change.nextState}');
   }
 
   @override
-  void onError(BlocBase<dynamic> bloc, Object error, StackTrace stackTrace) {
+  void onError(BlocBase bloc, Object error, StackTrace stackTrace) {
     log('onError(${bloc.runtimeType}, $error, $stackTrace)');
     super.onError(bloc, error, stackTrace);
   }
+
+  @override
+  void onCreate(BlocBase bloc) {
+    log('onCreate(${bloc.state}, ${bloc.runtimeType})');
+    super.onCreate(bloc);
+  }
+
+  @override
+  void onClose(BlocBase bloc) {
+    log('onClose(${bloc.state}, ${bloc.runtimeType})');
+    super.onClose(bloc);
+  }
 }
 
-Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
+void bootstrap({
+  required AuthenticationRepository authenticationRepository,
+  required JobsApi jobsApi,
+  required LogsApi logsApi,
+}) {
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);
   };
 
   Bloc.observer = AppBlocObserver();
 
-  await runZonedGuarded(
-    () async => runApp(await builder()),
+  final jobsRepository = JobsRepository(jobsApi: jobsApi);
+  final logsRepository = LogsRepository(logsApi: logsApi);
+
+  runZonedGuarded(
+    () => runApp(
+      App(
+        authenticationRepository: authenticationRepository,
+        jobsRepository: jobsRepository,
+        logsRepository: logsRepository,
+      ),
+    ),
     (error, stackTrace) => log(error.toString(), stackTrace: stackTrace),
   );
 }
