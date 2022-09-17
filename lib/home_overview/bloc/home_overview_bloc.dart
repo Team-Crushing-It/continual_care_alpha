@@ -17,7 +17,6 @@ class HomeOverviewBloc extends Bloc<HomeOverviewEvent, HomeOverviewState> {
         super(HomeOverviewState()) {
     on<HomeOverviewSubscriptionRequested>(_onSubscriptionRequested);
     on<HomeOverviewUpcomingJobRequested>(_onUpcomingJobRequested);
-    on<HomeOverviewLogAdded>(_onLogAdded);
   }
 
   final JobsRepository _jobsRepository;
@@ -41,23 +40,5 @@ class HomeOverviewBloc extends Bloc<HomeOverviewEvent, HomeOverviewState> {
       final job = jobs.first;
       emit(state.copyWith(job: job));
     }
-  }
-
-  Future<void> _onLogAdded(
-      HomeOverviewEvent event, Emitter<HomeOverviewState> emit) async {
-    final log = Log(location: "hello friend",badls: [
-      ADL(name: "badl 1",isIndependent: false),
-      ADL(name: "badl 2",isIndependent: true),
-      ADL(name: "badl 3",isIndependent: false),
-      ADL(name: "badl 4",isIndependent: true),
-    ],iadls: [
-      ADL(name: "iadl 1",isIndependent: false),
-      ADL(name: "iadl 2",isIndependent: true),
-      ADL(name: "iadl 3",isIndependent: false),
-      ADL(name: "iadl 4",isIndependent: true),
-    ]);
-    _logsRepository.saveLog(log);
-    final logs = await _logsRepository.getLogs().first;
-    emit(state.copyWith(logs: logs));
   }
 }

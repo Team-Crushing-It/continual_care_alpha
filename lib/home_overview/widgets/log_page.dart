@@ -1,6 +1,5 @@
 import 'package:continual_care_alpha/app/bloc/app_bloc.dart';
 import 'package:continual_care_alpha/schedule/widgets/date_ios_format.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,8 +7,8 @@ import 'package:continual_care_alpha/log/log.dart';
 import 'package:logs_api/logs_api.dart';
 import 'package:logs_repository/logs_repository.dart';
 
-class LogPage extends StatelessWidget {
-  const LogPage({super.key});
+class LogOverviewPage extends StatelessWidget {
+  const LogOverviewPage({super.key});
 
   static Route<void> route({Log? initialLog}) {
     return MaterialPageRoute(
@@ -25,7 +24,7 @@ class LogPage extends StatelessWidget {
           logsRepository: context.read<LogsRepository>(),
           initialLog: initialLog,
         ),
-        child: const LogPage(),
+        child: const LogOverviewPage(),
       ),
     );
   }

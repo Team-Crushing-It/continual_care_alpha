@@ -1,10 +1,8 @@
 import 'package:continual_care_alpha/home_overview/bloc/home_overview_bloc.dart';
 import 'package:continual_care_alpha/home_overview/home_overview.dart';
-import 'package:continual_care_alpha/log/log.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jobs_repository/jobs_repository.dart';
-import 'package:logs_api/logs_api.dart';
 import 'package:logs_repository/logs_repository.dart';
 
 import '../../schedule/widgets/job_list_tile.dart';
@@ -92,12 +90,9 @@ class HomeOverviewView extends StatelessWidget {
                                         actions: [
                                           TextButton(
                                             onPressed: () {
-                                              context
-                                                  .read<HomeOverviewBloc>()
-                                                  .add(HomeOverviewLogAdded());
                                               Navigator.pop(newContext);
                                               Navigator.of(context).push(
-                                                LogPage.route(),
+                                                LogOverviewPage.route(),
                                               );
                                             },
                                             child: Text(
@@ -182,7 +177,7 @@ class HomeOverviewView extends StatelessWidget {
                             initialLog: state.logs![index],
                             onTap: () {
                               Navigator.of(context).push(
-                                LogPage.route(
+                                LogOverviewPage.route(
                                   initialLog: state.logs![index],
                                 ),
                               );
