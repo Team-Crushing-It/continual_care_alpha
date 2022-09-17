@@ -29,7 +29,6 @@ class LogBloc extends Bloc<LogEvent, LogState> {
             started: initialLog?.started ?? DateTime.now(),
           ),
         ) {
-    print(initialLog!.badls.length);
     on<LogCommentsChanged>(_onCommentsChanged);
     on<LogIADLSChanged>(_onIADLSChanged);
     on<LogBADLSChanged>(_onBADLSChanged);
