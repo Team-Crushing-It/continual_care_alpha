@@ -1,5 +1,7 @@
 import 'package:continual_care_alpha/home_overview/bloc/home_overview_bloc.dart';
 import 'package:continual_care_alpha/home_overview/home_overview.dart';
+import 'package:continual_care_alpha/log/log.dart';
+import 'package:continual_care_alpha/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jobs_repository/jobs_repository.dart';
@@ -92,7 +94,7 @@ class HomeOverviewView extends StatelessWidget {
                                             onPressed: () {
                                               Navigator.pop(newContext);
                                               Navigator.of(context).push(
-                                                LogOverviewPage.route(),
+                                                LogFlow.route(),
                                               );
                                             },
                                             child: Text(

@@ -1,3 +1,3 @@
 export 'bloc/log_bloc.dart';
-export 'view/view.dart';
 export 'widgets/widgets.dart';
+export 'view/log_flow.dart';
