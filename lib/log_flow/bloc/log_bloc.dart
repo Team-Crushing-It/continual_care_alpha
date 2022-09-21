@@ -129,6 +129,7 @@ class LogBloc extends Bloc<LogEvent, LogState> {
     final updatedTask =
         event.task.copyWith(isCompleted: !event.task.isCompleted);
 
+
     final newList = state.tasks!.map((task) {
       return task.id == event.task.id ? updatedTask : task;
     }).toList();
