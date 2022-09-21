@@ -31,8 +31,8 @@ class Log extends Equatable {
     this.tasks = const [],
     this.iadls = const [],
     this.badls = const [],
-    this.cMood = Mood.neutral,
-    this.iMood = Mood.neutral,
+    this.cMood,
+    this.iMood,
     this.location = '',
     DateTime? completed,
     DateTime? started,
@@ -72,12 +72,12 @@ class Log extends Equatable {
   /// The mood of the caregiver.
   ///
   /// Note that the cMood may be empty.
-  final Mood cMood;
+  final Mood? cMood;
 
   /// The mood of the individual we are serving
   ///
   /// Note that the cMood may be empty.
-  final Mood iMood;
+  final Mood? iMood;
 
   /// The location of the log.
   ///
@@ -130,7 +130,7 @@ class Log extends Equatable {
   JsonMap toJson() => _$LogToJson(this);
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         id,
         comments,
         tasks,

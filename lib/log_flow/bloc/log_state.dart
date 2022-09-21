@@ -1,6 +1,25 @@
 part of 'log_bloc.dart';
 
-enum LogStatus { initial, updated, loading, success, failure }
+enum LogStatus {
+  initial,
+  updated,
+  loading,
+  success,
+  failure,
+  caregiverCompleted,
+  tasksCompleted,
+  iadlsCompleted,
+  badlsCompleted,
+  commentsCompleted
+}
+
+enum TaskStatus {
+  initial,
+  updated,
+  loading,
+  success,
+  failure,
+}
 
 extension LogStatusX on LogStatus {
   bool get isLoadingOrSuccess => [
@@ -11,16 +30,17 @@ extension LogStatusX on LogStatus {
 
 class LogState extends Equatable {
   LogState({
-    this.lastItemOperation,
     this.status = LogStatus.initial,
+    this.taskStatus = TaskStatus.initial,
     this.initialLog,
     this.user = User.empty,
     this.comments = const [],
     this.tasks = const [],
+    this.newTaskAction = '',
     this.iadls = const [],
     this.badls = const [],
-    this.cMood = Mood.neutral,
-    this.iMood = Mood.neutral,
+    this.cMood = null,
+    this.iMood = null,
     this.location = "",
     DateTime? completed,
     DateTime? started,
@@ -29,11 +49,12 @@ class LogState extends Equatable {
         this.started = started ?? DateTime.now();
 
   final LogStatus status;
+  final TaskStatus taskStatus;
   final Log? initialLog;
-  final dynamic lastItemOperation;
   final User user;
   final List<Comment>? comments;
   final List<Task>? tasks;
+  final String? newTaskAction;
   final List<ADL>? iadls;
   final List<ADL>? badls;
   final Mood? cMood;
@@ -48,13 +69,16 @@ class LogState extends Equatable {
   @override
   List<Object?> get props => [
         status,
-        lastItemOperation,
+        taskStatus,
         initialLog,
         comments,
         tasks,
+        newTaskAction,
         user,
         iadls,
         badls,
+        cMood,
+        iMood,
         location,
         completed,
         started,
@@ -63,12 +87,13 @@ class LogState extends Equatable {
 
   LogState copyWith({
     LogStatus? status,
-    dynamic lastItemOperation,
+    TaskStatus? taskStatus,
     Log? initialLog,
     dynamic las,
     User? user,
     List<Comment>? comments,
     List<Task>? tasks,
+    String? newTaskAction,
     List<ADL>? iadls,
     List<ADL>? badls,
     Mood? cMood,
@@ -80,11 +105,12 @@ class LogState extends Equatable {
   }) {
     return LogState(
       status: status ?? this.status,
-      lastItemOperation: lastItemOperation ?? this.lastItemOperation,
+      taskStatus: taskStatus ?? this.taskStatus,
       initialLog: initialLog ?? this.initialLog,
       user: user ?? this.user,
       comments: comments ?? this.comments,
       tasks: tasks ?? this.tasks,
+      newTaskAction: newTaskAction ?? this.newTaskAction,
       iadls: iadls ?? this.iadls,
       badls: badls ?? this.badls,
       cMood: cMood ?? this.cMood,

@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
 import 'package:logs_api/logs_api.dart';
 import 'package:logs_repository/logs_repository.dart';
 
@@ -21,18 +20,23 @@ class LogBloc extends Bloc<LogEvent, LogState> {
             comments: initialLog?.comments ?? [],
             iadls: initialLog?.iadls ?? [],
             badls: initialLog?.badls ?? [],
+            newTaskAction: '',
             tasks: initialLog?.tasks ?? [],
-            cMood: initialLog?.cMood ?? Mood.neutral,
-            iMood: initialLog?.iMood ?? Mood.neutral,
+            cMood: initialLog?.cMood ?? null,
+            iMood: initialLog?.iMood ?? null,
             location: initialLog?.location ?? '',
             completed: initialLog?.completed ?? DateTime.now(),
             started: initialLog?.started ?? DateTime.now(),
           ),
         ) {
+    on<LogStatusChanged>(_onStatusChanged);
     on<LogCommentsChanged>(_onCommentsChanged);
     on<LogIADLSChanged>(_onIADLSChanged);
     on<LogBADLSChanged>(_onBADLSChanged);
     on<LogTasksChanged>(_onTasksChanged);
+    on<LogNewTaskActionChanged>(_onNewTaskActionChanged);
+    on<LogNewTaskAdded>(_onNewTaskAdded);
+    on<LogTaskUpdated>(_onTaskUpdated);
     on<LogCMoodChanged>(_onCMoodChanged);
     on<LogIMoodChanged>(_onIMoodChanged);
     on<LogLocationChanged>(_onLocationChanged);
@@ -45,6 +49,17 @@ class LogBloc extends Bloc<LogEvent, LogState> {
   final LogsRepository _logsRepository;
   final User _user;
 
+  void _onStatusChanged(
+    LogStatusChanged event,
+    Emitter<LogState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        status: event.status,
+      ),
+    );
+  }
+
   void _onCommentsChanged(
     LogCommentsChanged event,
     Emitter<LogState> emit,
@@ -52,7 +67,6 @@ class LogBloc extends Bloc<LogEvent, LogState> {
     state.comments!.add(event.comment);
     emit(state.copyWith(
         comments: state.comments,
-        lastItemOperation: event.comment,
         initialLog: state.initialLog!.copyWith(comments: state.comments)));
   }
 
@@ -65,9 +79,7 @@ class LogBloc extends Bloc<LogEvent, LogState> {
     iadls[event.index] =
         previousADL.copyWith(isIndependent: !(previousADL.isIndependent));
     emit(state.copyWith(
-        badls: iadls,
-        lastItemOperation: iadls[event.index],
-        initialLog: state.initialLog!.copyWith(iadls: iadls)));
+        badls: iadls, initialLog: state.initialLog!.copyWith(iadls: iadls)));
     // _logsRepository.saveLog(state.initialLog!);
   }
 
@@ -80,10 +92,48 @@ class LogBloc extends Bloc<LogEvent, LogState> {
     badls[event.index] =
         previousADL.copyWith(isIndependent: !(previousADL.isIndependent));
     emit(state.copyWith(
-        badls: badls,
-        lastItemOperation: badls[event.index],
-        initialLog: state.initialLog!.copyWith(badls: badls)));
+        badls: badls, initialLog: state.initialLog!.copyWith(badls: badls)));
     // _logsRepository.saveLog(state.initialLog!);
+  }
+
+  void _onNewTaskActionChanged(
+    LogNewTaskActionChanged event,
+    Emitter<LogState> emit,
+  ) {
+    emit(state.copyWith(newTaskAction: event.action));
+  }
+
+  void _onNewTaskAdded(
+    LogNewTaskAdded event,
+    Emitter<LogState> emit,
+  ) {
+    // create a task model
+    final newTask = Task(action: state.newTaskAction!);
+
+    // add that task to the existing list
+    final output = state.tasks!.map((e) => e).toList();
+
+    output.add(newTask);
+
+    // updating the list
+    emit(state.copyWith(tasks: output, newTaskAction: ''));
+  }
+
+  void _onTaskUpdated(
+    LogTaskUpdated event,
+    Emitter<LogState> emit,
+  ) {
+    // copyWith new bool for isCompleted
+    // update all the tasks
+
+    final updatedTask =
+        event.task.copyWith(isCompleted: !event.task.isCompleted);
+
+    final newList = state.tasks!.map((task) {
+      return task.id == event.task.id ? updatedTask : task;
+    }).toList();
+
+    emit(state.copyWith(tasks: newList));
   }
 
   void _onTasksChanged(

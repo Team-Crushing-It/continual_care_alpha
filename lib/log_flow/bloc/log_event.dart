@@ -7,6 +7,15 @@ abstract class LogEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class LogStatusChanged extends LogEvent {
+  const LogStatusChanged(this.status);
+
+  final LogStatus status;
+
+  @override
+  List<Object> get props => [status];
+}
+
 class LogCommentsChanged extends LogEvent {
   const LogCommentsChanged(this.comment);
 
@@ -34,6 +43,19 @@ class LogBADLSChanged extends LogEvent {
   List<Object> get props => [index];
 }
 
+class LogNewTaskActionChanged extends LogEvent {
+  const LogNewTaskActionChanged(this.action);
+
+  final String action;
+
+  @override
+  List<Object> get props => [action];
+}
+
+class LogNewTaskAdded extends LogEvent {
+  const LogNewTaskAdded();
+}
+
 class LogTasksChanged extends LogEvent {
   const LogTasksChanged(this.tasks);
 
@@ -41,6 +63,15 @@ class LogTasksChanged extends LogEvent {
 
   @override
   List<Object> get props => [tasks];
+}
+
+class LogTaskUpdated extends LogEvent {
+  const LogTaskUpdated(this.task);
+
+  final Task task;
+
+  @override
+  List<Object> get props => [task];
 }
 
 class LogCMoodChanged extends LogEvent {
@@ -87,6 +118,7 @@ class LogStartedChanged extends LogEvent {
   @override
   List<Object> get props => [started];
 }
+
 class LogisCompletedChanged extends LogEvent {
   const LogisCompletedChanged(this.isCompleted);
 

@@ -1,5 +1,5 @@
 import 'package:continual_care_alpha/home_overview/home_overview.dart';
-import 'package:continual_care_alpha/log/log.dart';
+import 'package:continual_care_alpha/log_flow/log_flow.dart';
 import 'package:flutter/material.dart';
 import 'package:logs_api/logs_api.dart';
 

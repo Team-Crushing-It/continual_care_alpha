@@ -3,7 +3,7 @@ import 'package:continual_care_alpha/schedule/widgets/date_ios_format.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:continual_care_alpha/log/log.dart';
+import 'package:continual_care_alpha/log_flow/log_flow.dart';
 import 'package:logs_api/logs_api.dart';
 import 'package:logs_repository/logs_repository.dart';
 
@@ -31,13 +31,7 @@ class LogOverviewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<LogBloc, LogState>(
-      listenWhen: (previous, current) =>
-          previous.status != current.status &&
-          current.status == LogStatus.success,
-      listener: (context, state) => Navigator.of(context).pop(),
-      child: const LogView(),
-    );
+    return LogView();
   }
 }
 
