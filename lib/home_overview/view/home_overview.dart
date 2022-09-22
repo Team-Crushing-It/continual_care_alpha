@@ -76,7 +76,7 @@ class HomeOverviewView extends StatelessWidget {
                             return JobListTile(
                                 job: state.job!,
                                 onTap: () {
-                                  StartModal(context, state);
+                                  startJobModal(context, state);
                                 });
                           }
                           return Center(child: Text("No upcomming jobs"));
@@ -158,7 +158,7 @@ class HomeOverviewView extends StatelessWidget {
   }
 }
 
-Future<void> StartModal(BuildContext context, HomeOverviewState state) async {
+Future<void> startJobModal(BuildContext context, HomeOverviewState state) async {
   return showDialog(
     context: context,
     builder: (newContext) {
