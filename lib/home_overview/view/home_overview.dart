@@ -74,51 +74,10 @@ class HomeOverviewView extends StatelessWidget {
                         builder: (context, state) {
                           if (state.job != null) {
                             return JobListTile(
-                              job: state.job!,
-                              onTap: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (newContext) {
-                                    return BlocProvider.value(
-                                      value: context.read<HomeOverviewBloc>(),
-                                      child: AlertDialog(
-                                        title: Text(
-                                            "Mon Sep 12 Maureen & Day Derosa"),
-                                        content: Text(
-                                            'Would you like to start the job?',
-                                            style: TextStyle(
-                                                color: Color(0xff989898))),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.pop(newContext);
-                                              Navigator.of(context).push(
-                                                LogFlow.route(),
-                                              );
-                                            },
-                                            child: Text(
-                                              'Yes',
-                                              style:
-                                                  TextStyle(color: Colors.red),
-                                            ),
-                                          ),
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.pop(newContext);
-                                            },
-                                            child: Text(
-                                              'No',
-                                              style:
-                                                  TextStyle(color: Colors.red),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                );
-                              },
-                            );
+                                job: state.job!,
+                                onTap: () {
+                                  StartModal(context, state);
+                                });
                           }
                           return Center(child: Text("No upcomming jobs"));
                         },
@@ -197,4 +156,43 @@ class HomeOverviewView extends StatelessWidget {
       ),
     );
   }
+}
+
+Future<void> StartModal(BuildContext context, HomeOverviewState state) async {
+  return showDialog(
+    context: context,
+    builder: (newContext) {
+      return BlocProvider.value(
+        value: context.read<HomeOverviewBloc>(),
+        child: AlertDialog(
+          title: Text('${state.job!.startTime.toDateIosFormat()} ${state.job!.client}'),
+          content: Text('Would you like to start the job?',
+              style: TextStyle(color: Color(0xff989898))),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(newContext);
+                Navigator.of(context).push(
+                  LogFlow.route(),
+                );
+              },
+              child: Text(
+                'Yes',
+                style: TextStyle(color: Colors.red),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(newContext);
+              },
+              child: Text(
+                'No',
+                style: TextStyle(color: Colors.red),
+              ),
+            ),
+          ],
+        ),
+      );
+    },
+  );
 }
