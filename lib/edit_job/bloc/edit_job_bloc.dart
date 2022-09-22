@@ -23,7 +23,7 @@ class EditJobBloc extends Bloc<EditJobEvent, EditJobState> {
             location: initialJob?.location ?? '',
             coordinator: initialJob?.coordinator ?? coordinator,
             caregivers: initialJob?.caregivers ?? [User.empty],
-            link: initialJob?.link ?? '',
+            logs: initialJob?.logs ?? [Log()],
             isCompleted: initialJob?.isCompleted ?? false,
           ),
         ) {
@@ -34,7 +34,6 @@ class EditJobBloc extends Bloc<EditJobEvent, EditJobState> {
     on<EditJobLocationChanged>(_onLocationChanged);
     on<EditJobCoordinatorChanged>(_onCoordinatorChanged);
     on<EditJobCaregiversChanged>(_onCaregiversChanged);
-    on<EditJobLinkChanged>(_onLinkChanged);
     on<EditJobisCompletedChanged>(_onisCompletedChanged);
     on<EditJobSubmitted>(_onSubmitted);
   }
@@ -92,12 +91,6 @@ class EditJobBloc extends Bloc<EditJobEvent, EditJobState> {
     emit(state.copyWith(caregivers: event.caregivers));
   }
 
-  void _onLinkChanged(
-    EditJobLinkChanged event,
-    Emitter<EditJobState> emit,
-  ) {
-    emit(state.copyWith(link: event.link));
-  }
 
   void _onisCompletedChanged(
     EditJobisCompletedChanged event,
@@ -120,7 +113,7 @@ class EditJobBloc extends Bloc<EditJobEvent, EditJobState> {
       location: state.location,
       coordinator: _coordinator,
       caregivers: state.caregivers,
-      link: state.link,
+      logs: state.logs,
       isCompleted: state.isCompleted,
     );
     print('job: $job');

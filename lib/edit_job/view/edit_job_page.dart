@@ -89,7 +89,6 @@ class EditJobView extends StatelessWidget {
               _PayField(),
               _LocationField(),
               _CaregiversField(),
-              _LinkField(),
             ],
           ),
         ),
@@ -377,40 +376,3 @@ class _CaregiversField extends StatelessWidget {
   }
 }
 
-class _LinkField extends StatelessWidget {
-  const _LinkField();
-
-  @override
-  Widget build(BuildContext context) {
-    final state = context.watch<EditJobBloc>().state;
-    final hintText = state.initialJob?.link ?? '';
-    return Padding(
-      padding: const EdgeInsets.all(8),
-      child: Row(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: Icon(Icons.link, size: 40),
-          ),
-          Expanded(
-              child: TextFormField(
-            key: const Key('editJobView_link_textFormField'),
-            initialValue: state.link,
-            decoration: InputDecoration(
-              enabled: !state.status.isLoadingOrSuccess,
-              labelText: 'link',
-              hintText: hintText,
-            ),
-            inputFormatters: [
-              LengthLimitingTextInputFormatter(50),
-              // FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9\s]')),
-            ],
-            onChanged: (value) {
-              context.read<EditJobBloc>().add(EditJobLinkChanged(value));
-            },
-          )),
-        ],
-      ),
-    );
-  }
-}

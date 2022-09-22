@@ -4,13 +4,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:continual_care_alpha/log_flow/log_flow.dart';
-import 'package:logs_api/logs_api.dart';
-import 'package:logs_repository/logs_repository.dart';
+import 'package:jobs_api/jobs_api.dart';
+import 'package:jobs_repository/jobs_repository.dart';
 
 class LogOverviewPage extends StatelessWidget {
   const LogOverviewPage({super.key});
 
-  static Route<void> route({Log? initialLog}) {
+  static Route<void> route({required initialLog}) {
     return MaterialPageRoute(
       fullscreenDialog: true,
       builder: (context) => BlocProvider(
@@ -21,7 +21,7 @@ class LogOverviewPage extends StatelessWidget {
             email: context.read<AppBloc>().state.user.email,
             photo: context.read<AppBloc>().state.user.photo,
           ),
-          logsRepository: context.read<LogsRepository>(),
+          jobsRepository: context.read<JobsRepository>(),
           initialLog: initialLog,
         ),
         child: const LogOverviewPage(),

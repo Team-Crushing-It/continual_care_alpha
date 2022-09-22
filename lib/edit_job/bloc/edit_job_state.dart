@@ -20,7 +20,7 @@ class EditJobState extends Equatable {
     this.location = '',
     this.coordinator = User.empty,
     this.caregivers = const [User.empty],
-    this.link = '',
+    this.logs = const [],
     this.isCompleted = false,
   }) : this.startTime = startTime ?? DateTime.now();
 
@@ -33,7 +33,7 @@ class EditJobState extends Equatable {
   final String location;
   final User coordinator;
   final List<User> caregivers;
-  final String link;
+  final List<Log> logs;
   final bool isCompleted;
 
   bool get isNewJob => initialJob == null;
@@ -48,7 +48,7 @@ class EditJobState extends Equatable {
     String? location,
     User? coordinator,
     List<User>? caregivers,
-    String? link,
+    List<Log>? logs,
     bool? isCompleted,
   }) {
     return EditJobState(
@@ -61,7 +61,7 @@ class EditJobState extends Equatable {
       location: location ?? this.location,
       coordinator: coordinator ?? this.coordinator,
       caregivers: caregivers ?? this.caregivers,
-      link: link ?? this.link,
+      logs: logs ?? this.logs,
       isCompleted: isCompleted ?? this.isCompleted,
     );
   }
@@ -77,6 +77,6 @@ class EditJobState extends Equatable {
         location,
         coordinator,
         caregivers,
-        link
+        logs
       ];
 }

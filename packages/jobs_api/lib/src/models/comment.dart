@@ -1,9 +1,8 @@
 import 'package:equatable/equatable.dart';
-import 'package:logs_api/logs_api.dart';
+import 'package:jobs_api/jobs_api.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:meta/meta.dart';
 import 'package:uuid/uuid.dart';
-import 'package:logs_api/logs_api.dart';
 
 part 'comment.g.dart';
 

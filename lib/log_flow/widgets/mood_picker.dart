@@ -1,7 +1,7 @@
 import 'package:continual_care_alpha/log_flow/log_flow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:logs_api/logs_api.dart';
+import 'package:jobs_api/jobs_api.dart';
 
 class MoodPicker extends StatelessWidget {
   const MoodPicker({super.key, required this.prompt});

@@ -1,7 +1,7 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
-import 'package:logs_api/logs_api.dart';
+import 'package:jobs_api/jobs_api.dart';
 
 class CommentTile extends StatelessWidget {
   const CommentTile({Key? key, required this.comment}) : super(key: key);

@@ -24,8 +24,8 @@ Log _$LogFromJson(Map<String, dynamic> json) => Log(
               ?.map((dynamic e) => ADL.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
-      cMood: $enumDecodeNullable(_$MoodEnumMap, json['cMood']) ?? Mood.neutral,
-      iMood: $enumDecodeNullable(_$MoodEnumMap, json['iMood']) ?? Mood.neutral,
+      cMood: $enumDecodeNullable(_$MoodEnumMap, json['cMood']),
+      iMood: $enumDecodeNullable(_$MoodEnumMap, json['iMood']),
       location: json['location'] as String? ?? '',
       completed: json['completed'] == null
           ? null

@@ -56,7 +56,7 @@ class _TasksPageState extends State<TasksPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           LogProgress(),
-          TasksView(),
+          // TasksView(),
         ],
       ),
     );

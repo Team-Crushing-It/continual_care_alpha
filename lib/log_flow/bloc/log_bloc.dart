@@ -1,17 +1,17 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:logs_api/logs_api.dart';
-import 'package:logs_repository/logs_repository.dart';
+import 'package:jobs_api/jobs_api.dart';
+import 'package:jobs_repository/jobs_repository.dart';
 
 part 'log_event.dart';
 part 'log_state.dart';
 
 class LogBloc extends Bloc<LogEvent, LogState> {
   LogBloc({
-    required LogsRepository logsRepository,
+    required JobsRepository jobsRepository,
     required Log? initialLog,
     required User user,
-  })  : _logsRepository = logsRepository,
+  })  : _jobsRepository = jobsRepository,
         _user = user,
         super(
           LogState(
@@ -46,7 +46,7 @@ class LogBloc extends Bloc<LogEvent, LogState> {
     on<LogSubmitted>(_onSubmitted);
   }
 
-  final LogsRepository _logsRepository;
+  final JobsRepository _jobsRepository;
   final User _user;
 
   void _onStatusChanged(
@@ -202,7 +202,7 @@ class LogBloc extends Bloc<LogEvent, LogState> {
     );
     print('log: $log');
     try {
-      await _logsRepository.saveLog(log);
+      // await _jobsRepository.saveJob(log);
       emit(state.copyWith(status: LogStatus.success));
     } catch (e) {
       print(e);

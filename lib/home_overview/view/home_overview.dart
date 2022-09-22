@@ -1,10 +1,12 @@
+import 'package:continual_care_alpha/app/bloc/app_bloc.dart';
 import 'package:continual_care_alpha/home_overview/bloc/home_overview_bloc.dart';
 import 'package:continual_care_alpha/home_overview/home_overview.dart';
 import 'package:continual_care_alpha/log_flow/log_flow.dart';
+import 'package:continual_care_alpha/tasks/tasks.dart';
+import 'package:continual_care_alpha/tasks/view/tasks_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jobs_repository/jobs_repository.dart';
-import 'package:logs_repository/logs_repository.dart';
 
 import '../../schedule/widgets/job_list_tile.dart';
 
@@ -19,15 +21,45 @@ class HomeOverviewPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => HomeOverviewBloc(
-              jobsRepository: context.read<JobsRepository>(),
-              logsRepository: context.read<LogsRepository>(),
-            )
-              ..add(HomeOverviewSubscriptionRequested())
-              ..add(HomeOverviewUpcomingJobRequested()),
-        child: HomeOverviewView());
+      lazy: false,
+      create: (context) => HomeOverviewBloc(
+        jobsRepository: context.read<JobsRepository>(),
+      )
+        ..add(HomeOverviewSubscriptionRequested())
+        ..add(HomeOverviewUpcomingJobRequested()),
+      child: HomeOverviewView(),
+    );
   }
 }
+
+// class ModalProvider extends StatelessWidget {
+//   const ModalProvider({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     // print(
+//     //   context.read<HomeOverviewBloc>().state.upcomingJob!.logs.first.tasks,
+//     // );
+//     return MultiBlocProvider(
+//       providers: [
+//         BlocProvider(
+//           lazy: false,
+//           create: (context) => TasksBloc(
+//             initialTasks: context
+//                 .read<HomeOverviewBloc>()
+//                 .state
+//                 .upcomingJob!
+//                 .logs
+//                 .first
+//                 .tasks,
+//             jobsRepository: context.read<JobsRepository>(),
+//           ),
+//         ),
+//       ],
+//       child: HomeOverviewView(),
+//     );
+//   }
+// }
 
 class HomeOverviewView extends StatelessWidget {
   const HomeOverviewView({Key? key}) : super(key: key);
@@ -36,7 +68,10 @@ class HomeOverviewView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home Overview'),
+        title: Container(
+          height: 36,
+          child: Image.asset('assets/logo_dark_nobg.png'),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
@@ -72,11 +107,15 @@ class HomeOverviewView extends StatelessWidget {
                       ),
                       BlocBuilder<HomeOverviewBloc, HomeOverviewState>(
                         builder: (context, state) {
-                          if (state.job != null) {
+                          if (state.upcomingJob != null) {
                             return JobListTile(
-                                job: state.job!,
+                                job: state.upcomingJob!,
                                 onTap: () {
-                                  startJobModal(context, state);
+                                  startJobModal(
+                                    context,
+                                    state.upcomingJob!,
+                                    // state.priorJob!,
+                                  );
                                 });
                           }
                           return Center(child: Text("No upcomming jobs"));
@@ -125,74 +164,35 @@ class HomeOverviewView extends StatelessWidget {
                 ),
               ),
             ),
-            BlocBuilder<HomeOverviewBloc, HomeOverviewState>(
-              builder: (context, state) {
-                if (state.logs != null) {
-                  if (state.logs!.isNotEmpty) {
-                    return Expanded(
-                      child: ListView.builder(
-                        itemCount: state.logs!.length,
-                        itemBuilder: ((context, index) {
-                          return LogTile(
-                            initialLog: state.logs![index],
-                            onTap: () {
-                              Navigator.of(context).push(
-                                LogOverviewPage.route(
-                                  initialLog: state.logs![index],
-                                ),
-                              );
-                            },
-                          );
-                        }),
-                      ),
-                    );
-                  }
-                }
-                return Text("No logs yet");
-              },
-            )
+            // BlocBuilder<HomeOverviewBloc, HomeOverviewState>(
+            //   builder: (context, state) {
+            //     if (state.logs != null) {
+            //       if (state.logs!.isNotEmpty) {
+            //         return Expanded(
+            //           child: ListView.builder(
+            //             itemCount: state.logs!.length,
+            //             itemBuilder: ((context, index) {
+            //               return LogTile(
+            //                 initialLog: state.logs![index],
+            //                 onTap: () {
+            //                   Navigator.of(context).push(
+            //                     LogOverviewPage.route(
+            //                       initialLog: state.logs![index],
+            //                     ),
+            //                   );
+            //                 },
+            //               );
+            //             }),
+            //           ),
+            //         );
+            //       }
+            //     }
+            //     return Text("No logs yet");
+            //   },
+            // )
           ],
         ),
       ),
     );
   }
-}
-
-Future<void> startJobModal(BuildContext context, HomeOverviewState state) async {
-  return showDialog(
-    context: context,
-    builder: (newContext) {
-      return BlocProvider.value(
-        value: context.read<HomeOverviewBloc>(),
-        child: AlertDialog(
-          title: Text('${state.job!.startTime.toDateIosFormat()} ${state.job!.client}'),
-          content: Text('Would you like to start the job?',
-              style: TextStyle(color: Color(0xff989898))),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(newContext);
-                Navigator.of(context).push(
-                  LogFlow.route(),
-                );
-              },
-              child: Text(
-                'Yes',
-                style: TextStyle(color: Colors.red),
-              ),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.pop(newContext);
-              },
-              child: Text(
-                'No',
-                style: TextStyle(color: Colors.red),
-              ),
-            ),
-          ],
-        ),
-      );
-    },
-  );
 }

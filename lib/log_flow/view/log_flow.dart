@@ -4,8 +4,8 @@ import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:logs_api/logs_api.dart';
-import 'package:logs_repository/logs_repository.dart';
+import 'package:jobs_api/jobs_api.dart';
+import 'package:jobs_repository/jobs_repository.dart';
 
 List<Page> onGenerateLocationPages(LogState state, List<Page> pages) {
   return [
@@ -31,7 +31,7 @@ class LogFlow extends StatelessWidget {
             email: context.read<AppBloc>().state.user.email,
             photo: context.read<AppBloc>().state.user.photo,
           ),
-          logsRepository: context.read<LogsRepository>(),
+          jobsRepository: context.read<JobsRepository>(),
           initialLog: initialLog,
         ),
         child: const LogFlow(),

@@ -1,6 +1,8 @@
 import 'package:continual_care_alpha/log_flow/log_flow.dart';
+import 'package:continual_care_alpha/tasks/tasks.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jobs_api/jobs_api.dart';
 
 class TasksView extends StatefulWidget {
   const TasksView({super.key});
@@ -32,8 +34,8 @@ class _TasksViewState extends State<TasksView> {
 
   @override
   Widget build(BuildContext context) {
-    final date = context.read<LogBloc>().state.started!;
-    final tasks = context.read<LogBloc>().state.tasks!;
+    // final date = context.read<LogBloc>().state.started!;
+    final tasks = context.read<TasksBloc>().state.initialTasks!;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),

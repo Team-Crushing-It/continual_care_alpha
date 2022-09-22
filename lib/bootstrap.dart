@@ -14,8 +14,6 @@ import 'package:continual_care_alpha/app/app.dart';
 import 'package:flutter/widgets.dart';
 import 'package:jobs_api/jobs_api.dart';
 import 'package:jobs_repository/jobs_repository.dart';
-import 'package:logs_api/logs_api.dart';
-import 'package:logs_repository/logs_repository.dart';
 
 class AppBlocObserver extends BlocObserver {
   @override
@@ -47,7 +45,6 @@ class AppBlocObserver extends BlocObserver {
 void bootstrap({
   required AuthenticationRepository authenticationRepository,
   required JobsApi jobsApi,
-  required LogsApi logsApi,
 }) {
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);
@@ -56,14 +53,12 @@ void bootstrap({
   Bloc.observer = AppBlocObserver();
 
   final jobsRepository = JobsRepository(jobsApi: jobsApi);
-  final logsRepository = LogsRepository(logsApi: logsApi);
 
   runZonedGuarded(
     () => runApp(
       App(
         authenticationRepository: authenticationRepository,
         jobsRepository: jobsRepository,
-        logsRepository: logsRepository,
       ),
     ),
     (error, stackTrace) => log(error.toString(), stackTrace: stackTrace),

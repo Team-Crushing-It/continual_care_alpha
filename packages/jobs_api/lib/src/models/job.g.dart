@@ -22,7 +22,10 @@ Job _$JobFromJson(Map<String, dynamic> json) => Job(
               ?.map((dynamic e) => User.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [User.empty],
-      link: json['link'] as String? ?? '',
+      logs: (json['logs'] as List<dynamic>?)
+              ?.map((dynamic e) => Log.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
       isCompleted: json['isCompleted'] as bool? ?? false,
     );
 
@@ -35,6 +38,6 @@ Map<String, dynamic> _$JobToJson(Job instance) => <String, dynamic>{
       'location': instance.location,
       'coordinator': instance.coordinator.toJson(),
       'caregivers': instance.caregivers.map((e) => e.toJson()).toList(),
-      'link': instance.link,
+      'logs': instance.logs.map((e) => e.toJson()).toList(),
       'isCompleted': instance.isCompleted,
     };
