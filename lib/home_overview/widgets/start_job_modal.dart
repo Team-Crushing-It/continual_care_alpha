@@ -23,7 +23,8 @@ Future<void> startJobModal(
             Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,8 +34,8 @@ Future<void> startJobModal(
                         height: 32,
                         child: Text(
                           "Recent Comments",
-                          style:
-                              TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: 24, fontWeight: FontWeight.bold),
                         ),
                         decoration: BoxDecoration(
                           border: Border(
@@ -58,7 +59,8 @@ Future<void> startJobModal(
                                   )
                                 ]
                               : recentComments
-                                  .map<Widget>((comment) => Text(comment.comment))
+                                  .map<Widget>(
+                                      (comment) => Text(comment.comment))
                                   .toList(),
                         ),
                       ),
@@ -66,7 +68,8 @@ Future<void> startJobModal(
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,8 +79,8 @@ Future<void> startJobModal(
                         height: 32,
                         child: Text(
                           "Tasks",
-                          style:
-                              TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: 24, fontWeight: FontWeight.bold),
                         ),
                         decoration: BoxDecoration(
                           border: Border(
@@ -123,7 +126,7 @@ Future<void> startJobModal(
             onPressed: () {
               Navigator.pop(newContext);
               Navigator.of(context).push(
-                LogFlow.route(),
+                LogFlow.route(job: upcomingJob),
               );
             },
             child: Text(

@@ -23,6 +23,7 @@ class LogOverviewPage extends StatelessWidget {
           ),
           jobsRepository: context.read<JobsRepository>(),
           initialLog: initialLog,
+          job: Job(),
         ),
         child: const LogOverviewPage(),
       ),

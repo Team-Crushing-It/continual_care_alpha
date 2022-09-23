@@ -20,7 +20,7 @@ List<Page> onGenerateLocationPages(LogState state, List<Page> pages) {
 class LogFlow extends StatelessWidget {
   const LogFlow({super.key});
 
-  static Route<void> route({Log? initialLog}) {
+  static Route<void> route({Log? initialLog, required Job job}) {
     return MaterialPageRoute(
       fullscreenDialog: true,
       builder: (context) => BlocProvider(
@@ -33,6 +33,7 @@ class LogFlow extends StatelessWidget {
           ),
           jobsRepository: context.read<JobsRepository>(),
           initialLog: initialLog,
+          job: job,
         ),
         child: const LogFlow(),
       ),

@@ -58,7 +58,7 @@ class _JobListTileState extends State<JobListTile> {
           title: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.only(bottom: 4.0),
+                padding: const EdgeInsets.only(bottom: 4),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
@@ -86,18 +86,18 @@ class _JobListTileState extends State<JobListTile> {
           ),
           subtitle: Container(
             child: Padding(
-              padding: const EdgeInsets.all(4),
+              padding: const EdgeInsets.only(bottom: 4),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      IconText(
+                      _iconText(
                         icon: Icons.location_on,
                         text: widget.job.location,
                       ),
-                      IconText(
+                      _iconText(
                         icon: Icons.medical_information,
                         text: widget.job.client,
                       )
@@ -109,6 +109,35 @@ class _JobListTileState extends State<JobListTile> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _iconText extends StatelessWidget {
+  const _iconText({
+    required this.icon,
+    required this.text,
+  }) : super();
+
+  final IconData icon;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(right: 4),
+          child: Icon(icon, color: Color(0xFF626262), size: 16),
+        ),
+        Text(
+          text,
+          style: Theme.of(context).textTheme.bodyText1,
+          maxLines: 1,
+          overflow: TextOverflow.fade,
+          softWrap: false,
+        ),
+      ],
     );
   }
 }
