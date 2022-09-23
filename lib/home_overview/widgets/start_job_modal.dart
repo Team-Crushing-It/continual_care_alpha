@@ -8,7 +8,8 @@ Future<void> startJobModal(
   Job recentJob,
 ) async {
   final tasks = upcomingJob.tasks;
-  final recentComments = recentJob.logs.first.comments;
+  final recentComments =
+      recentJob.logs.isNotEmpty ? recentJob.logs.first.comments : null;
 
   return showDialog(
     context: context,
@@ -32,11 +33,8 @@ Future<void> startJobModal(
                       Container(
                         width: double.maxFinite,
                         height: 32,
-                        child: Text(
-                          "Recent Comments",
-                          style: TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.bold),
-                        ),
+                        child: Text("Recent Comments",
+                            style: Theme.of(context).textTheme.headline2),
                         decoration: BoxDecoration(
                           border: Border(
                             bottom: BorderSide(
@@ -51,14 +49,14 @@ Future<void> startJobModal(
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: recentComments.isEmpty
+                          children: recentComments == null
                               ? [
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text('no recent comments'),
                                   )
                                 ]
-                              : recentComments
+                              : recentComments!
                                   .map<Widget>(
                                       (comment) => Text(comment.comment))
                                   .toList(),
@@ -77,11 +75,8 @@ Future<void> startJobModal(
                       Container(
                         width: double.maxFinite,
                         height: 32,
-                        child: Text(
-                          "Tasks",
-                          style: TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.bold),
-                        ),
+                        child: Text("Tasks",
+                            style: Theme.of(context).textTheme.headline2),
                         decoration: BoxDecoration(
                           border: Border(
                             bottom: BorderSide(
@@ -104,7 +99,27 @@ Future<void> startJobModal(
                                   )
                                 ]
                               : tasks
-                                  .map<Widget>((task) => Text(task.action))
+                                  .map<Widget>((task) => Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 8, vertical: 4),
+                                        child: Container(
+                                            child: Row(
+                                          children: [
+                                            Container(
+                                              height: 16,
+                                              width: 16,
+                                              child: Checkbox(
+                                                  value: false,
+                                                  onChanged: (bool) {}),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 8.0),
+                                              child: Text(task.action),
+                                            ),
+                                          ],
+                                        )),
+                                      ))
                                   .toList(),
                         ),
                       ),
@@ -113,12 +128,8 @@ Future<void> startJobModal(
                 ),
               ],
             ),
-            Text(
-              'Would you like to start the job?',
-              style: TextStyle(
-                color: Color(0xff989898),
-              ),
-            ),
+            Text('Would you like to start the job?',
+                style: Theme.of(context).textTheme.bodyText1),
           ],
         ),
         actions: [
