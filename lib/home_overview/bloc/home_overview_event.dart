@@ -9,6 +9,5 @@ abstract class HomeOverviewEvent extends Equatable {
 
 class HomeOverviewSubscriptionRequested extends HomeOverviewEvent {}
 
-class HomeOverviewUpcomingJobRequested extends HomeOverviewEvent {}
 
 

@@ -24,9 +24,7 @@ class HomeOverviewPage extends StatelessWidget {
       lazy: false,
       create: (context) => HomeOverviewBloc(
         jobsRepository: context.read<JobsRepository>(),
-      )
-        ..add(HomeOverviewSubscriptionRequested())
-        ..add(HomeOverviewUpcomingJobRequested()),
+      )..add(HomeOverviewSubscriptionRequested()),
       child: HomeOverviewView(),
     );
   }
@@ -114,7 +112,7 @@ class HomeOverviewView extends StatelessWidget {
                                   startJobModal(
                                     context,
                                     state.upcomingJob!,
-                                    // state.priorJob!,
+                                    state.recentJob!,
                                   );
                                 });
                           }

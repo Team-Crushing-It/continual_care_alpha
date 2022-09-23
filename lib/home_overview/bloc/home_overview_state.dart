@@ -1,27 +1,31 @@
 part of 'home_overview_bloc.dart';
 
 class HomeOverviewState extends Equatable {
-  const HomeOverviewState({this.upcomingJob, this.priorJob, this.jobs});
+  const HomeOverviewState({
+    this.upcomingJob,
+    this.recentJob,
+    this.jobs,
+  });
 
   final Job? upcomingJob;
-  final Job? priorJob;
+  final Job? recentJob;
   final List<Job>? jobs;
 
   @override
   List<Object?> get props => [
         upcomingJob,
-        priorJob,
+        recentJob,
         jobs,
       ];
 
   HomeOverviewState copyWith({
     Job? upcomingJob,
-    Job? priorJob,
+    Job? recentJob,
     List<Job>? jobs,
   }) {
     return HomeOverviewState(
       upcomingJob: upcomingJob ?? this.upcomingJob,
-      priorJob: priorJob ?? this.priorJob,
+      recentJob: recentJob ?? this.recentJob,
       jobs: jobs ?? this.jobs,
     );
   }

@@ -12,7 +12,6 @@ class HomeOverviewBloc extends Bloc<HomeOverviewEvent, HomeOverviewState> {
   })  : _jobsRepository = jobsRepository,
         super(HomeOverviewState()) {
     on<HomeOverviewSubscriptionRequested>(_onSubscriptionRequested);
-    on<HomeOverviewUpcomingJobRequested>(_onUpcomingJobRequested);
   }
 
   final JobsRepository _jobsRepository;
@@ -20,20 +19,27 @@ class HomeOverviewBloc extends Bloc<HomeOverviewEvent, HomeOverviewState> {
   Future<void> _onSubscriptionRequested(
       HomeOverviewEvent event, Emitter<HomeOverviewState> emit) async {
     await emit.forEach<List<Job>>(_jobsRepository.getJobs(), onData: (jobs) {
-      return state.copyWith(jobs: jobs);
-    });
-  }
+      // this is used to determine the upcoming job
+      final upcomingJobs = jobs
+          .where((element) => element.startTime.isAfter(DateTime.now()))
+          .toList();
+      upcomingJobs.sort(((a, b) => a.startTime.compareTo(b.startTime)));
 
-  Future<void> _onUpcomingJobRequested(
-      HomeOverviewEvent event, Emitter<HomeOverviewState> emit) async {
-    List<Job> jobs = await _jobsRepository.getJobs().first;
-    jobs = jobs
-        .where((element) => element.startTime.isAfter(DateTime.now()))
-        .toList();
-    jobs.sort(((a, b) => a.startTime.compareTo(b.startTime)));
-    if (jobs.isNotEmpty) {
-      final upcomingJob = jobs.first;
-      emit(state.copyWith(upcomingJob: upcomingJob));
-    }
+      final upcomingJob = upcomingJobs.first;
+
+      // this is used to determine the most recent job
+      final recentJobs = jobs
+          .where((element) => element.startTime.isBefore(DateTime.now()))
+          .toList();
+      recentJobs.sort(((a, b) => b.startTime.compareTo(a.startTime)));
+
+      final recentJob = recentJobs.first;
+
+      return state.copyWith(
+        jobs: jobs,
+        upcomingJob: upcomingJob,
+        recentJob: recentJob,
+      );
+    });
   }
 }
