@@ -30,6 +30,8 @@ class FlutterJobsTheme {
             color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         headline1: TextStyle(
             color: Colors.black, fontSize: 24, fontWeight: FontWeight.bold),
+         headline2: TextStyle(
+            color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
       ),
     );
   }

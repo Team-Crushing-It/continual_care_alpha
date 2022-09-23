@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
-class AddJobButton extends StatelessWidget {
-  const AddJobButton({
+class BottomButton extends StatelessWidget {
+  const BottomButton({
     super.key,
+    required this.title,
     required this.onPressed,
     required this.pressable,
   });
 
+  final String title;
   final VoidCallback onPressed;
   final bool pressable;
 
@@ -15,13 +17,13 @@ class AddJobButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 32.0),
       child: Container(
-        width: 160,
+        width: 200,
         height: 32,
         child: pressable
             ? ElevatedButton(
                 onPressed: onPressed,
                 child: Text(
-                  'Add Job',
+                  title,
                   style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20),
                 ),
                 style: ElevatedButton.styleFrom(
@@ -34,7 +36,7 @@ class AddJobButton extends StatelessWidget {
             : OutlinedButton(
                 onPressed: null,
                 child: Text(
-                  'Add Job',
+                  title,
                   style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20),
                 ),
               ),

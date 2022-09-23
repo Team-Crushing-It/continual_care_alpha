@@ -66,7 +66,7 @@ class _JobListTileState extends State<JobListTile> {
                       widget.job.startTime.dateIosFormat()!,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: theme.textTheme.bodyText2,
+                      style: theme.textTheme.headline2,
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
