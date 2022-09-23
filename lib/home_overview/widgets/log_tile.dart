@@ -63,7 +63,7 @@ class LogTile extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 InfoItem(title: "Comments", count: initialLog.comments.length),
-                InfoItem(title: "Tasks", count: initialLog.tasks.length),
+                // InfoItem(title: "Tasks", count: initialLog.tasks.length),
                 InfoItem(title: "IADL", count: initialLog.iadls.length),
                 InfoItem(title: "BADL", count: initialLog.badls.length)
               ],

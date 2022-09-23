@@ -35,6 +35,7 @@ class Job extends Equatable {
     this.coordinator = User.empty,
     this.caregivers = const [User.empty],
     this.logs = const [],
+    this.tasks = const [],
     this.isCompleted = false,
   })  : assert(
           id == null || id.isNotEmpty, // id: ''
@@ -83,10 +84,15 @@ class Job extends Equatable {
   /// Note that the caregiver may be empty.
   final List<User> caregivers;
 
-  /// The link of the job.
+  /// The logs of the job
   ///
-  /// Note that the link may be empty.
+  /// Note that the logs may be empty.
   final List<Log> logs;
+
+  /// The tasks of the job
+  ///
+  /// Note that the logs may be empty.
+  final List<Task> tasks;
 
   /// The bool of whether or not the job is done
   ///
@@ -106,6 +112,7 @@ class Job extends Equatable {
     User? coordinator,
     List<User>? caregivers,
     List<Log>? logs,
+    List<Task>? tasks,
     bool? isCompleted,
   }) {
     return Job(
@@ -118,6 +125,7 @@ class Job extends Equatable {
       coordinator: coordinator ?? this.coordinator,
       caregivers: caregivers ?? this.caregivers,
       logs: logs ?? this.logs,
+      tasks: tasks ?? this.tasks,
       isCompleted: isCompleted ?? this.isCompleted,
     );
   }
@@ -139,6 +147,7 @@ class Job extends Equatable {
         coordinator,
         caregivers,
         logs,
+        tasks,
         isCompleted
       ];
 }

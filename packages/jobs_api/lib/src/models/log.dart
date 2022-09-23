@@ -27,7 +27,6 @@ class Log extends Equatable {
   Log({
     String? id,
     this.comments = const [],
-    this.tasks = const [],
     this.iadls = const [],
     this.badls = const [],
     this.cMood,
@@ -52,11 +51,6 @@ class Log extends Equatable {
   ///
   /// Note that the comments may be empty.
   final List<Comment> comments;
-
-  /// The tasks on the log
-  ///
-  /// Note that the tasks may be empty.
-  final List<Task> tasks;
 
   /// The iadls on the log
   ///
@@ -99,7 +93,6 @@ class Log extends Equatable {
   Log copyWith({
     String? id,
     List<Comment>? comments,
-    List<Task>? tasks,
     List<ADL>? badls,
     List<ADL>? iadls,
     Mood? cMood,
@@ -111,7 +104,6 @@ class Log extends Equatable {
     return Log(
       id: id ?? this.id,
       comments: comments ?? this.comments,
-      tasks: tasks ?? this.tasks,
       iadls: iadls ?? this.iadls,
       badls: badls ?? this.badls,
       cMood: cMood ?? this.cMood,
@@ -132,7 +124,6 @@ class Log extends Equatable {
   List<Object?> get props => [
         id,
         comments,
-        tasks,
         iadls,
         badls,
         cMood,

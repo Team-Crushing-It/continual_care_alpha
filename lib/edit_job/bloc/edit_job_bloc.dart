@@ -23,7 +23,7 @@ class EditJobBloc extends Bloc<EditJobEvent, EditJobState> {
             location: initialJob?.location ?? '',
             coordinator: initialJob?.coordinator ?? coordinator,
             caregivers: initialJob?.caregivers ?? [User.empty],
-            logs: initialJob?.logs ?? [Log()],
+            logs: initialJob?.logs ?? [],
             isCompleted: initialJob?.isCompleted ?? false,
           ),
         ) {
@@ -35,6 +35,9 @@ class EditJobBloc extends Bloc<EditJobEvent, EditJobState> {
     on<EditJobCoordinatorChanged>(_onCoordinatorChanged);
     on<EditJobCaregiversChanged>(_onCaregiversChanged);
     on<EditJobisCompletedChanged>(_onisCompletedChanged);
+    on<EditJobLogActionChanged>(_onLogActionChanged);
+    on<EditJobNewTaskAdded>(_onNewTaskAdded);
+
     on<EditJobSubmitted>(_onSubmitted);
   }
 
@@ -91,12 +94,29 @@ class EditJobBloc extends Bloc<EditJobEvent, EditJobState> {
     emit(state.copyWith(caregivers: event.caregivers));
   }
 
-
   void _onisCompletedChanged(
     EditJobisCompletedChanged event,
     Emitter<EditJobState> emit,
   ) {
     emit(state.copyWith(isCompleted: event.isCompleted));
+  }
+
+  void _onLogActionChanged(
+    EditJobLogActionChanged event,
+    Emitter<EditJobState> emit,
+  ) {
+    emit(state.copyWith(logAction: event.action));
+  }
+
+  void _onNewTaskAdded(
+    EditJobNewTaskAdded event,
+    Emitter<EditJobState> emit,
+  ) {
+    print(event);
+    final newTask = Task(action: state.logAction);
+    final updatedTasks = state.initialJob;
+    // final ouput = state.initialJob.copyWith()
+    // emit(state.initialJob.copyWith(logAction: event.action));
   }
 
   Future<void> _onSubmitted(

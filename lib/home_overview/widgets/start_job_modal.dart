@@ -7,7 +7,7 @@ Future<void> startJobModal(
   Job upcomingJob,
   Job recentJob,
 ) async {
-  final tasks = upcomingJob.logs.first.tasks;
+  final tasks = upcomingJob.tasks;
   final recentComments = recentJob.logs.first.comments;
 
   return showDialog(

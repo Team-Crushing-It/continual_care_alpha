@@ -59,36 +59,26 @@ class EditJobView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          isNewJob
-              ? 'Create New Job'
-              : 'Edit Job',
+          isNewJob ? 'Create New Job' : 'Edit Job',
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        tooltip: 'l10n.editJobSaveButtonTooltip',
-        shape: const ContinuousRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(32)),
-        ),
-        backgroundColor: status.isLoadingOrSuccess
-            ? fabBackgroundColor.withOpacity(0.5)
-            : fabBackgroundColor,
-        onPressed: status.isLoadingOrSuccess
-            ? null
-            : () => context.read<EditJobBloc>().add(const EditJobSubmitted()),
-        child: status.isLoadingOrSuccess
-            ? const CupertinoActivityIndicator()
-            : const Icon(Icons.check_rounded),
       ),
       body: CupertinoScrollbar(
         child: SingleChildScrollView(
           child: Column(
-            children: const [
+            children: [
               _ClientField(),
               _DateField(),
               _DurationField(),
               _PayField(),
               _LocationField(),
               _CaregiversField(),
+              _TasksList(),
+              AddJobButton(
+                pressable: true,
+                onPressed: (() {
+                  context.read<EditJobBloc>().add(const EditJobSubmitted());
+                }),
+              ),
             ],
           ),
         ),
@@ -376,3 +366,116 @@ class _CaregiversField extends StatelessWidget {
   }
 }
 
+class _TasksList extends StatefulWidget {
+  const _TasksList({super.key});
+
+  @override
+  State<_TasksList> createState() => _TasksListState();
+}
+
+class _TasksListState extends State<_TasksList> {
+  late FocusNode myFocusNode;
+  late TextEditingController myController;
+  @override
+  initState() {
+    super.initState();
+
+    myFocusNode = FocusNode();
+    myController = TextEditingController()
+      ..addListener(() {
+        context
+            .read<EditJobBloc>()
+            .add(EditJobLogActionChanged(myController.text));
+      });
+  }
+
+  @override
+  void dispose() {
+    myFocusNode.dispose();
+    myController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final tasks =
+        context.watch<EditJobBloc>().state.initialJob!.tasks;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: double.maxFinite,
+            height: 32,
+            child: Text(
+              "Tasks",
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  width: 1,
+                  color: Color(0xff626262),
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: tasks.isEmpty
+                  ? [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text('no tasks yet'),
+                      )
+                    ]
+                  : tasks.map<Widget>((task) => Text(task.action)).toList(),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 4.0),
+                    child: TextField(
+                      focusNode: myFocusNode,
+                      controller: myController,
+                      decoration: InputDecoration(
+                        hintText: 'Add Task',
+                        suffixIcon: IconButton(
+                          icon: Icon(Icons.add),
+                          onPressed: context
+                                  .watch<EditJobBloc>()
+                                  .state
+                                  .logAction
+                                  .isNotEmpty
+                              ? () {
+                                  context
+                                      .read<EditJobBloc>()
+                                      .add(EditJobNewTaskAdded());
+                                  myController.clear();
+                                  myFocusNode.unfocus();
+                                }
+                              : null,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}

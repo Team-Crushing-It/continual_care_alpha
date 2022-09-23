@@ -12,10 +12,6 @@ Log _$LogFromJson(Map<String, dynamic> json) => Log(
               ?.map((dynamic e) => Comment.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
-      tasks: (json['tasks'] as List<dynamic>?)
-              ?.map((dynamic e) => Task.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          const [],
       iadls: (json['iadls'] as List<dynamic>?)
               ?.map((dynamic e) => ADL.fromJson(e as Map<String, dynamic>))
               .toList() ??
@@ -38,7 +34,6 @@ Log _$LogFromJson(Map<String, dynamic> json) => Log(
 Map<String, dynamic> _$LogToJson(Log instance) => <String, dynamic>{
       'id': instance.id,
       'comments': instance.comments.map((e) => e.toJson()).toList(),
-      'tasks': instance.tasks.map((e) => e.toJson()).toList(),
       'iadls': instance.iadls.map((e) => e.toJson()).toList(),
       'badls': instance.badls.map((e) => e.toJson()).toList(),
       'cMood': _$MoodEnumMap[instance.cMood],

@@ -23,7 +23,7 @@ class LogBloc extends Bloc<LogEvent, LogState> {
             iadls: initialLog?.iadls ?? [],
             badls: initialLog?.badls ?? [],
             newTaskAction: '',
-            tasks: initialLog?.tasks ?? [],
+            tasks: job.tasks,
             cMood: initialLog?.cMood ?? null,
             iMood: initialLog?.iMood ?? null,
             location: initialLog?.location ?? '',
@@ -198,7 +198,6 @@ class LogBloc extends Bloc<LogEvent, LogState> {
       comments: state.comments,
       iadls: state.iadls,
       badls: state.badls,
-      tasks: state.tasks,
       location: state.location,
       completed: state.completed,
     );
