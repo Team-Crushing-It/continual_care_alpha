@@ -35,9 +35,9 @@ class LogBloc extends Bloc<LogEvent, LogState> {
     on<LogCommentsChanged>(_onCommentsChanged);
     on<LogIADLSChanged>(_onIADLSChanged);
     on<LogBADLSChanged>(_onBADLSChanged);
-    on<LogTasksChanged>(_onTasksChanged);
     on<LogNewTaskActionChanged>(_onNewTaskActionChanged);
-    on<LogNewTaskAdded>(_onNewTaskAdded);
+    on<LogNewTaskAdded>(_onLogNewTaskAdded);
+    on<LogTasksChanged>(_onTasksChanged);
     on<LogTaskUpdated>(_onTaskUpdated);
     on<LogCMoodChanged>(_onCMoodChanged);
     on<LogIMoodChanged>(_onIMoodChanged);
@@ -106,7 +106,7 @@ class LogBloc extends Bloc<LogEvent, LogState> {
     emit(state.copyWith(newTaskAction: event.action));
   }
 
-  void _onNewTaskAdded(
+  void _onLogNewTaskAdded(
     LogNewTaskAdded event,
     Emitter<LogState> emit,
   ) {

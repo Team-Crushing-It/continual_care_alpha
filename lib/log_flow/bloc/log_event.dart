@@ -52,9 +52,7 @@ class LogNewTaskActionChanged extends LogEvent {
   List<Object> get props => [action];
 }
 
-class LogNewTaskAdded extends LogEvent {
-  const LogNewTaskAdded();
-}
+class LogNewTaskAdded extends LogEvent {}
 
 class LogTasksChanged extends LogEvent {
   const LogTasksChanged(this.tasks);
@@ -127,6 +125,7 @@ class LogisCompletedChanged extends LogEvent {
   @override
   List<Object> get props => [isCompleted];
 }
+
 
 class LogSubmitted extends LogEvent {
   const LogSubmitted();

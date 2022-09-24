@@ -1,9 +1,5 @@
-import 'package:continual_care_alpha/app/bloc/app_bloc.dart';
 import 'package:continual_care_alpha/home_overview/bloc/home_overview_bloc.dart';
 import 'package:continual_care_alpha/home_overview/home_overview.dart';
-import 'package:continual_care_alpha/log_flow/log_flow.dart';
-import 'package:continual_care_alpha/tasks/tasks.dart';
-import 'package:continual_care_alpha/tasks/view/tasks_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jobs_repository/jobs_repository.dart';
@@ -30,34 +26,6 @@ class HomeOverviewPage extends StatelessWidget {
   }
 }
 
-// class ModalProvider extends StatelessWidget {
-//   const ModalProvider({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     // print(
-//     //   context.read<HomeOverviewBloc>().state.upcomingJob!.logs.first.tasks,
-//     // );
-//     return MultiBlocProvider(
-//       providers: [
-//         BlocProvider(
-//           lazy: false,
-//           create: (context) => TasksBloc(
-//             initialTasks: context
-//                 .read<HomeOverviewBloc>()
-//                 .state
-//                 .upcomingJob!
-//                 .logs
-//                 .first
-//                 .tasks,
-//             jobsRepository: context.read<JobsRepository>(),
-//           ),
-//         ),
-//       ],
-//       child: HomeOverviewView(),
-//     );
-//   }
-// }
 
 class HomeOverviewView extends StatelessWidget {
   const HomeOverviewView({Key? key}) : super(key: key);

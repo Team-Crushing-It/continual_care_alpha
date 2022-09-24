@@ -142,13 +142,11 @@ class EditJobBloc extends Bloc<EditJobEvent, EditJobState> {
     // existing ones
     var updatedTasks;
     if (!state.isNewJob) {
-      updatedTasks = state.initialJob!.tasks.map((e) => e).toList()
-        ..add(newTask);
+      updatedTasks = state.tasks.map((e) => e).toList()..add(newTask);
     }
     // Else just add the task from the bloc
     else {
-      updatedTasks = state.tasks.map((e) => e).toList()
-        ..add(newTask);
+      updatedTasks = state.tasks.map((e) => e).toList()..add(newTask);
     }
 
     emit(state.copyWith(

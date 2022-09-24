@@ -56,7 +56,135 @@ class _TasksPageState extends State<TasksPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           LogProgress(),
-          // TasksView(),
+          _TasksList(),
+        ],
+      ),
+    );
+  }
+}
+
+class _TasksList extends StatefulWidget {
+  const _TasksList({super.key});
+
+  @override
+  State<_TasksList> createState() => _TasksListState();
+}
+
+class _TasksListState extends State<_TasksList> {
+  late FocusNode myFocusNode;
+  late TextEditingController myController;
+  @override
+  initState() {
+    super.initState();
+
+    myFocusNode = FocusNode();
+    myController = TextEditingController()
+      ..addListener(() {
+        context.read<LogBloc>().add(LogNewTaskActionChanged(myController.text));
+      });
+  }
+
+  @override
+  void dispose() {
+    myFocusNode.dispose();
+    myController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final tasks = context.watch<LogBloc>().state.tasks;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: double.maxFinite,
+            height: 32,
+            child: Text(
+              "Tasks",
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  width: 1,
+                  color: Color(0xff626262),
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: tasks!.isEmpty
+                  ? [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text('no tasks yet',
+                            style: Theme.of(context).textTheme.bodyText1),
+                      )
+                    ]
+                  : tasks
+                      .map<Widget>((task) => Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 8),
+                            child: Row(
+                              children: [
+                                Container(
+                                    width: 16,
+                                    height: 16,
+                                    child: Checkbox(
+                                        value: false, onChanged: (value) {})),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 8),
+                                  child: Text(task.action,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1),
+                                ),
+                              ],
+                            ),
+                          ))
+                      .toList(),
+            ),
+          ),
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 4.0),
+                  child: TextField(
+                    focusNode: myFocusNode,
+                    controller: myController,
+                    decoration: InputDecoration(
+                      hintText: 'Add Task',
+                      suffixIcon: IconButton(
+                        icon: Icon(Icons.add),
+                        onPressed: context
+                                .watch<LogBloc>()
+                                .state
+                                .newTaskAction!
+                                .isNotEmpty
+                            ? () {
+                                context.read<LogBloc>().add(LogNewTaskAdded());
+                                myController.clear();
+                                myFocusNode.unfocus();
+                              }
+                            : null,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          )
         ],
       ),
     );

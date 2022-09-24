@@ -134,25 +134,25 @@ Future<void> startJobModal(
         ),
         actions: [
           TextButton(
+            child: Text(
+              'Yes',
+              style: TextStyle(color: Colors.red),
+            ),
             onPressed: () {
               Navigator.pop(newContext);
               Navigator.of(context).push(
                 LogFlow.route(job: upcomingJob),
               );
             },
-            child: Text(
-              'Yes',
-              style: TextStyle(color: Colors.red),
-            ),
           ),
           TextButton(
-            onPressed: () {
-              Navigator.pop(newContext);
-            },
             child: Text(
               'No',
               style: TextStyle(color: Colors.red),
             ),
+            onPressed: () {
+              Navigator.pop(newContext);
+            },
           ),
         ],
       );
