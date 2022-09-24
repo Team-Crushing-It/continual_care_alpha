@@ -13,7 +13,7 @@ enum LogStatus {
   commentsCompleted
 }
 
-enum TaskStatus {
+enum PageStatus {
   initial,
   updated,
   loading,
@@ -26,12 +26,16 @@ extension LogStatusX on LogStatus {
         LogStatus.loading,
         LogStatus.success,
       ].contains(this);
+
+  bool get isUpdated => [
+        PageStatus.updated,
+      ].contains(this);
 }
 
 class LogState extends Equatable {
   LogState({
     this.status = LogStatus.initial,
-    this.taskStatus = TaskStatus.initial,
+    this.pageStatus = PageStatus.initial,
     this.initialLog,
     this.user = User.empty,
     this.comments = const [],
@@ -49,7 +53,7 @@ class LogState extends Equatable {
         this.started = started ?? DateTime.now();
 
   final LogStatus status;
-  final TaskStatus taskStatus;
+  final PageStatus pageStatus;
   final Log? initialLog;
   final User user;
   final List<Comment>? comments;
@@ -69,7 +73,7 @@ class LogState extends Equatable {
   @override
   List<Object?> get props => [
         status,
-        taskStatus,
+        pageStatus,
         initialLog,
         comments,
         tasks,
@@ -87,7 +91,7 @@ class LogState extends Equatable {
 
   LogState copyWith({
     LogStatus? status,
-    TaskStatus? taskStatus,
+    PageStatus? pageStatus,
     Log? initialLog,
     dynamic las,
     User? user,
@@ -105,7 +109,7 @@ class LogState extends Equatable {
   }) {
     return LogState(
       status: status ?? this.status,
-      taskStatus: taskStatus ?? this.taskStatus,
+      pageStatus: pageStatus ?? this.pageStatus,
       initialLog: initialLog ?? this.initialLog,
       user: user ?? this.user,
       comments: comments ?? this.comments,

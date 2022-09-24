@@ -126,7 +126,6 @@ class LogisCompletedChanged extends LogEvent {
   List<Object> get props => [isCompleted];
 }
 
-
 class LogSubmitted extends LogEvent {
   const LogSubmitted();
 }

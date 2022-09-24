@@ -35,14 +35,6 @@ class MoodPicker extends StatelessWidget {
                   .toList(),
             ),
           ),
-          ContinueButton(
-            pressable: cMood == null ? false : true,
-            onPressed: () {
-              context.read<LogBloc>().add(
-                    LogStatusChanged(LogStatus.caregiverCompleted),
-                  );
-            },
-          )
         ],
       ),
     );

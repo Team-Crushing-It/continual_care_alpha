@@ -59,6 +59,7 @@ class LogBloc extends Bloc<LogEvent, LogState> {
     emit(
       state.copyWith(
         status: event.status,
+        pageStatus: PageStatus.initial,
       ),
     );
   }
@@ -114,12 +115,18 @@ class LogBloc extends Bloc<LogEvent, LogState> {
     final newTask = Task(action: state.newTaskAction!);
 
     // add that task to the existing list
-    final output = state.tasks!.map((e) => e).toList();
-
-    output.add(newTask);
+    final output = state.tasks!.map((e) => e).toList()..add(newTask);
 
     // updating the list
-    emit(state.copyWith(tasks: output, newTaskAction: ''));
+    emit(
+      state.copyWith(
+        status: LogStatus.updated,
+        tasks: output,
+        newTaskAction: '',
+      ),
+    );
+
+    // call something from the repository?
   }
 
   void _onTaskUpdated(
@@ -136,7 +143,10 @@ class LogBloc extends Bloc<LogEvent, LogState> {
       return task.id == event.task.id ? updatedTask : task;
     }).toList();
 
-    emit(state.copyWith(tasks: newList));
+    emit(state.copyWith(
+      pageStatus: PageStatus.updated,
+      tasks: newList,
+    ));
   }
 
   void _onTasksChanged(
@@ -150,7 +160,7 @@ class LogBloc extends Bloc<LogEvent, LogState> {
     LogCMoodChanged event,
     Emitter<LogState> emit,
   ) {
-    emit(state.copyWith(cMood: event.cMood));
+    emit(state.copyWith(cMood: event.cMood, pageStatus: PageStatus.updated));
   }
 
   void _onIMoodChanged(

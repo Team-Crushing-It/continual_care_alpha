@@ -15,6 +15,7 @@ class CaregiverPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final date = context.read<LogBloc>().state.started!;
+    final pageStatus = context.select((LogBloc bloc) => bloc.state.pageStatus);
 
     return Scaffold(
       appBar: AppBar(
@@ -31,6 +32,14 @@ class CaregiverPage extends StatelessWidget {
           LogProgress(),
           MoodPicker(
             prompt: 'How are you doing today?',
+          ),
+          ContinueButton(
+            pressable: pageStatus == PageStatus.updated ? true : false,
+            onPressed: () {
+              context.read<LogBloc>().add(
+                    LogStatusChanged(LogStatus.caregiverCompleted),
+                  );
+            },
           )
         ],
       ),

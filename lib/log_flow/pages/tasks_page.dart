@@ -94,12 +94,13 @@ class _TasksListState extends State<_TasksList> {
   @override
   Widget build(BuildContext context) {
     final tasks = context.watch<LogBloc>().state.tasks;
+    final pageStatus = context.select((LogBloc bloc) => bloc.state.pageStatus);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       child: Column(
         mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
             width: double.maxFinite,
@@ -137,10 +138,17 @@ class _TasksListState extends State<_TasksList> {
                             child: Row(
                               children: [
                                 Container(
-                                    width: 16,
-                                    height: 16,
-                                    child: Checkbox(
-                                        value: false, onChanged: (value) {})),
+                                  width: 16,
+                                  height: 16,
+                                  child: Checkbox(
+                                    value: task.isCompleted,
+                                    onChanged: (isChecked) {
+                                      context
+                                          .read<LogBloc>()
+                                          .add(LogTaskUpdated(task));
+                                    },
+                                  ),
+                                ),
                                 Padding(
                                   padding: const EdgeInsets.only(left: 8),
                                   child: Text(task.action,
@@ -184,7 +192,18 @@ class _TasksListState extends State<_TasksList> {
                 ),
               ),
             ],
-          )
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 32.0),
+            child: ContinueButton(
+              pressable: pageStatus == PageStatus.updated ? true : false,
+              onPressed: () {
+                context.read<LogBloc>().add(
+                      LogStatusChanged(LogStatus.caregiverCompleted),
+                    );
+              },
+            ),
+          ),
         ],
       ),
     );
