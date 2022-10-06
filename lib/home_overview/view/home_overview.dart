@@ -84,7 +84,7 @@ class HomeOverviewView extends StatelessWidget {
                                   );
                                 });
                           }
-                          return Center(child: Text("No upcomming jobs"));
+                          return Center(child: Text("No upcoming jobs"));
                         },
                       ),
                     ],

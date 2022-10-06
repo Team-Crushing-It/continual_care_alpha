@@ -40,13 +40,20 @@ class AppView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: FlutterJobsTheme.light,
-      darkTheme: FlutterJobsTheme.dark,
-      home: FlowBuilder<AppStatus>(
-        state: context.select((AppBloc bloc) => bloc.state.status),
-        onGeneratePages: onGenerateAppViewPages,
+    return BlocListener<AppBloc, AppState>(
+      listener: (context, state) {
+        if (state.status == AppStatus.authenticated) {
+          context.read<AppBloc>().add(AppGetGroup());
+        }
+      },
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: FlutterJobsTheme.light,
+        darkTheme: FlutterJobsTheme.dark,
+        home: FlowBuilder<AppStatus>(
+          state: context.select((AppBloc bloc) => bloc.state.status),
+          onGeneratePages: onGenerateAppViewPages,
+        ),
       ),
     );
   }

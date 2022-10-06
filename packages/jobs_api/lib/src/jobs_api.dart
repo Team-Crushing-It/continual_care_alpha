@@ -8,7 +8,7 @@ abstract class JobsApi {
   const JobsApi();
 
   /// Provides a [Stream] of all jobs.
-  Stream<List<Job>> getJobs();
+  Stream<List<Job>> getJobs(String group);
 
   /// Saves a [job].
   ///

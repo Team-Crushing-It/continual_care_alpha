@@ -17,15 +17,16 @@ class HomeOverviewBloc extends Bloc<HomeOverviewEvent, HomeOverviewState> {
 
   Future<void> _onSubscriptionRequested(
       HomeOverviewEvent event, Emitter<HomeOverviewState> emit) async {
-    await emit.forEach<List<Job>>(_jobsRepository.getJobs(), onData: (jobs)
-     {
+    await emit.forEach<List<Job>>(_jobsRepository.getJobs('groupTest'),
+        onData: (jobs) {
       // this is used to determine the upcoming job
       final upcomingJobs = jobs
           .where((element) => element.startTime.isAfter(DateTime.now()))
           .toList();
-      upcomingJobs.sort(((a, b) => a.startTime.compareTo(b.startTime)));
 
-      final upcomingJob = upcomingJobs.first;
+      // upcomingJobs.sort(((a, b) => a.startTime.compareTo(b.startTime)));
+
+      final upcomingJob = upcomingJobs.isEmpty ? null : upcomingJobs.first;
 
       // this is used to determine the most recent job
       final recentJobs = jobs

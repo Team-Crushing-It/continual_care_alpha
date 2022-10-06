@@ -9,9 +9,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  final authenticationRepository = AuthenticationRepository();
+
+  final firestore = FirebaseFirestore.instance;
+  final authenticationRepository =
+      AuthenticationRepository(firestore: firestore);
   await authenticationRepository.user.first;
-  final jobsApi = FirestoreJobsApi(firestore: FirebaseFirestore.instance);
+  final jobsApi = FirestoreJobsApi(firestore: firestore);
 
   return bootstrap(
     authenticationRepository: authenticationRepository,
