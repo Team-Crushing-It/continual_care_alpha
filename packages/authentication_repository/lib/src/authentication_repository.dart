@@ -201,8 +201,6 @@ class AuthenticationRepository {
 
     final output = group.data()!['group'] as String;
 
-    print(output);
-
     return output;
   }
 

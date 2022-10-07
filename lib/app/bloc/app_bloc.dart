@@ -43,7 +43,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   void _onGetGroup(AppGetGroup event, Emitter<AppState> emit) async {
     final group = await _authenticationRepository.getUserGroup();
 
-    emit(state.copyWith(group: group));
+    emit(state.copyWith(status: AppStatus.initialized, group: group));
   }
 
   @override

@@ -16,8 +16,8 @@ class HomeOverviewBloc extends Bloc<HomeOverviewEvent, HomeOverviewState> {
   final JobsRepository _jobsRepository;
 
   Future<void> _onSubscriptionRequested(
-      HomeOverviewEvent event, Emitter<HomeOverviewState> emit) async {
-    await emit.forEach<List<Job>>(_jobsRepository.getJobs('groupTest'),
+      HomeOverviewSubscriptionRequested event, Emitter<HomeOverviewState> emit) async {
+    await emit.forEach<List<Job>>(_jobsRepository.getJobs(event.group),
         onData: (jobs) {
       // this is used to determine the upcoming job
       final upcomingJobs = jobs

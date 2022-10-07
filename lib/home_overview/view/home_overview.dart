@@ -1,3 +1,4 @@
+import 'package:continual_care_alpha/app/app.dart';
 import 'package:continual_care_alpha/home_overview/bloc/home_overview_bloc.dart';
 import 'package:continual_care_alpha/home_overview/home_overview.dart';
 import 'package:flutter/material.dart';
@@ -20,12 +21,14 @@ class HomeOverviewPage extends StatelessWidget {
       lazy: false,
       create: (context) => HomeOverviewBloc(
         jobsRepository: context.read<JobsRepository>(),
-      )..add(HomeOverviewSubscriptionRequested()),
+      )..add(
+          HomeOverviewSubscriptionRequested(
+              context.read<AppBloc>().state.group),
+        ),
       child: HomeOverviewView(),
     );
   }
 }
-
 
 class HomeOverviewView extends StatelessWidget {
   const HomeOverviewView({Key? key}) : super(key: key);
@@ -130,32 +133,32 @@ class HomeOverviewView extends StatelessWidget {
                 ),
               ),
             ),
-            // BlocBuilder<HomeOverviewBloc, HomeOverviewState>(
-            //   builder: (context, state) {
-            //     if (state.logs != null) {
-            //       if (state.logs!.isNotEmpty) {
-            //         return Expanded(
-            //           child: ListView.builder(
-            //             itemCount: state.logs!.length,
-            //             itemBuilder: ((context, index) {
-            //               return LogTile(
-            //                 initialLog: state.logs![index],
-            //                 onTap: () {
-            //                   Navigator.of(context).push(
-            //                     LogOverviewPage.route(
-            //                       initialLog: state.logs![index],
-            //                     ),
-            //                   );
-            //                 },
-            //               );
-            //             }),
-            //           ),
-            //         );
-            //       }
-            //     }
-            //     return Text("No logs yet");
-            //   },
-            // )
+            BlocBuilder<HomeOverviewBloc, HomeOverviewState>(
+              builder: (context, state) {
+                if (state.jobs != null) {
+                  if (state.jobs!.isNotEmpty) {
+                    return Expanded(
+                      child: ListView.builder(
+                        itemCount: state.jobs!.length,
+                        itemBuilder: ((context, index) {
+                          return JobTile(
+                            initialJob: state.jobs![index],
+                            onTap: () {
+                              // Navigator.of(context).push(
+                              //   LogOverviewPage.route(
+                              //     initialLog: state.jobs![index],
+                              //   ),
+                              // );
+                            },
+                          );
+                        }),
+                      ),
+                    );
+                  }
+                }
+                return Text("No logs yet");
+              },
+            )
           ],
         ),
       ),
