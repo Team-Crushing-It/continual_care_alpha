@@ -17,13 +17,15 @@ class HomeOverviewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appState = context.read<AppBloc>().state;
     return BlocProvider(
       lazy: false,
       create: (context) => HomeOverviewBloc(
         jobsRepository: context.read<JobsRepository>(),
       )..add(
           HomeOverviewSubscriptionRequested(
-              context.read<AppBloc>().state.group),
+            appState.group,
+          ),
         ),
       child: HomeOverviewView(),
     );
@@ -104,7 +106,9 @@ class HomeOverviewView extends StatelessWidget {
                             size: 32,
                           )),
                       IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            context.read<AppBloc>().add(AppLogoutRequested());
+                          },
                           icon: Icon(
                             Icons.account_circle,
                             size: 32,

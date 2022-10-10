@@ -194,10 +194,9 @@ class AuthenticationRepository {
 
   /// Returns the metadata associated with the users
   Future<String> getUserGroup() async {
-    print('get usergrou;');
     final user = _cache.read<User>(key: userCacheKey);
 
-    final group = await _firestore.collection('users').doc('id').get();
+    final group = await _firestore.collection('users').doc(user!.id).get();
 
     final output = group.data()!['group'] as String;
 
