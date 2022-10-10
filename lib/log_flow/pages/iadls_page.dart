@@ -2,30 +2,25 @@ import 'package:continual_care_alpha/log_flow/log_flow.dart';
 import 'package:continual_care_alpha/schedule/widgets/date_ios_format.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jobs_api/jobs_api.dart';
 
-class TasksPage extends StatefulWidget {
-  const TasksPage({super.key});
+class IadlsPage extends StatefulWidget {
+  const IadlsPage({super.key});
 
   static MaterialPage<void> page() {
-    return const MaterialPage<void>(child: TasksPage());
+    return const MaterialPage<void>(child: IadlsPage());
   }
 
   @override
-  State<TasksPage> createState() => _TasksPageState();
+  State<IadlsPage> createState() => _IadlsPageState();
 }
 
-class _TasksPageState extends State<TasksPage> {
+class _IadlsPageState extends State<IadlsPage> {
   late FocusNode myFocusNode;
   late TextEditingController myController;
   @override
   initState() {
     super.initState();
-
-    myFocusNode = FocusNode();
-    myController = TextEditingController()
-      ..addListener(() {
-        context.read<LogBloc>().add(LogNewTaskActionChanged(myController.text));
-      });
   }
 
   @override
@@ -56,44 +51,34 @@ class _TasksPageState extends State<TasksPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           LogProgress(),
-          _TasksList(),
+          _IadlsList(),
         ],
       ),
     );
   }
 }
 
-class _TasksList extends StatefulWidget {
-  const _TasksList({super.key});
+class _IadlsList extends StatefulWidget {
+  const _IadlsList({super.key});
 
   @override
-  State<_TasksList> createState() => _TasksListState();
+  State<_IadlsList> createState() => _IadlsListState();
 }
 
-class _TasksListState extends State<_TasksList> {
-  late FocusNode myFocusNode;
-  late TextEditingController myController;
+class _IadlsListState extends State<_IadlsList> {
   @override
   initState() {
     super.initState();
-
-    myFocusNode = FocusNode();
-    myController = TextEditingController()
-      ..addListener(() {
-        context.read<LogBloc>().add(LogNewTaskActionChanged(myController.text));
-      });
   }
 
   @override
   void dispose() {
-    myFocusNode.dispose();
-    myController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final tasks = context.watch<LogBloc>().state.tasks;
+    final iadls = context.watch<LogBloc>().state.iadls;
     final pageStatus = context.select((LogBloc bloc) => bloc.state.pageStatus);
 
     return Padding(
@@ -106,7 +91,7 @@ class _TasksListState extends State<_TasksList> {
             width: double.maxFinite,
             height: 32,
             child: Text(
-              "Tasks",
+              "Instrumental ADLs",
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             decoration: BoxDecoration(
@@ -123,16 +108,18 @@ class _TasksListState extends State<_TasksList> {
             child: Column(
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: tasks!.isEmpty
+              children: iadls!.isEmpty
                   ? [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text('no tasks yet',
+                        child: Text('no iadl yet',
                             style: Theme.of(context).textTheme.bodyText1),
                       )
                     ]
-                  : tasks
-                      .map<Widget>((task) => Padding(
+                  : iadls
+                      .asMap()
+                      .entries
+                      .map<Widget>((entry) => Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 8, vertical: 8),
                             child: Row(
@@ -140,18 +127,23 @@ class _TasksListState extends State<_TasksList> {
                                 Container(
                                   width: 16,
                                   height: 16,
-                                  child: Checkbox(
-                                    value: context.watch<LogBloc>().state.tasks!.firstWhere((element) => element.id == task.id).isCompleted,
-                                    onChanged: (isChecked) {
-                                      context
-                                          .read<LogBloc>()
-                                          .add(LogTaskUpdated(task));
+                                  child: BlocBuilder<LogBloc, LogState>(
+                                    builder: (context, state) {
+                                      return Checkbox(
+                                        value: state
+                                            .iadls![entry.key].isIndependent,
+                                        onChanged: (isChecked) {
+                                          context
+                                              .read<LogBloc>()
+                                              .add(LogIADLSChanged(entry.key));
+                                        },
+                                      );
                                     },
                                   ),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(left: 8),
-                                  child: Text(task.action,
+                                  child: Text(entry.value.name,
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyText1),
@@ -162,44 +154,13 @@ class _TasksListState extends State<_TasksList> {
                       .toList(),
             ),
           ),
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 4.0),
-                  child: TextField(
-                    focusNode: myFocusNode,
-                    controller: myController,
-                    decoration: InputDecoration(
-                      hintText: 'Add Task',
-                      suffixIcon: IconButton(
-                        icon: Icon(Icons.add),
-                        onPressed: context
-                                .watch<LogBloc>()
-                                .state
-                                .newTaskAction!
-                                .isNotEmpty
-                            ? () {
-                                context.read<LogBloc>().add(LogNewTaskAdded());
-                                myController.clear();
-                                myFocusNode.unfocus();
-                              }
-                            : null,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 32.0),
             child: ContinueButton(
               pressable: pageStatus == PageStatus.updated ? true : false,
               onPressed: () {
                 context.read<LogBloc>().add(
-                      LogStatusChanged(LogStatus.tasksCompleted),
+                      LogStatusChanged(LogStatus.caregiverCompleted),
                     );
               },
             ),

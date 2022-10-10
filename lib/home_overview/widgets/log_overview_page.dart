@@ -307,7 +307,9 @@ class _IADLS extends StatelessWidget {
                       child: CheckTile(
                           text: iadl.name,
                           onTap: (value) {
-                            context.read<LogBloc>().add(LogIADLSChanged(index));
+                            context
+                                .read<LogBloc>()
+                                .add(LogIADLSChanged(index));
                           },
                           isChecked: iadl.isIndependent),
                     );

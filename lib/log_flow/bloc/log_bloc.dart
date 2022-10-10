@@ -34,7 +34,9 @@ class LogBloc extends Bloc<LogEvent, LogState> {
     on<LogStatusChanged>(_onStatusChanged);
     on<LogCommentsChanged>(_onCommentsChanged);
     on<LogIADLSChanged>(_onIADLSChanged);
+    on<LogIADLSInitialized>(_onIADLSInitialized);
     on<LogBADLSChanged>(_onBADLSChanged);
+    on<LogBADLSInitialized>(_onBADLSInitialized);
     on<LogNewTaskActionChanged>(_onNewTaskActionChanged);
     on<LogNewTaskAdded>(_onLogNewTaskAdded);
     on<LogTasksChanged>(_onTasksChanged);
@@ -78,13 +80,20 @@ class LogBloc extends Bloc<LogEvent, LogState> {
     LogIADLSChanged event,
     Emitter<LogState> emit,
   ) {
-    List<ADL>? iadls = state.iadls;
-    final previousADL = iadls![event.index];
-    iadls[event.index] =
-        previousADL.copyWith(isIndependent: !(previousADL.isIndependent));
-    emit(state.copyWith(
-        badls: iadls, initialLog: state.initialLog!.copyWith(iadls: iadls)));
-    // _logsRepository.saveLog(state.initialLog!);
+    // final iadlsList = state.iadls.map()
+    // final iadls = state.iadls;
+    // final previousADL = iadls![event.index];
+    // iadls[event.index] =
+    //     previousADL.copyWith(isIndependent: !(previousADL.isIndependent));
+    final newIadls = state.iadls!.map((iadl) => iadl).toList();
+    emit(state.copyWith(iadls: newIadls));
+  }
+
+  void _onIADLSInitialized(
+    LogIADLSInitialized event,
+    Emitter<LogState> emit,
+  ) {
+    emit(state.copyWith(iadls: event.iadls));
   }
 
   void _onBADLSChanged(
@@ -95,9 +104,15 @@ class LogBloc extends Bloc<LogEvent, LogState> {
     final previousADL = badls![event.index];
     badls[event.index] =
         previousADL.copyWith(isIndependent: !(previousADL.isIndependent));
-    emit(state.copyWith(
-        badls: badls, initialLog: state.initialLog!.copyWith(badls: badls)));
+    emit(state.copyWith(badls: badls));
     // _logsRepository.saveLog(state.initialLog!);
+  }
+
+  void _onBADLSInitialized(
+    LogBADLSInitialized event,
+    Emitter<LogState> emit,
+  ) {
+    emit(state.copyWith(badls: event.badls));
   }
 
   void _onNewTaskActionChanged(

@@ -26,6 +26,8 @@ class ADL extends Equatable {
     String? id,
     this.name = '',
     this.isIndependent = false,
+    required this.dependence,
+    required this.independence
   })  : assert(
           id == null || id.isNotEmpty, // id: ''
           'id can not be null and should be empty',
@@ -42,12 +44,22 @@ class ADL extends Equatable {
   /// Cannot be empty.
   final String name;
 
+  /// The independence for the adl
+  /// 
+  /// has to be filled manually
+
+  final String independence;
+
+  /// The dependence for the adl
+  /// 
+  /// has to be filled manually
+
+  final String dependence;
+
   /// Whether or not the adl is completed
   ///
   /// Note that the date may be empty.
   bool isIndependent;
-
-
 
   /// Returns a copy of this adl with the given values updated.
   ///
@@ -56,11 +68,15 @@ class ADL extends Equatable {
     String? id,
     String? name,
     bool? isIndependent,
+    String? dependence,
+    String? independence
   }) {
     return ADL(
       id: id ?? this.id,
       name: name ?? this.name,
       isIndependent: isIndependent ?? this.isIndependent,
+      dependence : dependence ?? this.dependence,
+      independence : dependence ?? this.independence,
     );
   }
 
@@ -75,5 +91,7 @@ class ADL extends Equatable {
         id,
         name,
         isIndependent,
+        dependence,
+        independence
       ];
 }
