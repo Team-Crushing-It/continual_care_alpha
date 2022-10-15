@@ -71,12 +71,12 @@ class LogIADLSInitialized extends LogEvent {
 }
 
 class LogIADLSChanged extends LogEvent {
-  const LogIADLSChanged(this.index);
+  const LogIADLSChanged(this.adl);
 
-  final int index;
+  final ADL adl;
 
   @override
-  List<Object> get props => [index];
+  List<Object> get props => [adl];
 }
 
 class LogBADLSInitialized extends LogEvent {
@@ -122,12 +122,12 @@ class LogBADLSInitialized extends LogEvent {
 }
 
 class LogBADLSChanged extends LogEvent {
-  const LogBADLSChanged(this.index);
+  const LogBADLSChanged(this.adl);
 
-  final int index;
+  final ADL adl;
 
   @override
-  List<Object> get props => [index];
+  List<Object> get props => [adl];
 }
 
 class LogNewTaskActionChanged extends LogEvent {

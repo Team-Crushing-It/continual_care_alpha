@@ -22,13 +22,13 @@ part 'adl.g.dart';
 @JsonSerializable(explicitToJson: true)
 class ADL extends Equatable {
   /// {@macro adl}
-  ADL({
-    String? id,
-    this.name = '',
-    this.isIndependent = false,
-    required this.dependence,
-    required this.independence
-  })  : assert(
+  ADL(
+      {String? id,
+      this.name = '',
+      this.isIndependent = false,
+      required this.dependence,
+      required this.independence})
+      : assert(
           id == null || id.isNotEmpty, // id: ''
           'id can not be null and should be empty',
         ),
@@ -45,13 +45,13 @@ class ADL extends Equatable {
   final String name;
 
   /// The independence for the adl
-  /// 
+  ///
   /// has to be filled manually
 
   final String independence;
 
   /// The dependence for the adl
-  /// 
+  ///
   /// has to be filled manually
 
   final String dependence;
@@ -64,19 +64,18 @@ class ADL extends Equatable {
   /// Returns a copy of this adl with the given values updated.
   ///
   /// {@macro adl}
-  ADL copyWith({
-    String? id,
-    String? name,
-    bool? isIndependent,
-    String? dependence,
-    String? independence
-  }) {
+  ADL copyWith(
+      {String? id,
+      String? name,
+      bool? isIndependent,
+      String? dependence,
+      String? independence}) {
     return ADL(
       id: id ?? this.id,
       name: name ?? this.name,
       isIndependent: isIndependent ?? this.isIndependent,
-      dependence : dependence ?? this.dependence,
-      independence : dependence ?? this.independence,
+      dependence: dependence ?? this.dependence,
+      independence: dependence ?? this.independence,
     );
   }
 
@@ -87,11 +86,10 @@ class ADL extends Equatable {
   JsonMap toJson() => _$ADLToJson(this);
 
   @override
-  List<Object> get props => [
-        id,
-        name,
-        isIndependent,
-        dependence,
-        independence
-      ];
+  List<Object> get props => [id, name, isIndependent, dependence, independence];
+
+  @override
+  String toString() {
+    return '$name: $isIndependent';
+  }
 }

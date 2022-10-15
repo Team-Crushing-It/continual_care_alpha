@@ -34,7 +34,7 @@ extension LogStatusX on LogStatus {
 
 class LogState extends Equatable {
   LogState({
-    this.status = LogStatus.initial,
+    this.status = LogStatus.tasksCompleted,
     this.pageStatus = PageStatus.initial,
     this.initialLog,
     this.user = User.empty,

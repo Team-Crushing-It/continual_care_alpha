@@ -117,9 +117,7 @@ class _IadlsListState extends State<_IadlsList> {
                       )
                     ]
                   : iadls
-                      .asMap()
-                      .entries
-                      .map<Widget>((entry) => Padding(
+                      .map<Widget>((adl) => Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 8, vertical: 8),
                             child: Row(
@@ -130,12 +128,11 @@ class _IadlsListState extends State<_IadlsList> {
                                   child: BlocBuilder<LogBloc, LogState>(
                                     builder: (context, state) {
                                       return Checkbox(
-                                        value: state
-                                            .iadls![entry.key].isIndependent,
+                                        value: adl.isIndependent,
                                         onChanged: (isChecked) {
                                           context
                                               .read<LogBloc>()
-                                              .add(LogIADLSChanged(entry.key));
+                                              .add(LogIADLSChanged(adl));
                                         },
                                       );
                                     },
@@ -143,7 +140,7 @@ class _IadlsListState extends State<_IadlsList> {
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(left: 8),
-                                  child: Text(entry.value.name,
+                                  child: Text(adl.name,
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyText1),

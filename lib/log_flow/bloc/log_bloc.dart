@@ -80,13 +80,20 @@ class LogBloc extends Bloc<LogEvent, LogState> {
     LogIADLSChanged event,
     Emitter<LogState> emit,
   ) {
-    // final iadlsList = state.iadls.map()
-    // final iadls = state.iadls;
-    // final previousADL = iadls![event.index];
-    // iadls[event.index] =
-    //     previousADL.copyWith(isIndependent: !(previousADL.isIndependent));
-    final newIadls = state.iadls!.map((iadl) => iadl).toList();
-    emit(state.copyWith(iadls: newIadls));
+    // flip the the checkbox value in the adl
+    // update the ADL in the list of ADL's
+    // filter the list of ADL's for the one that matches the other one. Then replace it.
+
+    // the filter mechanic
+    final updatedList = state.iadls!.map((adl) {
+      return adl.id == event.adl.id
+          ? event.adl.copyWith(isIndependent: !event.adl.isIndependent)
+          : adl;
+    }).toList();
+
+    // emit the new ADL's
+
+    emit(state.copyWith(iadls: updatedList));
   }
 
   void _onIADLSInitialized(
@@ -100,12 +107,14 @@ class LogBloc extends Bloc<LogEvent, LogState> {
     LogBADLSChanged event,
     Emitter<LogState> emit,
   ) {
-    List<ADL>? badls = state.badls;
-    final previousADL = badls![event.index];
-    badls[event.index] =
-        previousADL.copyWith(isIndependent: !(previousADL.isIndependent));
-    emit(state.copyWith(badls: badls));
-    // _logsRepository.saveLog(state.initialLog!);
+    // the filter mechanic
+    final updatedList = state.badls!.map((adl) {
+      return adl.id == event.adl.id
+          ? event.adl.copyWith(isIndependent: !event.adl.isIndependent)
+          : adl;
+    }).toList();
+
+    emit(state.copyWith(badls: updatedList));
   }
 
   void _onBADLSInitialized(
