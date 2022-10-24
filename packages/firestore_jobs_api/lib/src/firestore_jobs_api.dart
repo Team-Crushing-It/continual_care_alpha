@@ -24,13 +24,18 @@ class FirestoreJobsApi implements JobsApi {
   /// a [Job]
   @override
   Stream<List<Job>> getJobs(String group) {
+    print('group: $group');
     return jobsCollection
         .where('client', isEqualTo: group)
-        // .orderBy('startTime')
+        .orderBy('startTime')
         .snapshots()
         .map(
-          (snapshot) => snapshot.docs.map((e) => e.data()).toList(),
-        );
+      (snapshot) {
+        // print(snapshot.docs.length);
+        // print(snapshot.docs[0].data().client);
+        return snapshot.docs.map((e) => e.data()).toList();
+      },
+    );
   }
 
   /// This method first checks whether or not a job exists

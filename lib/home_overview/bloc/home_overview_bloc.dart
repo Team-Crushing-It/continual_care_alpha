@@ -15,10 +15,11 @@ class HomeOverviewBloc extends Bloc<HomeOverviewEvent, HomeOverviewState> {
 
   final JobsRepository _jobsRepository;
 
-  Future<void> _onSubscriptionRequested(
-      HomeOverviewSubscriptionRequested event, Emitter<HomeOverviewState> emit) async {
+  Future<void> _onSubscriptionRequested(HomeOverviewSubscriptionRequested event,
+      Emitter<HomeOverviewState> emit) async {
     await emit.forEach<List<Job>>(_jobsRepository.getJobs(event.group),
         onData: (jobs) {
+
       // this is used to determine the upcoming job
       final upcomingJobs = jobs
           .where((element) => element.startTime.isAfter(DateTime.now()))
@@ -32,9 +33,10 @@ class HomeOverviewBloc extends Bloc<HomeOverviewEvent, HomeOverviewState> {
       final recentJobs = jobs
           .where((element) => element.startTime.isBefore(DateTime.now()))
           .toList();
+          
       recentJobs.sort(((a, b) => b.startTime.compareTo(a.startTime)));
 
-      final recentJob = recentJobs.first;
+      final recentJob = recentJobs.isEmpty ? null : recentJobs.first;
 
       return state.copyWith(
         jobs: jobs,

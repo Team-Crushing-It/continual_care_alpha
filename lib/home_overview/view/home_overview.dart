@@ -17,14 +17,14 @@ class HomeOverviewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appState = context.read<AppBloc>().state;
+    final group = context.read<AppBloc>().state.group;
     return BlocProvider(
       lazy: false,
       create: (context) => HomeOverviewBloc(
         jobsRepository: context.read<JobsRepository>(),
       )..add(
           HomeOverviewSubscriptionRequested(
-            appState.group,
+            group,
           ),
         ),
       child: HomeOverviewView(),
@@ -85,7 +85,7 @@ class HomeOverviewView extends StatelessWidget {
                                   startJobModal(
                                     context,
                                     state.upcomingJob!,
-                                    state.recentJob!,
+                                    state.recentJob,
                                   );
                                 });
                           }

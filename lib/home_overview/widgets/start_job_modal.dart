@@ -5,11 +5,11 @@ import 'package:jobs_api/jobs_api.dart';
 Future<void> startJobModal(
   BuildContext context,
   Job upcomingJob,
-  Job recentJob,
+  Job? recentJob,
 ) async {
   final tasks = upcomingJob.tasks;
-  final recentComments =
-      recentJob.logs.isNotEmpty ? recentJob.logs.first.comments : null;
+  final recentComments = recentJob == null ? [Comment(comment: 'no comments')] : recentJob.logs.first.comments;
+
 
   return showDialog(
     context: context,
@@ -49,14 +49,7 @@ Future<void> startJobModal(
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: recentComments == null
-                              ? [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text('no recent comments'),
-                                  )
-                                ]
-                              : recentComments!
+                          children: recentComments
                                   .map<Widget>(
                                       (comment) => Text(comment.comment))
                                   .toList(),
