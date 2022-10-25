@@ -14,7 +14,7 @@ class IadlsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final date = context.read<LogBloc>().state.started!;
-    final iadls = context.watch<LogBloc>().state.initialLog!.iadls;
+    final iadls = context.watch<LogBloc>().state.iadls;
 
     return Scaffold(
       appBar: AppBar(

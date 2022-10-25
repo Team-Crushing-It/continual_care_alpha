@@ -33,7 +33,7 @@ class LogFlow extends StatelessWidget {
             photo: context.read<AppBloc>().state.user.photo,
           ),
           jobsRepository: context.read<JobsRepository>(),
-          initialLog: initialLog,
+          initialLog: Log(),
           job: job,
         ),
         child: const LogFlow(),

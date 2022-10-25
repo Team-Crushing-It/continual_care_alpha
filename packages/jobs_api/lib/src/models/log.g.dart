@@ -34,8 +34,8 @@ Log _$LogFromJson(Map<String, dynamic> json) => Log(
 Map<String, dynamic> _$LogToJson(Log instance) => <String, dynamic>{
       'id': instance.id,
       'comments': instance.comments.map((e) => e.toJson()).toList(),
-      'iadls': instance.iadls.map((e) => e.toJson()).toList(),
-      'badls': instance.badls.map((e) => e.toJson()).toList(),
+      'iadls': instance.iadls!.map((e) => e.toJson()).toList(),
+      'badls': instance.badls!.map((e) => e.toJson()).toList(),
       'cMood': _$MoodEnumMap[instance.cMood],
       'iMood': _$MoodEnumMap[instance.iMood],
       'location': instance.location,

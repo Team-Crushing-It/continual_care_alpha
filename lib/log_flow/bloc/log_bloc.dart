@@ -84,26 +84,13 @@ class LogBloc extends Bloc<LogEvent, LogState> {
     // filter the list of ADL's for the one that matches the other one. Then replace it.
 
     // the filter mechanic
-    final updatedList = state.initialLog!.iadls.map((adl) {
-      if (adl.name == event.adl.name) {
-        print('yes');
-      }
+    final updatedList = state.iadls!.map((adl) {
       return adl.name == event.adl.name
           ? event.adl.copyWith(isIndependent: !event.adl.isIndependent)
           : adl;
     }).toList();
 
-    print(updatedList);
-
-    print('state.initialLog: ${state.initialLog}');
-
-    final output = state.initialLog!.copyWith(iadls: updatedList);
-
-    print('output: ${output}');
-
-    // emit the new ADL's
-
-    emit(state.copyWith(initialLog: output));
+    emit(state.copyWith(iadls: updatedList));
   }
 
   void _onIADLSInitialized(

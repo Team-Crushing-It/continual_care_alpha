@@ -143,12 +143,12 @@ class Log extends Equatable {
   /// The iadls on the log
   ///
   /// Note that the iadls may be empty.
-  final List<ADL> iadls;
+  final List<ADL>? iadls;
 
   /// The badls on the log
   ///
   /// Note that the adls may be empty.
-  final List<ADL> badls;
+  final List<ADL>? badls;
 
   /// The mood of the caregiver.
   ///
