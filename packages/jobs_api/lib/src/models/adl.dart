@@ -22,14 +22,14 @@ part 'adl.g.dart';
 @JsonSerializable(explicitToJson: true)
 class ADL extends Equatable {
   /// {@macro adl}
-  ADL(
-      {String? id,
-      this.name = '',
-      this.isIndependent = false,
-      required this.dependence,
-      required this.independence})
-      : assert(
-          id == null || id.isNotEmpty, // id: ''
+  ADL({
+    String? id,
+    this.name = '',
+    this.isIndependent = false,
+    required this.dependence,
+    required this.independence,
+  })  : assert(
+          id == null || id.isNotEmpty, 
           'id can not be null and should be empty',
         ),
         id = id ?? const Uuid().v4();
@@ -59,17 +59,18 @@ class ADL extends Equatable {
   /// Whether or not the adl is completed
   ///
   /// Note that the date may be empty.
-  bool isIndependent;
+  final bool isIndependent;
 
   /// Returns a copy of this adl with the given values updated.
   ///
   /// {@macro adl}
-  ADL copyWith(
-      {String? id,
-      String? name,
-      bool? isIndependent,
-      String? dependence,
-      String? independence}) {
+  ADL copyWith({
+    String? id,
+    String? name,
+    bool? isIndependent,
+    String? dependence,
+    String? independence,
+  }) {
     return ADL(
       id: id ?? this.id,
       name: name ?? this.name,

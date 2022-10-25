@@ -36,7 +36,7 @@ class LogState extends Equatable {
   LogState({
     this.status = LogStatus.tasksCompleted,
     this.pageStatus = PageStatus.initial,
-    this.initialLog,
+    Log? initialLog,
     this.user = User.empty,
     this.comments = const [],
     this.tasks = const [],
@@ -49,12 +49,14 @@ class LogState extends Equatable {
     DateTime? completed,
     DateTime? started,
     this.isCompleted = false,
-  })  : this.completed = completed ?? DateTime.now(),
+  })  : 
+  this.initialLog = Log(),
+  this.completed = completed ?? DateTime.now(),
         this.started = started ?? DateTime.now();
 
   final LogStatus status;
   final PageStatus pageStatus;
-  final Log? initialLog;
+  final Log initialLog;
   final User user;
   final List<Comment>? comments;
   final List<Task>? tasks;
@@ -68,7 +70,7 @@ class LogState extends Equatable {
   final DateTime? started;
   final bool? isCompleted;
 
-  bool get isNewLog => initialLog == null;
+  // bool get isNewLog => initialLog == null;
 
   @override
   List<Object?> get props => [
@@ -93,7 +95,6 @@ class LogState extends Equatable {
     LogStatus? status,
     PageStatus? pageStatus,
     Log? initialLog,
-    dynamic las,
     User? user,
     List<Comment>? comments,
     List<Task>? tasks,

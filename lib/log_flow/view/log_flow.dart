@@ -35,7 +35,7 @@ class LogFlow extends StatelessWidget {
           jobsRepository: context.read<JobsRepository>(),
           initialLog: initialLog,
           job: job,
-        )..add(LogIADLSInitialized())..add(LogBADLSInitialized()),
+        ),
         child: const LogFlow(),
       ),
     );

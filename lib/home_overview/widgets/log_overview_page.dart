@@ -42,16 +42,11 @@ class LogView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = context.watch<LogBloc>().state;
-    final isNewLog = context.select(
-      (LogBloc bloc) => bloc.state.isNewLog,
-    );
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          isNewLog
-              ? 'Create New Log'
-              : '${state.initialLog!.completed.dateIosFormat()}',
+          '${state.initialLog!.completed.dateIosFormat()}',
         ),
       ),
       body: SingleChildScrollView(
@@ -59,7 +54,6 @@ class LogView extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: Column(
             children: [
-              if (!isNewLog) _Comments(),
               Container(
                 width: double.maxFinite,
                 height: 32,
@@ -111,23 +105,6 @@ class LogView extends StatelessWidget {
                 ),
               ),
               _BADLS(),
-              if (isNewLog) _Comments(),
-              if (isNewLog)
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 32),
-                  child: OutlinedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Container(
-                      width: double.infinity,
-                      child: Center(
-                        child: Text('Save Log',
-                            style: Theme.of(context).textTheme.bodyText1),
-                      ),
-                    ),
-                  ),
-                ),
             ],
           ),
         ),
@@ -307,9 +284,7 @@ class _IADLS extends StatelessWidget {
                       child: CheckTile(
                           text: iadl.name,
                           onTap: (value) {
-                            context
-                                .read<LogBloc>()
-                                .add(LogIADLSChanged(iadl));
+                            context.read<LogBloc>().add(LogIADLSChanged(iadl));
                           },
                           isChecked: iadl.isIndependent),
                     );

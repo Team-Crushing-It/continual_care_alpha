@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jobs_api/jobs_api.dart';
 
-class IadlsPage extends StatefulWidget {
+class IadlsPage extends StatelessWidget {
   const IadlsPage({super.key});
 
   static MaterialPage<void> page() {
@@ -12,30 +12,9 @@ class IadlsPage extends StatefulWidget {
   }
 
   @override
-  State<IadlsPage> createState() => _IadlsPageState();
-}
-
-class _IadlsPageState extends State<IadlsPage> {
-  late FocusNode myFocusNode;
-  late TextEditingController myController;
-  @override
-  initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    myFocusNode.dispose();
-    myController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final date = context.read<LogBloc>().state.started!;
-    final tasks = context.read<LogBloc>().state.tasks!;
-
-    // myController.text = context.watch<LogBloc>().state.newTaskAction!;
+    final iadls = context.watch<LogBloc>().state.initialLog!.iadls;
 
     return Scaffold(
       appBar: AppBar(
@@ -51,119 +30,93 @@ class _IadlsPageState extends State<IadlsPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           LogProgress(),
-          _IadlsList(),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  MainTitle(title: 'Instrumental ADLs'),
+                  for (final iadl in iadls!) ADLCheck(adl: iadl),
+                ],
+              ),
+            ),
+          ),
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 32.0),
+              child: ContinueButton(
+                pressable: true,
+                onPressed: () {
+                  context.read<LogBloc>().add(
+                        LogStatusChanged(LogStatus.caregiverCompleted),
+                      );
+                },
+              ),
+            ),
+          ),
         ],
       ),
     );
   }
 }
 
-class _IadlsList extends StatefulWidget {
-  const _IadlsList({super.key});
+class ADLCheck extends StatelessWidget {
+  const ADLCheck({super.key, required this.adl});
 
-  @override
-  State<_IadlsList> createState() => _IadlsListState();
-}
-
-class _IadlsListState extends State<_IadlsList> {
-  @override
-  initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
+  final ADL adl;
 
   @override
   Widget build(BuildContext context) {
-    final iadls = context.watch<LogBloc>().state.iadls;
-    final pageStatus = context.select((LogBloc bloc) => bloc.state.pageStatus);
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            width: double.maxFinite,
-            height: 32,
-            child: Text(
-              "Instrumental ADLs",
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(
-                  width: 1,
-                  color: Color(0xff626262),
-                ),
+    return Column(
+      children: [
+        Row(
+          children: [
+            Container(
+              width: 16,
+              height: 16,
+              child: BlocBuilder<LogBloc, LogState>(
+                builder: (context, state) {
+                  return Checkbox(
+                    value: adl.isIndependent,
+                    onChanged: (isChecked) {
+                      context.read<LogBloc>().add(LogIADLSChanged(adl));
+                    },
+                  );
+                },
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 8.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: iadls!.isEmpty
-                  ? [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text('no iadl yet',
-                            style: Theme.of(context).textTheme.bodyText1),
-                      )
-                    ]
-                  : iadls
-                      .map<Widget>((adl) => Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 8, vertical: 8),
-                            child: Row(
-                              children: [
-                                Container(
-                                  width: 16,
-                                  height: 16,
-                                  child: BlocBuilder<LogBloc, LogState>(
-                                    builder: (context, state) {
-                                      return Checkbox(
-                                        value: adl.isIndependent,
-                                        onChanged: (isChecked) {
-                                          context
-                                              .read<LogBloc>()
-                                              .add(LogIADLSChanged(adl));
-                                        },
-                                      );
-                                    },
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 8),
-                                  child: Text(adl.name,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1),
-                                ),
-                              ],
-                            ),
-                          ))
-                      .toList(),
+            Padding(
+              padding: const EdgeInsets.only(left: 8),
+              child:
+                  Text(adl.name, style: Theme.of(context).textTheme.bodyText1),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 32.0),
-            child: ContinueButton(
-              pressable: pageStatus == PageStatus.updated ? true : false,
-              onPressed: () {
-                context.read<LogBloc>().add(
-                      LogStatusChanged(LogStatus.caregiverCompleted),
-                    );
-              },
+          ],
+        ),
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Expanded(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(adl.independence,
+                      style: Theme.of(context).textTheme.bodyText1),
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
+            Expanded(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(adl.dependence,
+                      style: Theme.of(context).textTheme.bodyText1),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
