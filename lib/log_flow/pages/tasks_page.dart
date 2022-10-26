@@ -141,7 +141,13 @@ class _TasksListState extends State<_TasksList> {
                                   width: 16,
                                   height: 16,
                                   child: Checkbox(
-                                    value: context.watch<LogBloc>().state.tasks!.firstWhere((element) => element.id == task.id).isCompleted,
+                                    value: context
+                                        .watch<LogBloc>()
+                                        .state
+                                        .tasks!
+                                        .firstWhere(
+                                            (element) => element.id == task.id)
+                                        .isCompleted,
                                     onChanged: (isChecked) {
                                       context
                                           .read<LogBloc>()
@@ -174,7 +180,7 @@ class _TasksListState extends State<_TasksList> {
                     decoration: InputDecoration(
                       hintText: 'Add Task',
                       suffixIcon: IconButton(
-                        icon: Icon(Icons.add),
+                        icon: Icon(Icons.add),  
                         onPressed: context
                                 .watch<LogBloc>()
                                 .state

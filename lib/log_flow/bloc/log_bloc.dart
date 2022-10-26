@@ -34,7 +34,6 @@ class LogBloc extends Bloc<LogEvent, LogState> {
     on<LogStatusChanged>(_onStatusChanged);
     on<LogCommentsChanged>(_onCommentsChanged);
     on<LogIADLSChanged>(_onIADLSChanged);
-
     on<LogBADLSChanged>(_onBADLSChanged);
     on<LogNewTaskActionChanged>(_onNewTaskActionChanged);
     on<LogNewTaskAdded>(_onLogNewTaskAdded);
@@ -141,7 +140,6 @@ class LogBloc extends Bloc<LogEvent, LogState> {
     // updating the list
     emit(
       state.copyWith(
-        status: LogStatus.updated,
         tasks: output,
         newTaskAction: '',
       ),
