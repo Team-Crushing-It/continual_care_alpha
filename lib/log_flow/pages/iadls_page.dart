@@ -112,53 +112,46 @@ class ADLCheck extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.only(top: 8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      "Independence",
-                      style: TextStyle(
-                        fontSize: 14,
-                        decoration: TextDecoration.underline,
-                      ),
+          child: IntrinsicHeight(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: 150,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Independence",
+                            style: Theme.of(context).textTheme.headline3),
+                        Text(adl.independence,
+                            style: Theme.of(context).textTheme.headline4),
+                      ],
                     ),
-                    Text(adl.independence,
-                        style: Theme.of(context).textTheme.bodyText1),
-                  ],
-                ),
-              ),
-              VerticalDivider(
-                thickness: 1,
-                color: Colors.black,
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        "Dependence",
-                        style: TextStyle(
-                          fontSize: 14,
-                          decoration: TextDecoration.underline,
-                        ),
-                      ),
-                      Text(adl.dependence,
-                          style: Theme.of(context).textTheme.bodyText1),
-                    ],
                   ),
-                ),
+                  VerticalDivider(
+                    thickness: 1,
+                    width: 1,
+                    color: Colors.black,
+                  ),
+                  Container(
+                    width: 150,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text("Dependence",
+                            style: Theme.of(context).textTheme.headline3),
+                        Text(adl.dependence,
+                            style: Theme.of(context).textTheme.headline4),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ],
