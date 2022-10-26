@@ -49,9 +49,8 @@ class LogState extends Equatable {
     DateTime? completed,
     DateTime? started,
     this.isCompleted = false,
-  })  : 
-  this.initialLog = Log(),
-  this.completed = completed ?? DateTime.now(),
+  })  : this.initialLog = Log(),
+        this.completed = completed ?? DateTime.now(),
         this.started = started ?? DateTime.now();
 
   final LogStatus status;

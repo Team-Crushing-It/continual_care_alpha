@@ -1,5 +1,6 @@
 import 'package:continual_care_alpha/app/bloc/app_bloc.dart';
 import 'package:continual_care_alpha/log_flow/log_flow.dart';
+import 'package:continual_care_alpha/log_flow/pages/badls_page.dart';
 import 'package:continual_care_alpha/log_flow/pages/iadls_page.dart';
 import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,7 @@ List<Page> onGenerateLocationPages(LogState state, List<Page> pages) {
     if (state.status == LogStatus.initial) CaregiverPage.page(),
     if (state.status == LogStatus.caregiverCompleted) TasksPage.page(),
     if (state.status == LogStatus.tasksCompleted) IadlsPage.page(),
-    if (state.status == LogStatus.iadlsCompleted) TasksPage.page(),
+    if (state.status == LogStatus.iadlsCompleted) BadlsPage.page(),
     if (state.status == LogStatus.badlsCompleted) TasksPage.page(),
   ];
 }

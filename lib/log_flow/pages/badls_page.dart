@@ -4,17 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jobs_api/jobs_api.dart';
 
-class IadlsPage extends StatelessWidget {
-  const IadlsPage({super.key});
+class BadlsPage extends StatelessWidget {
+  const BadlsPage({super.key});
 
   static MaterialPage<void> page() {
-    return const MaterialPage<void>(child: IadlsPage());
+    return const MaterialPage<void>(child: BadlsPage());
   }
 
   @override
   Widget build(BuildContext context) {
     final date = context.read<LogBloc>().state.started!;
-    final iadls = context.watch<LogBloc>().state.iadls;
+    final badls = context.watch<LogBloc>().state.badls;
 
     return Scaffold(
       appBar: AppBar(
@@ -40,8 +40,8 @@ class IadlsPage extends StatelessWidget {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          MainTitle(title: 'Instrumental ADLs'),
-                          for (final iadl in iadls!) ADLCheck(adl: iadl),
+                          MainTitle(title: 'Basic ADLs'),
+                          for (final badl in badls!) ADLCheck(adl: badl),
                         ],
                       ),
                     ),
@@ -53,7 +53,7 @@ class IadlsPage extends StatelessWidget {
                         pressable: true,
                         onPressed: () {
                           context.read<LogBloc>().add(
-                                LogStatusChanged(LogStatus.iadlsCompleted),
+                                LogStatusChanged(LogStatus.badlsCompleted),
                               );
                         },
                       ),
@@ -113,7 +113,6 @@ class ADLCheck extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: 8),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -133,10 +132,6 @@ class ADLCheck extends StatelessWidget {
                         style: Theme.of(context).textTheme.bodyText1),
                   ],
                 ),
-              ),
-              VerticalDivider(
-                thickness: 1,
-                color: Colors.black,
               ),
               Expanded(
                 child: Padding(
