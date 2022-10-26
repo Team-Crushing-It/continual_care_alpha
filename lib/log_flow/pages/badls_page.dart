@@ -14,7 +14,7 @@ class BadlsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final date = context.read<LogBloc>().state.started!;
-    final badls = context.watch<LogBloc>().state.badls;
+    final iadls = context.watch<LogBloc>().state.badls;
 
     return Scaffold(
       appBar: AppBar(
@@ -22,7 +22,9 @@ class BadlsPage extends StatelessWidget {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            context.read<LogBloc>().add(LogStatusChanged(LogStatus.initial));
+            context
+                .read<LogBloc>()
+                .add(LogStatusChanged(LogStatus.tasksCompleted));
           },
         ),
       ),
@@ -41,7 +43,7 @@ class BadlsPage extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           MainTitle(title: 'Basic ADLs'),
-                          for (final badl in badls!) ADLCheck(adl: badl),
+                          for (final iadl in iadls!) ADLCheck(adl: iadl),
                         ],
                       ),
                     ),
@@ -96,7 +98,7 @@ class ADLCheck extends StatelessWidget {
                     return Checkbox(
                       value: adl.isIndependent,
                       onChanged: (isChecked) {
-                        context.read<LogBloc>().add(LogIADLSChanged(adl));
+                        context.read<LogBloc>().add(LogBADLSChanged(adl));
                       },
                     );
                   },
@@ -112,48 +114,62 @@ class ADLCheck extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.only(top: 8),
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      "Independence",
-                      style: TextStyle(
-                        fontSize: 14,
-                        decoration: TextDecoration.underline,
-                      ),
-                    ),
-                    Text(adl.independence,
-                        style: Theme.of(context).textTheme.bodyText1),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        "Dependence",
-                        style: TextStyle(
-                          fontSize: 14,
-                          decoration: TextDecoration.underline,
+          child: IntrinsicHeight(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: 150,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 4.0),
+                          child: Text(
+                            "Independence",
+                            style:
+                                Theme.of(context).textTheme.headline3!.copyWith(
+                                      decoration: TextDecoration.underline,
+                                    ),
+                          ),
                         ),
-                      ),
-                      Text(adl.dependence,
-                          style: Theme.of(context).textTheme.bodyText1),
-                    ],
+                        Text(adl.independence,
+                            style: Theme.of(context).textTheme.headline4),
+                      ],
+                    ),
                   ),
-                ),
+                  VerticalDivider(
+                    thickness: 1,
+                    width: 1,
+                    color: Colors.black,
+                  ),
+                  Container(
+                    width: 150,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 4.0),
+                          child: Text(
+                            "Dependence",
+                            style:
+                                Theme.of(context).textTheme.headline3!.copyWith(
+                                      decoration: TextDecoration.underline,
+                                    ),
+                          ),
+                        ),
+                        Text(adl.dependence,
+                            style: Theme.of(context).textTheme.headline4),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ],

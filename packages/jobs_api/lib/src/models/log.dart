@@ -89,14 +89,14 @@ class Log extends Equatable {
                 independence:
                     'Bathes self completely or needs help in bathing only a single part of the body such as the back, genital area or disabled extremity.',
                 dependence:
-                    'Needs help with bathing more than one part of the\nbody, getting in or out of the tub or shower. Requires total bathing',
+                    'Needs help with bathing more than one part of the body, getting in or out of the tub or shower. Requires total bathing',
               ),
               ADL(
                 name: 'Dressing',
                 independence:
                     'Gets clothes from closets and drawers and puts on clothes and outer garments complete with fasteners. May have help tying shoes.',
                 dependence:
-                    'Needs help with\ndressing self or needs to be\ncompletely dressed.',
+                    'Needs help with dressing self or needs to be completely dressed.',
               ),
               ADL(
                 name: 'Toileting',

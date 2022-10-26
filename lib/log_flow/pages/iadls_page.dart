@@ -22,7 +22,9 @@ class IadlsPage extends StatelessWidget {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            context.read<LogBloc>().add(LogStatusChanged(LogStatus.initial));
+            context
+                .read<LogBloc>()
+                .add(LogStatusChanged(LogStatus.caregiverCompleted));
           },
         ),
       ),
@@ -124,8 +126,16 @@ class ADLCheck extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Independence",
-                            style: Theme.of(context).textTheme.headline3),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 4.0),
+                          child: Text(
+                            "Independence",
+                            style:
+                                Theme.of(context).textTheme.headline3!.copyWith(
+                                      decoration: TextDecoration.underline,
+                                    ),
+                          ),
+                        ),
                         Text(adl.independence,
                             style: Theme.of(context).textTheme.headline4),
                       ],
@@ -142,8 +152,16 @@ class ADLCheck extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text("Dependence",
-                            style: Theme.of(context).textTheme.headline3),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 4.0),
+                          child: Text(
+                            "Dependence",
+                            style:
+                                Theme.of(context).textTheme.headline3!.copyWith(
+                                      decoration: TextDecoration.underline,
+                                    ),
+                          ),
+                        ),
                         Text(adl.dependence,
                             style: Theme.of(context).textTheme.headline4),
                       ],
