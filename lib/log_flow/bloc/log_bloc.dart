@@ -24,6 +24,7 @@ class LogBloc extends Bloc<LogEvent, LogState> {
             badls: initialLog?.badls ?? [],
             newTaskAction: '',
             tasks: job.tasks,
+            client: job.client,
             cMood: initialLog?.cMood ?? null,
             iMood: initialLog?.iMood ?? null,
             location: initialLog?.location ?? '',
@@ -68,10 +69,16 @@ class LogBloc extends Bloc<LogEvent, LogState> {
     LogCommentsChanged event,
     Emitter<LogState> emit,
   ) {
-    state.comments!.add(event.comment);
-    emit(state.copyWith(
-        comments: state.comments,
-        initialLog: state.initialLog!.copyWith(comments: state.comments)));
+    final output = state.comments!.map((e) {
+      return e;
+    }).toList()
+      ..add(event.comment);
+
+    emit(
+      state.copyWith(
+        comments: output,
+      ),
+    );
   }
 
   void _onIADLSChanged(

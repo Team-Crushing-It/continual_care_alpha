@@ -202,7 +202,7 @@ class _TasksListState extends State<_TasksList> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 32.0),
             child: ContinueButton(
-              pressable: pageStatus == PageStatus.updated ? true : false,
+              pressable: true,
               onPressed: () {
                 context.read<LogBloc>().add(
                       LogStatusChanged(LogStatus.tasksCompleted),

@@ -15,7 +15,7 @@ List<Page> onGenerateLocationPages(LogState state, List<Page> pages) {
     if (state.status == LogStatus.caregiverCompleted) TasksPage.page(),
     if (state.status == LogStatus.tasksCompleted) IadlsPage.page(),
     if (state.status == LogStatus.iadlsCompleted) BadlsPage.page(),
-    if (state.status == LogStatus.badlsCompleted) TasksPage.page(),
+    if (state.status == LogStatus.badlsCompleted) CommentsPage.page(),
   ];
 }
 

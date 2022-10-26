@@ -34,12 +34,13 @@ extension LogStatusX on LogStatus {
 
 class LogState extends Equatable {
   LogState({
-    this.status = LogStatus.tasksCompleted,
+    this.status = LogStatus.badlsCompleted,
     this.pageStatus = PageStatus.initial,
     Log? initialLog,
     this.user = User.empty,
     this.comments = const [],
     this.tasks = const [],
+    this.client = '',
     this.newTaskAction = '',
     this.iadls = const [],
     this.badls = const [],
@@ -59,6 +60,7 @@ class LogState extends Equatable {
   final User user;
   final List<Comment>? comments;
   final List<Task>? tasks;
+  final String client;
   final String? newTaskAction;
   final List<ADL>? iadls;
   final List<ADL>? badls;
@@ -78,6 +80,7 @@ class LogState extends Equatable {
         initialLog,
         comments,
         tasks,
+        client,
         newTaskAction,
         user,
         iadls,
@@ -97,6 +100,7 @@ class LogState extends Equatable {
     User? user,
     List<Comment>? comments,
     List<Task>? tasks,
+    String? client,
     String? newTaskAction,
     List<ADL>? iadls,
     List<ADL>? badls,
@@ -114,6 +118,7 @@ class LogState extends Equatable {
       user: user ?? this.user,
       comments: comments ?? this.comments,
       tasks: tasks ?? this.tasks,
+      client: client ?? this.client,
       newTaskAction: newTaskAction ?? this.newTaskAction,
       iadls: iadls ?? this.iadls,
       badls: badls ?? this.badls,

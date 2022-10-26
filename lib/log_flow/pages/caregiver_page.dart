@@ -34,7 +34,7 @@ class CaregiverPage extends StatelessWidget {
             prompt: 'How are you doing today?',
           ),
           ContinueButton(
-            pressable: pageStatus == PageStatus.updated ? true : false,
+            pressable: true,
             onPressed: () {
               context.read<LogBloc>().add(
                     LogStatusChanged(LogStatus.caregiverCompleted),
