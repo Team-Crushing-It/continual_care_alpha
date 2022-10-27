@@ -43,7 +43,11 @@ class IadlsPage extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           MainTitle(title: 'Instrumental ADLs'),
-                          for (final iadl in iadls!) ADLCheck(adl: iadl),
+                          for (final iadl in iadls!)
+                            ADLCheck(
+                              adl: iadl,
+                              isIadl: true,
+                            ),
                         ],
                       ),
                     ),
@@ -70,4 +74,3 @@ class IadlsPage extends StatelessWidget {
     );
   }
 }
-

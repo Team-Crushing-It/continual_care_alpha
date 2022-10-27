@@ -14,7 +14,7 @@ class BadlsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final date = context.read<LogBloc>().state.started!;
-    final iadls = context.watch<LogBloc>().state.badls;
+    final badls = context.watch<LogBloc>().state.badls;
 
     return Scaffold(
       appBar: AppBar(
@@ -43,7 +43,11 @@ class BadlsPage extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           MainTitle(title: 'Basic ADLs'),
-                          for (final iadl in iadls!) ADLCheck(adl: iadl),
+                          for (final badl in badls!)
+                            ADLCheck(
+                              adl: badl,
+                              isIadl: false,
+                            ),
                         ],
                       ),
                     ),
