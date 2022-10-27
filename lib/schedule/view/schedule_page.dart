@@ -17,11 +17,9 @@ class SchedulePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) 
-        => ScheduleBloc(
-          jobsRepository: context.read<JobsRepository>(),
-        )..add(const ScheduleSubscriptionRequested())
-      ,
+      create: (context) => ScheduleBloc(
+        jobsRepository: context.read<JobsRepository>(),
+      )..add(const ScheduleSubscriptionRequested()),
       child: const ScheduleView(),
     );
   }
@@ -113,23 +111,41 @@ class ScheduleView extends StatelessWidget {
                 ),
                 Expanded(
                   flex: 4,
-                  child: ListView(
-                    children: [
-                      for (final job in state.filteredJobs)
-                        JobListTile(
-                          job: job,
-                          onDismissed: (_) {
-                            context
-                                .read<ScheduleBloc>()
-                                .add(ScheduleJobDeleted(job));
-                          },
-                          onTap: () {
-                            Navigator.of(context).push(
-                              EditJobPage.route(initialJob: job),
-                            );
-                          },
-                        ),
-                    ],
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 8.0, horizontal: 16),
+                    child: ListView(
+                      children: [
+                        for (final job in state.filteredJobs)
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(
+                                  width: 1,
+                                  color: Color(0xff626262),
+                                ),
+                              ),
+                            ),
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(bottom: 16.0, top: 8),
+                              child: JobListTile(
+                                job: job,
+                                onDismissed: (_) {
+                                  context
+                                      .read<ScheduleBloc>()
+                                      .add(ScheduleJobDeleted(job));
+                                },
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                    EditJobPage.route(initialJob: job),
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
                   ),
                 ),
               ],

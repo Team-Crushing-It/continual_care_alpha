@@ -1,9 +1,9 @@
 import 'package:equatable/equatable.dart';
 import 'package:jobs_api/jobs_api.dart';
+import 'package:jobs_api/jobs_api.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:meta/meta.dart';
 import 'package:uuid/uuid.dart';
-import 'package:jobs_api/jobs_api.dart';
 
 part 'job.g.dart';
 
@@ -34,7 +34,8 @@ class Job extends Equatable {
     this.location = '',
     this.coordinator = User.empty,
     this.caregivers = const [User.empty],
-    this.link = '',
+    this.logs = const [],
+    this.tasks = const [],
     this.isCompleted = false,
   })  : assert(
           id == null || id.isNotEmpty, // id: ''
@@ -83,10 +84,15 @@ class Job extends Equatable {
   /// Note that the caregiver may be empty.
   final List<User> caregivers;
 
-  /// The link of the job.
+  /// The logs of the job
   ///
-  /// Note that the link may be empty.
-  final String link;
+  /// Note that the logs may be empty.
+  final List<Log> logs;
+
+  /// The tasks of the job
+  ///
+  /// Note that the logs may be empty.
+  final List<Task> tasks;
 
   /// The bool of whether or not the job is done
   ///
@@ -105,7 +111,8 @@ class Job extends Equatable {
     String? location,
     User? coordinator,
     List<User>? caregivers,
-    String? link,
+    List<Log>? logs,
+    List<Task>? tasks,
     bool? isCompleted,
   }) {
     return Job(
@@ -117,7 +124,8 @@ class Job extends Equatable {
       location: location ?? this.location,
       coordinator: coordinator ?? this.coordinator,
       caregivers: caregivers ?? this.caregivers,
-      link: link ?? this.link,
+      logs: logs ?? this.logs,
+      tasks: tasks ?? this.tasks,
       isCompleted: isCompleted ?? this.isCompleted,
     );
   }
@@ -138,7 +146,8 @@ class Job extends Equatable {
         location,
         coordinator,
         caregivers,
-        link,
+        logs,
+        tasks,
         isCompleted
       ];
 }

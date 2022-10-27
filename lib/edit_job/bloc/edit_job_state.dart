@@ -7,6 +7,10 @@ extension EditJobStatusX on EditJobStatus {
         EditJobStatus.loading,
         EditJobStatus.success,
       ].contains(this);
+
+  bool get isUpdated => [
+        EditJobStatus.updated,
+      ].contains(this);
 }
 
 class EditJobState extends Equatable {
@@ -20,7 +24,9 @@ class EditJobState extends Equatable {
     this.location = '',
     this.coordinator = User.empty,
     this.caregivers = const [User.empty],
-    this.link = '',
+    this.logs = const [],
+    this.logAction = '',
+    this.tasks = const [],
     this.isCompleted = false,
   }) : this.startTime = startTime ?? DateTime.now();
 
@@ -33,7 +39,9 @@ class EditJobState extends Equatable {
   final String location;
   final User coordinator;
   final List<User> caregivers;
-  final String link;
+  final List<Log> logs;
+  final String logAction;
+  final List<Task> tasks;
   final bool isCompleted;
 
   bool get isNewJob => initialJob == null;
@@ -48,7 +56,9 @@ class EditJobState extends Equatable {
     String? location,
     User? coordinator,
     List<User>? caregivers,
-    String? link,
+    List<Log>? logs,
+    String? logAction,
+    List<Task>? tasks,
     bool? isCompleted,
   }) {
     return EditJobState(
@@ -61,7 +71,9 @@ class EditJobState extends Equatable {
       location: location ?? this.location,
       coordinator: coordinator ?? this.coordinator,
       caregivers: caregivers ?? this.caregivers,
-      link: link ?? this.link,
+      logs: logs ?? this.logs,
+      logAction: logAction ?? this.logAction,
+      tasks: tasks ?? this.tasks,
       isCompleted: isCompleted ?? this.isCompleted,
     );
   }
@@ -77,6 +89,8 @@ class EditJobState extends Equatable {
         location,
         coordinator,
         caregivers,
-        link
+        logs,
+        tasks,
+        logAction,
       ];
 }

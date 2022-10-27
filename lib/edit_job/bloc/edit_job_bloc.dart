@@ -23,7 +23,8 @@ class EditJobBloc extends Bloc<EditJobEvent, EditJobState> {
             location: initialJob?.location ?? '',
             coordinator: initialJob?.coordinator ?? coordinator,
             caregivers: initialJob?.caregivers ?? [User.empty],
-            link: initialJob?.link ?? '',
+            logs: initialJob?.logs ?? [],
+            tasks: initialJob?.tasks ?? [Task(action: 'test action')],
             isCompleted: initialJob?.isCompleted ?? false,
           ),
         ) {
@@ -34,8 +35,10 @@ class EditJobBloc extends Bloc<EditJobEvent, EditJobState> {
     on<EditJobLocationChanged>(_onLocationChanged);
     on<EditJobCoordinatorChanged>(_onCoordinatorChanged);
     on<EditJobCaregiversChanged>(_onCaregiversChanged);
-    on<EditJobLinkChanged>(_onLinkChanged);
     on<EditJobisCompletedChanged>(_onisCompletedChanged);
+    on<EditJobLogActionChanged>(_onLogActionChanged);
+    on<EditJobNewTaskAdded>(_onNewTaskAdded);
+
     on<EditJobSubmitted>(_onSubmitted);
   }
 
@@ -46,14 +49,20 @@ class EditJobBloc extends Bloc<EditJobEvent, EditJobState> {
     EditJobClientChanged event,
     Emitter<EditJobState> emit,
   ) {
-    emit(state.copyWith(client: event.client));
+    emit(state.copyWith(
+      status: EditJobStatus.updated,
+      client: event.client,
+    ));
   }
 
   void _onPayChanged(
     EditJobPayChanged event,
     Emitter<EditJobState> emit,
   ) {
-    emit(state.copyWith(pay: event.pay));
+    emit(state.copyWith(
+      status: EditJobStatus.updated,
+      pay: event.pay,
+    ));
   }
 
   void _onStartTimeChanged(
@@ -61,49 +70,89 @@ class EditJobBloc extends Bloc<EditJobEvent, EditJobState> {
     Emitter<EditJobState> emit,
   ) {
     emit(state.copyWith(
-        status: EditJobStatus.updated, startTime: event.startTime));
+      status: EditJobStatus.updated,
+      startTime: event.startTime,
+    ));
   }
 
   void _onDurationChanged(
     EditJobDurationChanged event,
     Emitter<EditJobState> emit,
   ) {
-    emit(state.copyWith(duration: event.duration));
+    emit(state.copyWith(
+      status: EditJobStatus.updated,
+      duration: event.duration,
+    ));
   }
 
   void _onLocationChanged(
     EditJobLocationChanged event,
     Emitter<EditJobState> emit,
   ) {
-    emit(state.copyWith(location: event.location));
+    emit(state.copyWith(
+      status: EditJobStatus.updated,
+      location: event.location,
+    ));
   }
 
   void _onCoordinatorChanged(
     EditJobCoordinatorChanged event,
     Emitter<EditJobState> emit,
   ) {
-    emit(state.copyWith(coordinator: event.coordinator));
+    emit(state.copyWith(
+      status: EditJobStatus.updated,
+      coordinator: event.coordinator,
+    ));
   }
 
   void _onCaregiversChanged(
     EditJobCaregiversChanged event,
     Emitter<EditJobState> emit,
   ) {
-    emit(state.copyWith(caregivers: event.caregivers));
-  }
-
-  void _onLinkChanged(
-    EditJobLinkChanged event,
-    Emitter<EditJobState> emit,
-  ) {
-    emit(state.copyWith(link: event.link));
+    emit(state.copyWith(
+      status: EditJobStatus.updated,
+      caregivers: event.caregivers,
+    ));
   }
 
   void _onisCompletedChanged(
     EditJobisCompletedChanged event,
     Emitter<EditJobState> emit,
   ) {
-    emit(state.copyWith(isCompleted: event.isCompleted));
+    emit(state.copyWith(
+      status: EditJobStatus.updated,
+      isCompleted: event.isCompleted,
+    ));
+  }
+
+  void _onLogActionChanged(
+    EditJobLogActionChanged event,
+    Emitter<EditJobState> emit,
+  ) {
+    emit(state.copyWith(logAction: event.action));
+  }
+
+  void _onNewTaskAdded(
+    EditJobNewTaskAdded event,
+    Emitter<EditJobState> emit,
+  ) async {
+    final newTask = Task(action: state.logAction);
+
+    // If the job is not a new job, then add this new task to the
+    // existing ones
+    var updatedTasks;
+    if (!state.isNewJob) {
+      updatedTasks = state.tasks.map((e) => e).toList()..add(newTask);
+    }
+    // Else just add the task from the bloc
+    else {
+      updatedTasks = state.tasks.map((e) => e).toList()..add(newTask);
+    }
+
+    emit(state.copyWith(
+      status: EditJobStatus.updated,
+      tasks: updatedTasks,
+    ));
   }
 
   Future<void> _onSubmitted(
@@ -120,10 +169,10 @@ class EditJobBloc extends Bloc<EditJobEvent, EditJobState> {
       location: state.location,
       coordinator: _coordinator,
       caregivers: state.caregivers,
-      link: state.link,
+      logs: state.logs,
+      tasks: state.tasks,
       isCompleted: state.isCompleted,
     );
-    print('job: $job');
     try {
       await _jobsRepository.saveJob(job);
       emit(state.copyWith(status: EditJobStatus.success));

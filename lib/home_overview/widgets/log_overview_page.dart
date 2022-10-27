@@ -3,14 +3,14 @@ import 'package:continual_care_alpha/schedule/widgets/date_ios_format.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:continual_care_alpha/log/log.dart';
-import 'package:logs_api/logs_api.dart';
-import 'package:logs_repository/logs_repository.dart';
+import 'package:continual_care_alpha/log_flow/log_flow.dart';
+import 'package:jobs_api/jobs_api.dart';
+import 'package:jobs_repository/jobs_repository.dart';
 
 class LogOverviewPage extends StatelessWidget {
   const LogOverviewPage({super.key});
 
-  static Route<void> route({Log? initialLog}) {
+  static Route<void> route({required initialLog}) {
     return MaterialPageRoute(
       fullscreenDialog: true,
       builder: (context) => BlocProvider(
@@ -21,8 +21,9 @@ class LogOverviewPage extends StatelessWidget {
             email: context.read<AppBloc>().state.user.email,
             photo: context.read<AppBloc>().state.user.photo,
           ),
-          logsRepository: context.read<LogsRepository>(),
+          jobsRepository: context.read<JobsRepository>(),
           initialLog: initialLog,
+          job: Job(),
         ),
         child: const LogOverviewPage(),
       ),
@@ -31,13 +32,7 @@ class LogOverviewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<LogBloc, LogState>(
-      listenWhen: (previous, current) =>
-          previous.status != current.status &&
-          current.status == LogStatus.success,
-      listener: (context, state) => Navigator.of(context).pop(),
-      child: const LogView(),
-    );
+    return LogView();
   }
 }
 
@@ -47,16 +42,11 @@ class LogView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = context.watch<LogBloc>().state;
-    final isNewLog = context.select(
-      (LogBloc bloc) => bloc.state.isNewLog,
-    );
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          isNewLog
-              ? 'Create New Log'
-              : '${state.initialLog!.completed.dateIosFormat()}',
+          '${state.initialLog!.completed.dateIosFormat()}',
         ),
       ),
       body: SingleChildScrollView(
@@ -64,7 +54,6 @@ class LogView extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: Column(
             children: [
-              if (!isNewLog) _Comments(),
               Container(
                 width: double.maxFinite,
                 height: 32,
@@ -116,23 +105,6 @@ class LogView extends StatelessWidget {
                 ),
               ),
               _BADLS(),
-              if (isNewLog) _Comments(),
-              if (isNewLog)
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 32),
-                  child: OutlinedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Container(
-                      width: double.infinity,
-                      child: Center(
-                        child: Text('Save Log',
-                            style: Theme.of(context).textTheme.bodyText1),
-                      ),
-                    ),
-                  ),
-                ),
             ],
           ),
         ),
@@ -312,7 +284,7 @@ class _IADLS extends StatelessWidget {
                       child: CheckTile(
                           text: iadl.name,
                           onTap: (value) {
-                            context.read<LogBloc>().add(LogIADLSChanged(index));
+                            context.read<LogBloc>().add(LogIADLSChanged(iadl));
                           },
                           isChecked: iadl.isIndependent),
                     );
@@ -365,7 +337,7 @@ class _BADLS extends StatelessWidget {
                       child: CheckTile(
                           text: badl.name,
                           onTap: (value) {
-                            context.read<LogBloc>().add(LogBADLSChanged(index));
+                            context.read<LogBloc>().add(LogBADLSChanged(badl));
                           },
                           isChecked: badl.isIndependent),
                     );

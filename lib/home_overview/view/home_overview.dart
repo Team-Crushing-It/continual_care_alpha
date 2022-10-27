@@ -1,11 +1,9 @@
+import 'package:continual_care_alpha/app/app.dart';
 import 'package:continual_care_alpha/home_overview/bloc/home_overview_bloc.dart';
 import 'package:continual_care_alpha/home_overview/home_overview.dart';
-import 'package:continual_care_alpha/log/log.dart';
-import 'package:continual_care_alpha/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jobs_repository/jobs_repository.dart';
-import 'package:logs_repository/logs_repository.dart';
 
 import '../../schedule/widgets/job_list_tile.dart';
 
@@ -19,14 +17,18 @@ class HomeOverviewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final group = context.read<AppBloc>().state.group;
     return BlocProvider(
-        create: (context) => HomeOverviewBloc(
-              jobsRepository: context.read<JobsRepository>(),
-              logsRepository: context.read<LogsRepository>(),
-            )
-              ..add(HomeOverviewSubscriptionRequested())
-              ..add(HomeOverviewUpcomingJobRequested()),
-        child: HomeOverviewView());
+      lazy: false,
+      create: (context) => HomeOverviewBloc(
+        jobsRepository: context.read<JobsRepository>(),
+      )..add(
+          HomeOverviewSubscriptionRequested(
+            group,
+          ),
+        ),
+      child: HomeOverviewView(),
+    );
   }
 }
 
@@ -37,7 +39,10 @@ class HomeOverviewView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home Overview'),
+        title: Container(
+          height: 36,
+          child: Image.asset('assets/logo_dark_nobg.png'),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
@@ -73,55 +78,18 @@ class HomeOverviewView extends StatelessWidget {
                       ),
                       BlocBuilder<HomeOverviewBloc, HomeOverviewState>(
                         builder: (context, state) {
-                          if (state.job != null) {
+                          if (state.upcomingJob != null) {
                             return JobListTile(
-                              job: state.job!,
-                              onTap: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (newContext) {
-                                    return BlocProvider.value(
-                                      value: context.read<HomeOverviewBloc>(),
-                                      child: AlertDialog(
-                                        title: Text(
-                                            "Mon Sep 12 Maureen & Day Derosa"),
-                                        content: Text(
-                                            'Would you like to start the job?',
-                                            style: TextStyle(
-                                                color: Color(0xff989898))),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.pop(newContext);
-                                              Navigator.of(context).push(
-                                                LogFlow.route(),
-                                              );
-                                            },
-                                            child: Text(
-                                              'Yes',
-                                              style:
-                                                  TextStyle(color: Colors.red),
-                                            ),
-                                          ),
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.pop(newContext);
-                                            },
-                                            child: Text(
-                                              'No',
-                                              style:
-                                                  TextStyle(color: Colors.red),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                );
-                              },
-                            );
+                                job: state.upcomingJob!,
+                                onTap: () {
+                                  startJobModal(
+                                    context,
+                                    state.upcomingJob!,
+                                    state.recentJob,
+                                  );
+                                });
                           }
-                          return Center(child: Text("No upcomming jobs"));
+                          return Center(child: Text("No upcoming jobs"));
                         },
                       ),
                     ],
@@ -138,7 +106,9 @@ class HomeOverviewView extends StatelessWidget {
                             size: 32,
                           )),
                       IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            context.read<AppBloc>().add(AppLogoutRequested());
+                          },
                           icon: Icon(
                             Icons.account_circle,
                             size: 32,
@@ -167,32 +137,32 @@ class HomeOverviewView extends StatelessWidget {
                 ),
               ),
             ),
-            BlocBuilder<HomeOverviewBloc, HomeOverviewState>(
-              builder: (context, state) {
-                if (state.logs != null) {
-                  if (state.logs!.isNotEmpty) {
-                    return Expanded(
-                      child: ListView.builder(
-                        itemCount: state.logs!.length,
-                        itemBuilder: ((context, index) {
-                          return LogTile(
-                            initialLog: state.logs![index],
-                            onTap: () {
-                              Navigator.of(context).push(
-                                LogOverviewPage.route(
-                                  initialLog: state.logs![index],
-                                ),
-                              );
-                            },
-                          );
-                        }),
-                      ),
-                    );
-                  }
-                }
-                return Text("No logs yet");
-              },
-            )
+            // BlocBuilder<HomeOverviewBloc, HomeOverviewState>(
+            //   builder: (context, state) {
+            //     if (state.jobs != null) {
+            //       if (state.jobs!.isNotEmpty) {
+            //         return Expanded(
+            //           child: ListView.builder(
+            //             itemCount: state.jobs!.length,
+            //             itemBuilder: ((context, index) {
+            //               return JobTile(
+            //                 initialJob: state.jobs![index],
+            //                 onTap: () {
+            //                   // Navigator.of(context).push(
+            //                   //   LogOverviewPage.route(
+            //                   //     initialLog: state.jobs![index],
+            //                   //   ),
+            //                   // );
+            //                 },
+            //               );
+            //             }),
+            //           ),
+            //         );
+            //       }
+            //     }
+            //     return Text("No logs yet");
+            //   },
+            // )
           ],
         ),
       ),

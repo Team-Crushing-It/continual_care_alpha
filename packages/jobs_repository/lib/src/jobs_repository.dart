@@ -12,7 +12,7 @@ class JobsRepository {
   final JobsApi _jobsApi;
 
   /// Provides a [Stream] of all jobs.
-  Stream<List<Job>> getJobs() => _jobsApi.getJobs();
+  Stream<List<Job>> getJobs(String group) => _jobsApi.getJobs(group);
 
   /// Saves a [job].
   ///

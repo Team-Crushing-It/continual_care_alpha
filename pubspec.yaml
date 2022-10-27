@@ -14,8 +14,6 @@ dependencies:
   equatable: ^2.0.3
   firestore_jobs_api:
     path: packages/firestore_jobs_api
-  firestore_logs_api:
-    path: packages/firestore_logs_api
   flow_builder: ^0.0.9
   flutter:
     sdk: flutter
@@ -26,18 +24,10 @@ dependencies:
   form_inputs:
     path: packages/form_inputs
   intl: ^0.17.0
-  local_storage_jobs_api:
-    path: packages/local_storage_jobs_api
-  local_storage_logs_api:
-    path: packages/local_storage_logs_api
   jobs_api:
     path: packages/jobs_api
-  logs_api:
-    path: packages/logs_api
   jobs_repository:
     path: packages/jobs_repository
-  logs_repository:
-    path: packages/logs_repository
   transparent_image: ^2.0.0
   firebase_core: ^1.21.1
 

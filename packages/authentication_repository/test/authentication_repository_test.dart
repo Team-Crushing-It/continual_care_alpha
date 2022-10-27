@@ -43,33 +43,33 @@ class FakeAuthProvider extends Fake implements AuthProvider {}
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  MethodChannelFirebase.channel.setMockMethodCallHandler((call) async {
-    if (call.method == 'Firebase#initializeCore') {
-      return [
-        {
-          'name': defaultFirebaseAppName,
-          'options': {
-            'apiKey': '123',
-            'appId': '123',
-            'messagingSenderId': '123',
-            'projectId': '123',
-          },
-          'pluginConstants': const <String, String>{},
-        }
-      ];
-    }
+  // MethodChannelFirebase.channel.setMockMethodCallHandler((call) async {
+  //   if (call.method == 'Firebase#initializeCore') {
+  //     return [
+  //       {
+  //         'name': defaultFirebaseAppName,
+  //         'options': {
+  //           'apiKey': '123',
+  //           'appId': '123',
+  //           'messagingSenderId': '123',
+  //           'projectId': '123',
+  //         },
+  //         'pluginConstants': const <String, String>{},
+  //       }
+  //     ];
+  //   }
 
-    if (call.method == 'Firebase#initializeApp') {
-      final arguments = call.arguments as Map<String, dynamic>;
-      return <String, dynamic>{
-        'name': arguments['appName'],
-        'options': arguments['options'],
-        'pluginConstants': const <String, String>{},
-      };
-    }
+  //   if (call.method == 'Firebase#initializeApp') {
+  //     final arguments = call.arguments as Map<String, dynamic>;
+  //     return <String, dynamic>{
+  //       'name': arguments['appName'],
+  //       'options': arguments['options'],
+  //       'pluginConstants': const <String, String>{},
+  //     };
+  //   }
 
-    return null;
-  });
+  //   return null;
+  // });
 
   TestWidgetsFlutterBinding.ensureInitialized();
   Firebase.initializeApp();

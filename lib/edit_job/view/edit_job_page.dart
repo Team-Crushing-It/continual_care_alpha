@@ -59,37 +59,27 @@ class EditJobView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          isNewJob
-              ? 'Create New Job'
-              : 'Edit Job',
+          isNewJob ? 'Create New Job' : 'Edit Job',
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        tooltip: 'l10n.editJobSaveButtonTooltip',
-        shape: const ContinuousRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(32)),
-        ),
-        backgroundColor: status.isLoadingOrSuccess
-            ? fabBackgroundColor.withOpacity(0.5)
-            : fabBackgroundColor,
-        onPressed: status.isLoadingOrSuccess
-            ? null
-            : () => context.read<EditJobBloc>().add(const EditJobSubmitted()),
-        child: status.isLoadingOrSuccess
-            ? const CupertinoActivityIndicator()
-            : const Icon(Icons.check_rounded),
       ),
       body: CupertinoScrollbar(
         child: SingleChildScrollView(
           child: Column(
-            children: const [
+            children: [
               _ClientField(),
               _DateField(),
               _DurationField(),
               _PayField(),
               _LocationField(),
               _CaregiversField(),
-              _LinkField(),
+              _TasksList(),
+              BottomButton(
+                title: isNewJob ? 'Create New Job' : 'Update Job',
+                pressable: status.isUpdated ? true : false,
+                onPressed: (() {
+                  context.read<EditJobBloc>().add(const EditJobSubmitted());
+                }),
+              ),
             ],
           ),
         ),
@@ -377,38 +367,132 @@ class _CaregiversField extends StatelessWidget {
   }
 }
 
-class _LinkField extends StatelessWidget {
-  const _LinkField();
+class _TasksList extends StatefulWidget {
+  const _TasksList({super.key});
+
+  @override
+  State<_TasksList> createState() => _TasksListState();
+}
+
+class _TasksListState extends State<_TasksList> {
+  late FocusNode myFocusNode;
+  late TextEditingController myController;
+  @override
+  initState() {
+    super.initState();
+
+    myFocusNode = FocusNode();
+    myController = TextEditingController()
+      ..addListener(() {
+        context
+            .read<EditJobBloc>()
+            .add(EditJobLogActionChanged(myController.text));
+      });
+  }
+
+  @override
+  void dispose() {
+    myFocusNode.dispose();
+    myController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final state = context.watch<EditJobBloc>().state;
-    final hintText = state.initialJob?.link ?? '';
+    final tasks = context.watch<EditJobBloc>().state.tasks;
+
     return Padding(
-      padding: const EdgeInsets.all(8),
-      child: Row(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: Icon(Icons.link, size: 40),
-          ),
-          Expanded(
-              child: TextFormField(
-            key: const Key('editJobView_link_textFormField'),
-            initialValue: state.link,
-            decoration: InputDecoration(
-              enabled: !state.status.isLoadingOrSuccess,
-              labelText: 'link',
-              hintText: hintText,
+          Container(
+            width: double.maxFinite,
+            height: 32,
+            child: Text(
+              "Tasks",
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
-            inputFormatters: [
-              LengthLimitingTextInputFormatter(50),
-              // FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9\s]')),
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  width: 1,
+                  color: Color(0xff626262),
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: tasks.isEmpty
+                  ? [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text('no tasks yet',
+                            style: Theme.of(context).textTheme.bodyText1),
+                      )
+                    ]
+                  : tasks
+                      .map<Widget>((task) => Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 8),
+                            child: Row(
+                              children: [
+                                Container(
+                                    width: 16,
+                                    height: 16,
+                                    child: Checkbox(
+                                        value: false, onChanged: (value) {})),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 8),
+                                  child: Text(task.action,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1),
+                                ),
+                              ],
+                            ),
+                          ))
+                      .toList(),
+            ),
+          ),
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 4.0),
+                  child: TextField(
+                    focusNode: myFocusNode,
+                    controller: myController,
+                    decoration: InputDecoration(
+                      hintText: 'Add Task',
+                      suffixIcon: IconButton(
+                        icon: Icon(Icons.add),
+                        onPressed: context
+                                .watch<EditJobBloc>()
+                                .state
+                                .logAction
+                                .isNotEmpty
+                            ? () {
+                                context
+                                    .read<EditJobBloc>()
+                                    .add(EditJobNewTaskAdded());
+                                myController.clear();
+                                myFocusNode.unfocus();
+                              }
+                            : null,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ],
-            onChanged: (value) {
-              context.read<EditJobBloc>().add(EditJobLinkChanged(value));
-            },
-          )),
+          )
         ],
       ),
     );

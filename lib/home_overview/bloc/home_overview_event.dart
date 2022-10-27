@@ -7,8 +7,15 @@ abstract class HomeOverviewEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class HomeOverviewSubscriptionRequested extends HomeOverviewEvent {}
+class HomeOverviewSubscriptionRequested extends HomeOverviewEvent {
+  // @visibleForTesting
+  const HomeOverviewSubscriptionRequested(this.group);
 
-class HomeOverviewUpcomingJobRequested extends HomeOverviewEvent {}
+  final String group;
+
+  @override
+  List<Object> get props => [group];
+}
+
 
 

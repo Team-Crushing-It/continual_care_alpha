@@ -13,21 +13,29 @@ class FirestoreJobsApi implements JobsApi {
   final FirebaseFirestore _firestore;
 
   /// a converter method for maintaining type-safety
-  late final jobsCollection =
-      _firestore.collection('jobs').withConverter<Job>(
-            fromFirestore: (snapshot, _) => Job.fromJson(snapshot.data()!),
-            toFirestore: (job, _) => job.toJson(),
-          );
+  late final jobsCollection = _firestore.collection('jobs').withConverter<Job>(
+        fromFirestore: (snapshot, _) => Job.fromJson(snapshot.data()!),
+        toFirestore: (job, _) => job.toJson(),
+      );
 
   /// This stream orders the [Job]'s by the
   /// time they were created, and then converts
   /// them from a [DocumentSnapshot] into
   /// a [Job]
   @override
-  Stream<List<Job>> getJobs() {
-    return jobsCollection.orderBy('startTime').snapshots().map(
-          (snapshot) => snapshot.docs.map((e) => e.data()).toList(),
-        );
+  Stream<List<Job>> getJobs(String group) {
+    print('group: $group');
+    return jobsCollection
+        .where('client', isEqualTo: group)
+        .orderBy('startTime')
+        .snapshots()
+        .map(
+      (snapshot) {
+        // print(snapshot.docs.length);
+        // print(snapshot.docs[0].data().client);
+        return snapshot.docs.map((e) => e.data()).toList();
+      },
+    );
   }
 
   /// This method first checks whether or not a job exists

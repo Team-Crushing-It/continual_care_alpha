@@ -9,9 +9,11 @@ environment:
 dependencies:
   cache:
     path: ../cache
+  cloud_firestore: ^3.4.3
   equatable: ^2.0.3
   firebase_auth: 
   firebase_core: 
+  
   flutter:
     sdk: flutter
   google_sign_in: ^5.0.7

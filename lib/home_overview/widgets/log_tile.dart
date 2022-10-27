@@ -1,20 +1,27 @@
 import 'package:continual_care_alpha/home_overview/home_overview.dart';
-import 'package:continual_care_alpha/log/log.dart';
 import 'package:flutter/material.dart';
-import 'package:logs_api/logs_api.dart';
+import 'package:jobs_api/jobs_api.dart';
 
-class LogTile extends StatelessWidget {
-  const LogTile({
+class JobTile extends StatelessWidget {
+  const JobTile({
     Key? key,
-    required this.initialLog,
+    required this.initialJob,
     this.onTap,
   }) : super(key: key);
 
-  final Log initialLog;
+  final Job initialJob;
   final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
+    var log;
+    
+    final logExists = initialJob.logs.isNotEmpty;
+
+    if (logExists) {
+      log = initialJob.logs.first;
+    }
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
       child: ListTile(
@@ -27,7 +34,7 @@ class LogTile extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  initialLog.completed.toDateIosFormat()!,
+                  logExists ? log.completed.toDateIosFormat()! : 'na',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -62,10 +69,13 @@ class LogTile extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                InfoItem(title: "Comments", count: initialLog.comments.length),
-                InfoItem(title: "Tasks", count: initialLog.tasks.length),
-                InfoItem(title: "IADL", count: initialLog.iadls.length),
-                InfoItem(title: "BADL", count: initialLog.badls.length)
+                InfoItem(
+                    title: "Comments",
+                    count: logExists ? log.comments.length : 0),
+                // InfoItem(title: "Tasks", count: initialJob.tasks.length),
+                InfoItem(
+                    title: "IADL", count: logExists ? log.iadls.length : 0),
+                InfoItem(title: "BADL", count: logExists ? log.badls.length : 0)
               ],
             ),
           ),

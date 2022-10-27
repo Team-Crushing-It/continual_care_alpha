@@ -19,6 +19,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         ) {
     on<AppUserChanged>(_onUserChanged);
     on<AppLogoutRequested>(_onLogoutRequested);
+    on<AppGetGroup>(_onGetGroup);
     _userSubscription = _authenticationRepository.user.listen(
       (user) => add(AppUserChanged(user)),
     );
@@ -37,6 +38,12 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
   void _onLogoutRequested(AppLogoutRequested event, Emitter<AppState> emit) {
     unawaited(_authenticationRepository.logOut());
+  }
+
+  void _onGetGroup(AppGetGroup event, Emitter<AppState> emit) async {
+    final group = await _authenticationRepository.getUserGroup();
+
+    emit(state.copyWith(status: AppStatus.initialized, group: group));
   }
 
   @override

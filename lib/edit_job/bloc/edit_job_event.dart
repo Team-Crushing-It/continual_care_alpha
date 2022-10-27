@@ -43,7 +43,6 @@ class EditJobDurationChanged extends EditJobEvent {
   List<Object> get props => [duration];
 }
 
-
 class EditJobLocationChanged extends EditJobEvent {
   const EditJobLocationChanged(this.location);
 
@@ -71,15 +70,16 @@ class EditJobCaregiversChanged extends EditJobEvent {
   List<Object> get props => [caregivers];
 }
 
+class EditJobLogActionChanged extends EditJobEvent {
+  const EditJobLogActionChanged(this.action);
 
-class EditJobLinkChanged extends EditJobEvent {
-  const EditJobLinkChanged(this.link);
-
-  final String link;
+  final String action;
 
   @override
-  List<Object> get props => [link];
+  List<Object> get props => [action];
 }
+
+class EditJobNewTaskAdded extends EditJobEvent {}
 
 class EditJobisCompletedChanged extends EditJobEvent {
   const EditJobisCompletedChanged(this.isCompleted);

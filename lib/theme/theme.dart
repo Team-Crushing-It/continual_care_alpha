@@ -24,10 +24,19 @@ class FlutterJobsTheme {
       textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(primary: const Color(0xFF989898))),
       scaffoldBackgroundColor: Colors.white,
-      textTheme: const TextTheme(
-          bodyText1: TextStyle(color: Color(0xFF353743), fontSize: 16),
-          bodyText2: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold)),
+      textTheme: TextTheme(
+        bodyText1: TextStyle(color: Color(0xFF353743), fontSize: 16),
+        bodyText2: TextStyle(
+            color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+        headline1: TextStyle(
+            color: Colors.black, fontSize: 24, fontWeight: FontWeight.bold),
+        headline2: TextStyle(
+            color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+        headline3: TextStyle(
+            color: Colors.black, fontSize: 12, fontWeight: FontWeight.bold),
+        headline4: TextStyle(
+            color: Colors.black, fontSize: 12, fontWeight: FontWeight.normal),
+      ),
     );
   }
 

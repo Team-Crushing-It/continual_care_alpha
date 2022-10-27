@@ -1,9 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:jobs_repository/jobs_repository.dart';
-import 'package:logs_api/logs_api.dart';
-import 'package:logs_repository/logs_repository.dart';
 
 part 'home_overview_event.dart';
 part 'home_overview_state.dart';
@@ -11,34 +8,41 @@ part 'home_overview_state.dart';
 class HomeOverviewBloc extends Bloc<HomeOverviewEvent, HomeOverviewState> {
   HomeOverviewBloc({
     required JobsRepository jobsRepository,
-    required LogsRepository logsRepository,
   })  : _jobsRepository = jobsRepository,
-        _logsRepository = logsRepository,
         super(HomeOverviewState()) {
     on<HomeOverviewSubscriptionRequested>(_onSubscriptionRequested);
-    on<HomeOverviewUpcomingJobRequested>(_onUpcomingJobRequested);
   }
 
   final JobsRepository _jobsRepository;
-  final LogsRepository _logsRepository;
 
-  Future<void> _onSubscriptionRequested(
-      HomeOverviewEvent event, Emitter<HomeOverviewState> emit) async {
-    await emit.forEach<List<Log>>(_logsRepository.getLogs(), onData: (logs) {
-      return state.copyWith(logs: logs);
+  Future<void> _onSubscriptionRequested(HomeOverviewSubscriptionRequested event,
+      Emitter<HomeOverviewState> emit) async {
+    await emit.forEach<List<Job>>(_jobsRepository.getJobs(event.group),
+        onData: (jobs) {
+
+      // this is used to determine the upcoming job
+      final upcomingJobs = jobs
+          .where((element) => element.startTime.isAfter(DateTime.now()))
+          .toList();
+
+      // upcomingJobs.sort(((a, b) => a.startTime.compareTo(b.startTime)));
+
+      final upcomingJob = upcomingJobs.isEmpty ? null : upcomingJobs.first;
+
+      // this is used to determine the most recent job
+      final recentJobs = jobs
+          .where((element) => element.startTime.isBefore(DateTime.now()))
+          .toList();
+          
+      recentJobs.sort(((a, b) => b.startTime.compareTo(a.startTime)));
+
+      final recentJob = recentJobs.isEmpty ? null : recentJobs.first;
+
+      return state.copyWith(
+        jobs: jobs,
+        upcomingJob: upcomingJob,
+        recentJob: recentJob,
+      );
     });
-  }
-
-  Future<void> _onUpcomingJobRequested(
-      HomeOverviewEvent event, Emitter<HomeOverviewState> emit) async {
-    List<Job> jobs = await _jobsRepository.getJobs().first;
-    jobs = jobs
-        .where((element) => element.startTime.isAfter(DateTime.now()))
-        .toList();
-    jobs.sort(((a, b) => a.startTime.compareTo(b.startTime)));
-    if (jobs.isNotEmpty) {
-      final job = jobs.first;
-      emit(state.copyWith(job: job));
-    }
   }
 }
