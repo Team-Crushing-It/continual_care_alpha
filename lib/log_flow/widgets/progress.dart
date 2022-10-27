@@ -12,182 +12,86 @@ class LogProgress extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final status = context.read<LogBloc>().state.status;
+    List<LogStatus> logStatus = [
+      LogStatus.initial,
+      LogStatus.caregiverCompleted,
+      LogStatus.tasksCompleted,
+      LogStatus.iadlsCompleted,
+      LogStatus.badlsCompleted,
+      LogStatus.commentsCompleted,
+    ];
+    return ProgressChecks(checksNumber: logStatus.indexOf(status));
+  }
+}
 
-    if (status == LogStatus.initial) {
-      return Container(
-        height: 56,
-        decoration: BoxDecoration(
-          border: Border(
-            bottom: BorderSide(
-              width: 1,
-              color: Color(0xff626262),
-            ),
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _ProgressBox(title: 'caregiver'),
-              _ProgressBox(title: 'tasks'),
-              _ProgressBox(title: 'iadls'),
-              _ProgressBox(title: 'badls'),
-              _ProgressBox(title: 'comments'),
-            ],
-          ),
-        ),
-      );
-    }
+class ProgressChecks extends StatelessWidget {
+  ProgressChecks({
+    Key? key,
+    required this.checksNumber,
+  }) : super(key: key);
 
-    if (status == LogStatus.caregiverCompleted) {
-      return Container(
-        height: 56,
-        decoration: BoxDecoration(
-          border: Border(
-            bottom: BorderSide(
-              width: 1,
-              color: Color(0xff626262),
-            ),
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _ProgressBox(title: 'caregiver', value: true),
-              _ProgressBox(title: 'tasks'),
-              _ProgressBox(title: 'iadls'),
-              _ProgressBox(title: 'badls'),
-              _ProgressBox(title: 'comments'),
-            ],
-          ),
-        ),
-      );
-    }
-    if (status == LogStatus.tasksCompleted) {
-      return Container(
-        height: 56,
-        decoration: BoxDecoration(
-          border: Border(
-            bottom: BorderSide(
-              width: 1,
-              color: Color(0xff626262),
-            ),
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _ProgressBox(title: 'caregiver', value: true),
-              _ProgressBox(title: 'tasks', value: true),
-              _ProgressBox(title: 'iadls'),
-              _ProgressBox(title: 'badls'),
-              _ProgressBox(title: 'comments'),
-            ],
-          ),
-        ),
-      );
-    }
+  final int checksNumber;
+  List<_ProgressBox> progress = [
+    _ProgressBox(
+      title: 'caregiver',
+      status: LogStatus.initial,
+    ),
+    _ProgressBox(
+      title: 'tasks',
+      status: LogStatus.caregiverCompleted,
+    ),
+    _ProgressBox(
+      title: 'iadls',
+      status: LogStatus.tasksCompleted,
+    ),
+    _ProgressBox(
+      title: 'badls',
+      status: LogStatus.iadlsCompleted,
+    ),
+    _ProgressBox(
+      title: 'comments',
+      status: LogStatus.badlsCompleted,
+    ),
+  ];
 
-    if (status == LogStatus.caregiverCompleted) {
-      return Container(
-        height: 56,
-        decoration: BoxDecoration(
-          border: Border(
-            bottom: BorderSide(
-              width: 1,
-              color: Color(0xff626262),
-            ),
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 56,
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            width: 1,
+            color: Color(0xff626262),
           ),
         ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _ProgressBox(title: 'caregiver', value: true),
-              _ProgressBox(title: 'tasks'),
-              _ProgressBox(title: 'iadls'),
-              _ProgressBox(title: 'badls'),
-              _ProgressBox(title: 'comments'),
-            ],
-          ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: progress.map((item) {
+            if (progress.indexOf(item) < checksNumber)
+              return item.copyWith(value: true);
+            return item;
+          }).toList(),
         ),
-      );
-    }
-    if (status == LogStatus.iadlsCompleted) {
-      return Container(
-        height: 56,
-        decoration: BoxDecoration(
-          border: Border(
-            bottom: BorderSide(
-              width: 1,
-              color: Color(0xff626262),
-            ),
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _ProgressBox(title: 'caregiver', value: true),
-              _ProgressBox(title: 'tasks', value: true),
-              _ProgressBox(title: 'iadls', value: true),
-              _ProgressBox(title: 'badls'),
-              _ProgressBox(title: 'comments'),
-            ],
-          ),
-        ),
-      );
-    }
-
-    if (status == LogStatus.badlsCompleted) {
-      return Container(
-        height: 56,
-        decoration: BoxDecoration(
-          border: Border(
-            bottom: BorderSide(
-              width: 1,
-              color: Color(0xff626262),
-            ),
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _ProgressBox(title: 'caregiver', value: true),
-              _ProgressBox(title: 'tasks', value: true),
-              _ProgressBox(title: 'iadls', value: true),
-              _ProgressBox(title: 'badls', value: true),
-              _ProgressBox(title: 'comments'),
-            ],
-          ),
-        ),
-      );
-    }
-
-    return Container();
+      ),
+    );
   }
 }
 
 class _ProgressBox extends StatelessWidget {
-  const _ProgressBox({required this.title, this.value});
+  const _ProgressBox({
+    required this.status,
+    required this.title,
+    this.value,
+  });
 
   final String title;
   final bool? value;
+  final LogStatus status;
 
   @override
   Widget build(BuildContext context) {
@@ -202,11 +106,27 @@ class _ProgressBox extends StatelessWidget {
               width: 24,
               child: Checkbox(
                 value: value ?? false,
-                onChanged: (bool) => {},
+                onChanged: (bool) {
+                  context.read<LogBloc>().add(
+                        LogStatusChanged(status),
+                      );
+                },
               ),
             ),
             Text(title, style: TextStyle(fontSize: 10)),
           ],
         ));
+  }
+
+  _ProgressBox copyWith({
+    String? title,
+    bool? value,
+    LogStatus? status,
+  }) {
+    return _ProgressBox(
+      title: title ?? this.title,
+      value: value ?? this.value,
+      status: status ?? this.status,
+    );
   }
 }
