@@ -42,6 +42,7 @@ class CommentsPage extends StatelessWidget {
                 children: [
                   MoodPicker(
                     prompt: 'How was $client today?',
+                    cMood: false,
                   ),
                   Comments(),
                   Padding(

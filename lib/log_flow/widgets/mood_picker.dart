@@ -4,13 +4,22 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jobs_api/jobs_api.dart';
 
 class MoodPicker extends StatelessWidget {
-  const MoodPicker({super.key, required this.prompt});
+  const MoodPicker({
+    super.key,
+    required this.prompt,
+    required this.cMood,
+  });
 
   final String prompt;
+  final bool cMood;
 
   @override
   Widget build(BuildContext context) {
-    final cMood = context.watch<LogBloc>().state.cMood;
+    final mood = cMood
+        ? context.watch<LogBloc>().state.cMood
+        : context.watch<LogBloc>().state.iMood;
+
+    // final cMood = context.watch<LogBloc>().state.cMood;
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
@@ -24,11 +33,17 @@ class MoodPicker extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: Mood.values
                   .map<Widget>(
-                    (mood) => MoodBox(
-                      mood: mood,
-                      isSelected: mood == cMood ? true : false,
+                    (pMood) => MoodBox(
+                      mood: pMood,
+                      isSelected: pMood == mood ? true : false,
                       onTap: () => {
-                        context.read<LogBloc>().add(LogCMoodChanged(mood)),
+                        cMood
+                            ? context
+                                .read<LogBloc>()
+                                .add(LogCMoodChanged(pMood))
+                            : context
+                                .read<LogBloc>()
+                                .add(LogIMoodChanged(pMood))
                       },
                     ),
                   )
