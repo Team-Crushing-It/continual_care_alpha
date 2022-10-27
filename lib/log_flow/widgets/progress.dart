@@ -50,7 +50,7 @@ class ProgressChecks extends StatelessWidget {
     ),
     _ProgressBox(
       title: 'comments',
-      status: LogStatus.commentsCompleted,
+      status: LogStatus.badlsCompleted,
     ),
   ];
 
