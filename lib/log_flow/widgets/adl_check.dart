@@ -4,9 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jobs_api/jobs_api.dart';
 
 class ADLCheck extends StatelessWidget {
-  const ADLCheck({super.key, required this.adl});
+  const ADLCheck({super.key, required this.adl, required this.isIadl});
 
   final ADL adl;
+  final bool isIadl;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,9 @@ class ADLCheck extends StatelessWidget {
                     return Checkbox(
                       value: adl.isIndependent,
                       onChanged: (isChecked) {
-                        context.read<LogBloc>().add(LogIADLSChanged(adl));
+                        context.read<LogBloc>().add(isIadl
+                            ? LogIADLSChanged(adl)
+                            : LogBADLSChanged(adl));
                       },
                     );
                   },
