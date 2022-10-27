@@ -230,7 +230,7 @@ class LogBloc extends Bloc<LogEvent, LogState> {
   ) async {
     emit(state.copyWith(status: LogStatus.loading));
 
-    final log = (state.initialLog ?? Log()).copyWith(
+    final log = (state.initialLog).copyWith(
       comments: state.comments,
       iadls: state.iadls,
       badls: state.badls,
@@ -238,8 +238,15 @@ class LogBloc extends Bloc<LogEvent, LogState> {
       completed: state.completed,
     );
     print('log: $log');
+
+    final outputLogs = _job.logs..add(log);
+
+    final output = _job.copyWith(logs: outputLogs);
+
+    print('output: $output');
+
     try {
-      // await _jobsRepository.saveJob(log);
+      await _jobsRepository.saveJob(output);
       emit(state.copyWith(status: LogStatus.success));
     } catch (e) {
       print(e);

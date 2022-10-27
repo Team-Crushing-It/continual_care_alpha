@@ -137,32 +137,32 @@ class HomeOverviewView extends StatelessWidget {
                 ),
               ),
             ),
-            BlocBuilder<HomeOverviewBloc, HomeOverviewState>(
-              builder: (context, state) {
-                if (state.jobs != null) {
-                  if (state.jobs!.isNotEmpty) {
-                    return Expanded(
-                      child: ListView.builder(
-                        itemCount: state.jobs!.length,
-                        itemBuilder: ((context, index) {
-                          return JobTile(
-                            initialJob: state.jobs![index],
-                            onTap: () {
-                              // Navigator.of(context).push(
-                              //   LogOverviewPage.route(
-                              //     initialLog: state.jobs![index],
-                              //   ),
-                              // );
-                            },
-                          );
-                        }),
-                      ),
-                    );
-                  }
-                }
-                return Text("No logs yet");
-              },
-            )
+            // BlocBuilder<HomeOverviewBloc, HomeOverviewState>(
+            //   builder: (context, state) {
+            //     if (state.jobs != null) {
+            //       if (state.jobs!.isNotEmpty) {
+            //         return Expanded(
+            //           child: ListView.builder(
+            //             itemCount: state.jobs!.length,
+            //             itemBuilder: ((context, index) {
+            //               return JobTile(
+            //                 initialJob: state.jobs![index],
+            //                 onTap: () {
+            //                   // Navigator.of(context).push(
+            //                   //   LogOverviewPage.route(
+            //                   //     initialLog: state.jobs![index],
+            //                   //   ),
+            //                   // );
+            //                 },
+            //               );
+            //             }),
+            //           ),
+            //         );
+            //       }
+            //     }
+            //     return Text("No logs yet");
+            //   },
+            // )
           ],
         ),
       ),
