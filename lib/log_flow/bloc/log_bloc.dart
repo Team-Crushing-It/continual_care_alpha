@@ -32,6 +32,10 @@ class LogBloc extends Bloc<LogEvent, LogState> {
             started: initialLog?.started ?? DateTime.now(),
           ),
         ) {
+
+
+/// LogLocationRequested(_onLogLocationRequested)
+
     on<LogStatusChanged>(_onStatusChanged);
     on<LogCommentsChanged>(_onCommentsChanged);
     on<LogIADLSChanged>(_onIADLSChanged);
