@@ -177,8 +177,8 @@ class LogIMoodChanged extends LogEvent {
   List<Object> get props => [iMood];
 }
 
-class LogLocationChanged extends LogEvent {
-  const LogLocationChanged(this.location);
+class LogLocationRequested extends LogEvent {
+  const LogLocationRequested(this.location);
 
   final String location;
 

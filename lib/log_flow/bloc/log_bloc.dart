@@ -46,7 +46,7 @@ class LogBloc extends Bloc<LogEvent, LogState> {
     on<LogTaskUpdated>(_onTaskUpdated);
     on<LogCMoodChanged>(_onCMoodChanged);
     on<LogIMoodChanged>(_onIMoodChanged);
-    on<LogLocationChanged>(_onLocationChanged);
+    on<LogLocationRequested>(_onLocationRequested);
     on<LogCompletedChanged>(_onCompletedChanged);
     on<LogStartedChanged>(_onStartedChanged);
     on<LogisCompletedChanged>(_onisCompletedChanged);
@@ -200,10 +200,15 @@ class LogBloc extends Bloc<LogEvent, LogState> {
     emit(state.copyWith(iMood: event.iMood));
   }
 
-  void _onLocationChanged(
-    LogLocationChanged event,
+  Future<void> _onLocationRequested(
+    LogLocationRequested event,
     Emitter<LogState> emit,
-  ) {
+  ) async{
+
+    /// await function call to repo
+
+    // final location = await _jobsRepository.getLocation();
+
     emit(state.copyWith(location: event.location));
   }
 
