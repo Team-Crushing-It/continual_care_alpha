@@ -32,6 +32,7 @@ class CaregiverPage extends StatelessWidget {
           LogProgress(),
           MoodPicker(
             prompt: 'How are you doing today?',
+            cMood: true,
           ),
           ContinueButton(
             pressable: true,
