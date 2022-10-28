@@ -3,6 +3,7 @@ import 'package:continual_care_alpha/home_overview/bloc/home_overview_bloc.dart'
 import 'package:continual_care_alpha/home_overview/home_overview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jobs_api/jobs_api.dart';
 import 'package:jobs_repository/jobs_repository.dart';
 
 import '../../schedule/widgets/job_list_tile.dart';
@@ -137,6 +138,198 @@ class HomeOverviewView extends StatelessWidget {
                 ),
               ),
             ),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    JobTile(
+                      initialJob: Job(
+                        client: 'Maureen & Day DeRosa',
+                        logs: [
+                          Log(
+                            iMood: Mood.happy,
+                            comments: [Comment(), Comment(), Comment()],
+                            completed: DateTime.now().subtract(
+                              Duration(days: 2),
+                            ),
+                            badls: [
+                              ADL(
+                                  isIndependent: true,
+                                  independence: '',
+                                  dependence: ''),
+                              ADL(
+                                  isIndependent: true,
+                                  independence: '',
+                                  dependence: ''),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                    JobTile(
+                      initialJob: Job(
+                        client: 'Maureen & Day DeRosa',
+                        logs: [
+                          Log(
+                            iMood: Mood.neutral,
+                            comments: [Comment(), Comment(), Comment()],
+                            completed: DateTime.now().subtract(
+                              Duration(days: 3),
+                            ),
+                            badls: [
+                              ADL(
+                                  isIndependent: true,
+                                  independence: '',
+                                  dependence: ''),
+                              ADL(
+                                  isIndependent: true,
+                                  independence: '',
+                                  dependence: ''),
+                              ADL(
+                                  isIndependent: true,
+                                  independence: '',
+                                  dependence: ''),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                    JobTile(
+                      initialJob: Job(
+                        client: 'Maureen & Day DeRosa',
+                        logs: [
+                          Log(
+                            iMood: Mood.happy,
+                            comments: [Comment(), Comment(), Comment()],
+                            completed: DateTime.now().subtract(
+                              Duration(days: 4),
+                            ),
+                            badls: [
+                              ADL(
+                                  isIndependent: true,
+                                  independence: '',
+                                  dependence: ''),
+                              ADL(
+                                  isIndependent: true,
+                                  independence: '',
+                                  dependence: ''),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                    JobTile(
+                      initialJob: Job(
+                        client: 'Maureen & Day DeRosa',
+                        logs: [
+                          Log(
+                            iMood: Mood.happy,
+                            comments: [Comment(), Comment(), Comment()],
+                            completed: DateTime.now().subtract(
+                              Duration(days: 5),
+                            ),
+                            badls: [
+                              ADL(
+                                  isIndependent: true,
+                                  independence: '',
+                                  dependence: ''),
+                              ADL(
+                                  isIndependent: true,
+                                  independence: '',
+                                  dependence: ''),
+                              ADL(
+                                  isIndependent: true,
+                                  independence: '',
+                                  dependence: ''),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                    JobTile(
+                      initialJob: Job(
+                        client: 'Maureen & Day DeRosa',
+                        logs: [
+                          Log(
+                            iMood: Mood.happy,
+                            comments: [Comment(), Comment(), Comment()],
+                            completed: DateTime.now().subtract(
+                              Duration(days: 6),
+                            ),
+                            badls: [
+                              ADL(
+                                  isIndependent: true,
+                                  independence: '',
+                                  dependence: ''),
+                              ADL(
+                                  isIndependent: true,
+                                  independence: '',
+                                  dependence: ''),
+                              ADL(
+                                  isIndependent: true,
+                                  independence: '',
+                                  dependence: ''),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                    JobTile(
+                      initialJob: Job(
+                        client: 'Maureen & Day DeRosa',
+                        logs: [
+                          Log(
+                            iMood: Mood.happy,
+                            comments: [Comment(), Comment(), Comment()],
+                            completed: DateTime.now().subtract(
+                              Duration(days: 8),
+                            ),
+                            badls: [
+                              ADL(
+                                  isIndependent: true,
+                                  independence: '',
+                                  dependence: ''),
+                              ADL(
+                                  isIndependent: true,
+                                  independence: '',
+                                  dependence: ''),
+                              ADL(
+                                  isIndependent: true,
+                                  independence: '',
+                                  dependence: ''),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                    JobTile(
+                      initialJob: Job(
+                        client: 'Maureen & Day DeRosa',
+                        logs: [
+                          Log(
+                            iMood: Mood.happy,
+                            comments: [Comment(), Comment(), Comment()],
+                            completed: DateTime.now().subtract(
+                              Duration(days: 2),
+                            ),
+                            badls: [
+                              ADL(
+                                  isIndependent: true,
+                                  independence: '',
+                                  dependence: ''),
+                              ADL(
+                                  isIndependent: true,
+                                  independence: '',
+                                  dependence: ''),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
             // BlocBuilder<HomeOverviewBloc, HomeOverviewState>(
             //   builder: (context, state) {
             //     if (state.jobs != null) {

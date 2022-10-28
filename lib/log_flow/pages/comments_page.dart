@@ -16,55 +16,48 @@ class CommentsPage extends StatelessWidget {
     final date = context.read<LogBloc>().state.started!;
     final client = context.watch<LogBloc>().state.client;
 
-    return BlocListener<LogBloc, LogState>(
-      listener: (context, state) {
-        if (state.status == LogStatus.success) {
-          context.flow<LogState>().complete();
-        }
-      },
-      child: Scaffold(
-          appBar: AppBar(
-            title: Text(date.dateIosFormat()!),
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () {
-                context
-                    .read<LogBloc>()
-                    .add(LogStatusChanged(LogStatus.tasksCompleted));
-              },
-            ),
+    return Scaffold(
+        appBar: AppBar(
+          title: Text(date.dateIosFormat()!),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              context
+                  .read<LogBloc>()
+                  .add(LogStatusChanged(LogStatus.tasksCompleted));
+            },
           ),
-          body: Column(
-            children: [
-              LogProgress(),
-              Expanded(
-                  child: Column(
-                children: [
-                  MoodPicker(
-                    prompt: 'How was $client today?',
-                    cMood: false,
-                  ),
-                  Comments(),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 32.0),
-                    child: ContinueButton(
-                      pressable: true,
-                      onPressed: () {
-                        print('complete flow');
+        ),
+        body: Column(
+          children: [
+            LogProgress(),
+            Expanded(
+                child: Column(
+              children: [
+                MoodPicker(
+                  prompt: 'How was $client today?',
+                  cMood: false,
+                ),
+                Comments(),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 32.0),
+                  child: ContinueButton(
+                    pressable: true,
+                    onPressed: () {
+                      print('complete flow');
 
-                        // call the event to submit new log
-                        context.read<LogBloc>().add(
-                              LogSubmitted(),
-                            );
-                        // once the event is complete, then complete the flow
-                        context.flow<LogState>().complete();
-                      },
-                    ),
-                  )
-                ],
-              )),
-            ],
-          )),
-    );
+                      // call the event to submit new log
+                      context.read<LogBloc>().add(
+                            LogSubmitted(),
+                          );
+                      // once the event is complete, then complete the flow
+                      context.flow<LogState>().complete();
+                    },
+                  ),
+                )
+              ],
+            )),
+          ],
+        ));
   }
 }

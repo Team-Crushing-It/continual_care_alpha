@@ -1,4 +1,7 @@
+import 'package:continual_care_alpha/edit_job/edit_job.dart';
 import 'package:continual_care_alpha/home_overview/home_overview.dart';
+import 'package:continual_care_alpha/schedule/widgets/date_ios_format.dart';
+import 'package:continual_care_alpha/schedule/widgets/time_format.dart';
 import 'package:flutter/material.dart';
 import 'package:jobs_api/jobs_api.dart';
 
@@ -14,13 +17,34 @@ class JobTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var log;
-    
+    Log log;
+
     final logExists = initialJob.logs.isNotEmpty;
 
     if (logExists) {
       log = initialJob.logs.first;
+    } else {
+      log = Log();
     }
+
+    var iadlsCount = 0;
+    var badlsCount = 0;
+
+    log.iadls!.forEach(
+      (element) {
+        if (element.isIndependent == true) {
+          iadlsCount++;
+        }
+      },
+    );
+
+    log.badls!.forEach(
+      (element) {
+        if (element.isIndependent == true) {
+          badlsCount++;
+        }
+      },
+    );
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
@@ -33,21 +57,45 @@ class JobTile extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  logExists ? log.completed.toDateIosFormat()! : 'na',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
+                logExists
+                    ? Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            log.completed.dateIosFormat()!,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Text(log.completed.timeFormat()!),
+                          ),
+                        ],
+                      )
+                    : Text(
+                        'na',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: Text.rich(
                       overflow: TextOverflow.ellipsis,
                       TextSpan(children: [
                         TextSpan(
-                            text: "Location: ",
-                            style: TextStyle(color: Color(0xff989898))),
-                        TextSpan(text: "🤩"),
+                          text: "Mood: ",
+                          style: TextStyle(
+                            color: Color(0xff989898),
+                          ),
+                        ),
+                        if (log.iMood == Mood.happy) TextSpan(text: "🤩"),
+                        if (log.iMood == Mood.neutral) TextSpan(text: "😐"),
+                        if (log.iMood == Mood.sad) TextSpan(text: "😔"),
                       ])),
                 ),
               ],
@@ -74,8 +122,9 @@ class JobTile extends StatelessWidget {
                     count: logExists ? log.comments.length : 0),
                 // InfoItem(title: "Tasks", count: initialJob.tasks.length),
                 InfoItem(
-                    title: "IADL", count: logExists ? log.iadls.length : 0),
-                InfoItem(title: "BADL", count: logExists ? log.badls.length : 0)
+                    title: "IADL", count: logExists ? iadlsCount : 0),
+                InfoItem(
+                    title: "BADL", count: logExists ? badlsCount : 0)
               ],
             ),
           ),

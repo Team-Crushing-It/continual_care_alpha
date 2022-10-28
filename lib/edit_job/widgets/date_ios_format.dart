@@ -1,5 +1,3 @@
-
-
 import 'package:intl/intl.dart';
 
 extension ToDateIosFormat on DateTime {
