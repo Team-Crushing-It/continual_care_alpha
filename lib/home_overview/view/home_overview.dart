@@ -109,6 +109,7 @@ class HomeOverviewView extends StatelessWidget {
                       IconButton(
                           onPressed: () {
                             context.read<AppBloc>().add(AppLogoutRequested());
+                            context.read<HomeOverviewBloc>().close();
                           },
                           icon: Icon(
                             Icons.account_circle,
