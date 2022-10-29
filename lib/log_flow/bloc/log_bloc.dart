@@ -32,9 +32,7 @@ class LogBloc extends Bloc<LogEvent, LogState> {
             started: initialLog?.started ?? DateTime.now(),
           ),
         ) {
-
-
-/// LogLocationRequested(_onLogLocationRequested)
+    /// LogLocationRequested(_onLogLocationRequested)
 
     on<LogStatusChanged>(_onStatusChanged);
     on<LogCommentsChanged>(_onCommentsChanged);
@@ -46,7 +44,7 @@ class LogBloc extends Bloc<LogEvent, LogState> {
     on<LogTaskUpdated>(_onTaskUpdated);
     on<LogCMoodChanged>(_onCMoodChanged);
     on<LogIMoodChanged>(_onIMoodChanged);
-    on<LogLocationChanged>(_onLocationChanged);
+    on<LogLocationRequested>(_onLocationRequested);
     on<LogCompletedChanged>(_onCompletedChanged);
     on<LogStartedChanged>(_onStartedChanged);
     on<LogisCompletedChanged>(_onisCompletedChanged);
@@ -200,11 +198,18 @@ class LogBloc extends Bloc<LogEvent, LogState> {
     emit(state.copyWith(iMood: event.iMood));
   }
 
-  void _onLocationChanged(
-    LogLocationChanged event,
+  Future<void> _onLocationRequested(
+    LogLocationRequested event,
     Emitter<LogState> emit,
-  ) {
-    emit(state.copyWith(location: event.location));
+  ) async {
+    try {
+      // get location from geo coordinates
+      final location = await _jobsRepository.getLocation();
+      print("location : $location");
+      emit(state.copyWith(location: location));
+    } on LocationPermissionNotGrantedException catch (e) {
+      print(e);
+    }
   }
 
   void _onCompletedChanged(

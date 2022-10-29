@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:jobs_api/jobs_api.dart';
 
 /// {@template jobs_api}
@@ -34,3 +35,11 @@ abstract class JobsApi {
 
 /// Error thrown when a [Job] with a given id is not found.
 class JobNotFoundException implements Exception {}
+
+// Error thrown when a [LocationPermission] not granted.
+class LocationPermissionNotGrantedException implements Exception {
+  final String message;
+  LocationPermissionNotGrantedException(
+    this.message,
+  );
+}

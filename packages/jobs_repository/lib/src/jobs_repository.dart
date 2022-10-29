@@ -1,4 +1,7 @@
+import 'package:geolocator/geolocator.dart';
 import 'package:jobs_api/jobs_api.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:location/location.dart' as Location;
 
 /// {@template jobs_repository}
 /// A repository that handles job related requests.
@@ -35,4 +38,39 @@ class JobsRepository {
   /// Returns the number of updated jobs.
   Future<int> completeAll({required bool isCompleted}) =>
       _jobsApi.completeAll(isCompleted: isCompleted);
+
+  Future<String> getLocation() async {
+    bool _serviceEnabled;
+    LocationPermission permission;
+
+    _serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!_serviceEnabled) {
+      final location = Location.Location();
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        throw LocationPermissionNotGrantedException(
+            'Location services are permanently denied, we cannot request services.');
+      }
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        throw LocationPermissionNotGrantedException(
+            'Location permissions are denied');
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      throw LocationPermissionNotGrantedException(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+    final position = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high,
+    );
+    final places =
+        await placemarkFromCoordinates(position.latitude, position.longitude);
+    final place = places[0];
+    return '${place.locality}, ${place.postalCode}, ${place.country}, lat: ${position.latitude}, lon: ${position.longitude}';
+  }
 }
