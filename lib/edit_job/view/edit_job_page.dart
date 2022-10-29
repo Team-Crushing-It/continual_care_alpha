@@ -8,6 +8,8 @@ import 'package:jobs_api/jobs_api.dart';
 import 'package:jobs_repository/jobs_repository.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 
+import '../../log_flow/log_flow.dart';
+
 class EditJobPage extends StatelessWidget {
   const EditJobPage({super.key});
 
@@ -78,6 +80,14 @@ class EditJobView extends StatelessWidget {
                 pressable: status.isUpdated ? true : false,
                 onPressed: (() {
                   context.read<EditJobBloc>().add(const EditJobSubmitted());
+                }),
+              ),BottomButton(
+                title: 'Add New Log',
+                pressable: true,
+                onPressed: (() {
+                  Navigator.of(context).push(
+                    LogFlow.route(job: context.read<EditJobBloc>().state.initialJob!),
+                  );
                 }),
               ),
             ],
@@ -187,7 +197,7 @@ class _DateField extends StatelessWidget {
                             style:
                                 TextStyle(fontSize: 12, color: Colors.black54)),
                       ),
-                      Text(state2.toDateIosFormat()!),
+                      Text(state2.toDateIosFormatHr()!),
                       Divider(thickness: 1, color: Colors.black38),
                     ],
                   ),

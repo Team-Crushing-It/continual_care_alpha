@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:continual_care_alpha/home_overview/home_overview.dart';
 import 'package:equatable/equatable.dart';
 import 'package:jobs_api/jobs_api.dart';
 import 'package:jobs_repository/jobs_repository.dart';
@@ -38,7 +39,6 @@ class EditJobBloc extends Bloc<EditJobEvent, EditJobState> {
     on<EditJobisCompletedChanged>(_onisCompletedChanged);
     on<EditJobLogActionChanged>(_onLogActionChanged);
     on<EditJobNewTaskAdded>(_onNewTaskAdded);
-
     on<EditJobSubmitted>(_onSubmitted);
   }
 
@@ -181,4 +181,6 @@ class EditJobBloc extends Bloc<EditJobEvent, EditJobState> {
       emit(state.copyWith(status: EditJobStatus.failure));
     }
   }
+
+  
 }
