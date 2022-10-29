@@ -7,6 +7,9 @@ environment:
   sdk: ">=2.13.0 <3.0.0"
 
 dependencies:
+  geocoding: ^2.0.5
+  geolocator: ^9.0.2
+  location: ^4.4.0
   jobs_api:
     path: ../jobs_api
 

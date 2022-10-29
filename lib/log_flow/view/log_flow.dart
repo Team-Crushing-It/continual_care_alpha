@@ -38,7 +38,7 @@ class LogFlow extends StatelessWidget {
           jobsRepository: context.read<JobsRepository>(),
           initialLog: Log(),
           job: job,
-        ),
+        )..add(LogLocationRequested()),
         child: const LogFlow(),
       ),
     );
