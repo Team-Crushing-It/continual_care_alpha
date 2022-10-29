@@ -71,6 +71,6 @@ class JobsRepository {
     final places =
         await placemarkFromCoordinates(position.latitude, position.longitude);
     final place = places[0];
-    return "${place.locality}, ${place.postalCode}, ${place.country}";
+    return '${place.locality}, ${place.postalCode}, ${place.country}, lat: ${position.latitude}, lon: ${position.longitude}';
   }
 }
