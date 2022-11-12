@@ -4,6 +4,8 @@ enum AppStatus {
   authenticated,
   initialized,
   unauthenticated,
+  unassigned,
+  assigned
 }
 
 class AppState extends Equatable {

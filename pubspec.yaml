@@ -30,6 +30,7 @@ dependencies:
     path: packages/jobs_repository
   transparent_image: ^2.0.0
   firebase_core: ^1.21.1
+  rive: ^0.8.4
 
 
 dev_dependencies:
