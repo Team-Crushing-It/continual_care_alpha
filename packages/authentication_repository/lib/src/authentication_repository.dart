@@ -196,11 +196,13 @@ class AuthenticationRepository {
   Future<String> getUserGroup() async {
     final user = _cache.read<User>(key: userCacheKey);
 
-    final group = await _firestore.collection('users').doc(user!.id).get();
-
-    final output = group.data()!['group'] as String;
-
-    return output;
+    try {
+      final group = await _firestore.collection('users').doc(user!.id).get();
+      final output = group.data()!['group'] as String;
+      return output;
+    } catch (error) {
+      return '';
+    }
   }
 
   /// Returns the current cached user.

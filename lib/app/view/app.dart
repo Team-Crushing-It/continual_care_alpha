@@ -45,6 +45,14 @@ class AppView extends StatelessWidget {
         if (state.status == AppStatus.authenticated) {
           context.read<AppBloc>().add(AppGetGroup());
         }
+        if (state.status == AppStatus.initialized) {
+          if (state.group == '') {
+            context.read<AppBloc>().add(AppUnassignedGroup());
+          }
+          else {
+             context.read<AppBloc>().add(AppAssignedGroup());
+          }
+        }
       },
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

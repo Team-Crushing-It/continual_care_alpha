@@ -30,6 +30,7 @@ dependencies:
     path: packages/jobs_repository
   transparent_image: ^2.0.0
   firebase_core: ^1.21.1
+  rive: ^0.8.4
 
 
 dev_dependencies:
@@ -38,9 +39,19 @@ dev_dependencies:
     sdk: flutter
   mocktail: ^0.2.0
   very_good_analysis: ^2.4.0
+  flutter_launcher_icons: "^0.11.0"
+  icons_launcher: ^2.0.6
 
 flutter:
   uses-material-design: true
   generate: true
   assets:
     - assets/
+
+icons_launcher:
+  image_path: 'assets/icon.png'
+  platforms:
+    android:
+      enable: true
+    ios:
+      enable: true

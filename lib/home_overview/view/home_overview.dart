@@ -19,6 +19,7 @@ class HomeOverviewPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final group = context.read<AppBloc>().state.group;
+
     return BlocProvider(
       lazy: false,
       create: (context) => HomeOverviewBloc(

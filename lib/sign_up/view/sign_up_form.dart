@@ -23,12 +23,18 @@ class SignUpForm extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Image.asset(
-            'assets/logo_light.png',
-          ),
-          _RadioInput(),
           Column(
             children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 70.0),
+                child: Center(
+                  child: Text('Sign up with email and password',
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.headline1!.copyWith(
+                            fontSize: 32,
+                          )),
+                ),
+              ),
               _EmailInput(),
               _PasswordInput(),
               _ConfirmPasswordInput(),
