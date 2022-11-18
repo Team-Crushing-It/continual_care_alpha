@@ -77,21 +77,8 @@ workflows:
     environment:
       groups:
         # Add the group environment variables in Codemagic UI (either in Application/Team variables) - https://docs.codemagic.io/variables/environment-variable-groups/
-        - app_store_credentials # <-- (Includes APP_STORE_CONNECT_ISSUER_ID, APP_STORE_CONNECT_KEY_IDENTIFIER, APP_STORE_CONNECT_PRIVATE_KEY)
-          # APP_STORE_CONNECT_ISSUER_ID <-- Put your App Store Connect Issuer Id here
-          # APP_STORE_CONNECT_KEY_IDENTIFIER <-- Put your App Store Connect Key Identifier here
-          # APP_STORE_CONNECT_PRIVATE_KEY <-- Put your App Store Connect Private Key here
-        - certificate_credentials # <-- (Includes CERTIFICATE_PRIVATE_KEY - Put your Certificate Private Key here)
-        - other
-      vars:
-        XCODE_WORKSPACE: "Runner.xcworkspace"
-        XCODE_SCHEME: "Runner"
-        BUNDLE_ID: "io.codemagic.flutteryaml" # <-- Put your bundle id here
-        APP_STORE_ID: 6444452860 # <-- Use the TestFlight Apple id number (An automatically generated ID assigned to your app) found under General > App Information > Apple ID.
-        APP_STORE_CONNECT_ISSUER_ID: 4NAJK9C935 # <-- Put your encrypted App Store Connect Issuer ID here 
-        APP_STORE_CONNECT_PRIVATE_KEY: MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgIIQQDwEMlnsKkdlnmi/rL4DwWjZp+wWcQflF5N60x9agCgYIKoZIzj0DAQehRANCAAQxelLR9KWR5oPFv+4GOaWuFQYNFxnW+1l+YCIUNm5T05I5zb6FS7OmUejx4CyrLfrszo1Df2pL527PRlL3ie1G # <-- Put your encrypted App Store Connect Key Identifier here 
-        APP_STORE_CONNECT_KEY_IDENTIFIER: 718e4923-b8c1-4ba3-9dbc-1286533b977b # <-- Put your encrypted App Store Connect Private Key here 
-        CERTIFICATE_PRIVATE_KEY: MIIEpAIBAAKCAQEAuPqsWFEF2JXvk5brRMXSA7LeDp0pM22GLPyNXk2f49oC69vO76L2cBPROxyruF+gBxoE1Pw0/jk/SN5rWJkHkFD/fKDJjXuGjew5JeQIYx7437RhP78yEotIzLolhRqQ3Dl280RvFfEAyJPbrM+Fplqu8MgRz1pWkx+6EYYDLmJjubepElN8zoqqJ0KbVvyJI47gxoomlOW8oEel0/sw7xFFTHxjzCXCKOEXZjFaRKgLrS9mlmLR+PnqeunKbDxRcJvzulwhPKOswDqZDeRVuHMuCZN1JcnpNZaZSg5Dtw/bm2YLJGdTwFmpBhz46aUAI3Vlomd443sXhzZST2HGfQIDAQABAoIBAGXurJ4WN9R7+wMnfQnuwKYNINSIwjV2uyN7ICPBPsR+VHHINKZU9NwZ74hVakM1XqfLLLJ5MHKO9VKgTiMKYOKj38W7jJWMZj861tsMZ5rHbHlJmvVX1K3nVvyJ7zcDxqO0ftna8iPzJG1jHQCDcrCS9Cf29+l9bIuyRgR2Bra9y6QZpxThQI0SEJwoIlPUb6KXTCXyoeBJsaxQV5dnlZloQHDem1r33j7xs+EnJXcds4wqb2+Qzqcw2BBmYSS5E5OU9RjsyVcnw7eg7CdoaNfFNdthTUjlHspGRTX7T5Ujly43hSmyQYqt3uEr5p5K+NTzDNMEVBcYmnuuy2Hhg7kCgYEA9IJTgjiysLFYIlVQk5SNLMNyDqj48Ta+jLtQS5NTat1y6Bp3IJhU9/UfNnrkof8gB38f6jso2KCR9W69TAeQdX4m5Z6fRg9cjl9Ju7rcTO7QOBmG3M35Gw3rluMjFXjRhLU6t4xZKPobSUqcQKChWsn3Cgwik7hFmbpBWwByKkMCgYEAwawlggjvfEsdBps613UmI4RfH3VKfkLWHxR9D0GccFwfHAOnPKQtKSRY0Zn/5xVR9Bbv+O65xFJ4Jyt1w/B8j71Cl9spK0d4PKbNXbY9hgsFozV0A5Q1S+I/kCUpGJr4Fqm58M/Y5ONBLydNOrN5hbwVY/N9tccu2GClsWxrID8CgYEAu2S3A/LYYLtKxOWGH9WWbVxNqhau1JAUcl+NJp7/K8QVMPY3nu+hD3j6NxLw74dM0PIJT8ePgpdtxiDdS8vwV1wcC5gKkfNsCGHXbN3FweC2DIjj546lAKsmiDoExYwXaBJNsicKnnExQHbCUnXJtH9dqoGqbnSoQy2QsWIiHWkCgYEAqZ4P13vl6nCKgj+vYAW8mjyTZqS90ijNCLlT8emfjhRQNqPIcubCmpa3pxJ9ua/Fb8Yq81R4o8Uqb/uzDyDupqC10vNhcgMM/emEUP+LkHrUvCTTb1L8/nGvA5pYDLGkd4y8SXhvV77kVtzP2YpX8tVP0pLs1SgWEfFLDEGM7NcCgYAAsN6jV0Ui5Neod9bklZ7BmGGgSXdL9BgoP10xZNmvXkPwLLFKQzN3WgColN/uuu0tK1Dc2x5OL0YBKElYedySlRNRP0/Qve2zQg7VL4J/KGCVZ2hyol/FUchETIuoAOV1UAGZTv93s/hOEjib65E3xAMimnboHi9yOQRcTd99zQ== # <-- Put your encrypted Certificate Private Key here 
+        - appstore_credentials # <-- (Includes APP_STORE_CONNECT_ISSUER_ID, APP_STORE_CONNECT_KEY_IDENTIFIER, APP_STORE_CONNECT_PRIVATE_KEY)
+        - ios_config
       flutter: stable
       xcode: latest
       cocoapods: default
