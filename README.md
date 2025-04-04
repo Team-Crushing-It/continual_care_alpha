@@ -9,7 +9,7 @@ The difference between the two: continually means there are pauses; continuously
 
 We opened up Continual Care to give our family and the world a better way to give care, and giving back is the cause we rally behind as we continue to cultivate joy in the lives of the individuals and families that we serve.
 
-Read more about our giving at [https://continualcare.org](http://continualcare.org)
+Read more about our giving at http://continual-care.super.site/
 
 ## What it does
 DX/DI (Data Experience/Data Interfaces) is a research into how data is experienced and consumed, and our innovation in patient experience is in the collection and consumption of higher-resolution diagnostic analytics: Activities of Daily Living (ADLs).
